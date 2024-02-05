@@ -643,6 +643,7 @@ button,
   padding: 5px 20px;
   border-radius: 20px;
   text-decoration: none;
+  transition-duration: 0.4s;
 }
 
 .btn-seemore:hover {
@@ -655,6 +656,7 @@ button,
   padding: 5px 20px;
   border-radius: 20px;
   text-decoration: none;
+  transition-duration: 0.4s;
 }
 
 .btn-see_profile:hover {

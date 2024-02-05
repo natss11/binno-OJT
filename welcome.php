@@ -217,7 +217,7 @@ if (!$posts || !$events || !$blogs) {
                         }
 
                         // Loop through images with IDs containing "dynamicEventImg"
-                        for (var i = 0; i <= 10; i++) {
+                        for (var i = 0; i <= 3; i++) {
                             var imgElement = document.getElementById("dynamicEventImg-" + i);
                             updateImageSrc(imgElement);
                             console.log(`dynamicEventImg-${i}: `, imgElement);
@@ -303,7 +303,6 @@ if (!$posts || !$events || !$blogs) {
                         }
                     </script>
                 </div>
-
             </div>
         </main>
 

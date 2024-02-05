@@ -47,7 +47,7 @@ if (!$blogs) {
         <title>BLOGS</title>
     </head>
 
-    <body class="bg-gray-100">
+    <body>
 
         <?php include 'navbar-blogs.php'; ?>
 
