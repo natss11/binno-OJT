@@ -24,7 +24,7 @@ function fetch_api_data($api_url)
     return $data;
 }
 
-function loadImage($id, $filePath, $imgType)
+function loadImage($id, $filePath, $imgType, $imgSrc)
 {
 ?>
     <script>
@@ -89,8 +89,8 @@ if (!$enablers) {
                     $i++;
                     $setting_institution = isset($enabler->setting_institution) ? htmlspecialchars($enabler->setting_institution) : '';
                     $setting_institution_short = strlen($setting_institution) > 20 ? substr($setting_institution, 0, 20) . '...' : $setting_institution;
-                    $setting_coverpic = isset($enabler->setting_coverpic) ? htmlspecialchars(str_replace('profile-cover-img/', '', $enabler->setting_coverpic)) : '';
-                    $setting_profilepic = isset($enabler->setting_profilepic) ? htmlspecialchars(str_replace('profile-img/', '', $enabler->setting_profilepic)) : '';
+                    $setting_coverpic = isset($enabler['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $enabler['setting_coverpic'])) : '';
+                    $setting_profilepic = isset($enabler['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $enabler['setting_profilepic'])) : '';
                 ?>
                     <div class="bg-white rounded-lg overflow-hidden shadow-md relative">
                         <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-full h-32 object-cover" style="background-color: #888888;">
@@ -111,8 +111,8 @@ if (!$enablers) {
 
                     <?php
                     // Call the loadImage function for each profile and cover image
-                    loadImage($i, 'profile-img', 'Profile');
-                    loadImage($i, 'profile-cover-img', 'Cover');
+                    loadImage($i, 'profile-img', 'Profile', $setting_profilepic);
+                    loadImage($i, 'profile-cover-img', 'Cover', $setting_coverpic);
                     ?>
                 <?php
                 }
@@ -149,19 +149,12 @@ if (!$enablers) {
                     .catch(error => console.error('Error fetching image data:', error));
             }
 
-            // Loop through images with IDs containing "dynamicImgCover" and "dynamicImgProfile"
-            for (var i = 1; i <= 3; i++) {
-                var coverImgElement = document.getElementById("dynamicImgCover-" + i);
-                var profileImgElement = document.getElementById("dynamicImgProfile-" + i);
-
-                if (coverImgElement) {
-                    // Update each cover image's src from the API
-                    updateImageSrc(coverImgElement);
-                }
-
-                if (profileImgElement) {
-                    // Update each profile image's src from the API
-                    updateImageSrc(profileImgElement);
+            // Loop through images with IDs containing "dynamicImg"
+            for (var i = 1; i <= count($enablers); i++) {
+                var imgElement = document.getElementById("dynamicImgProfile-" + i);
+                if (imgElement) {
+                    // Update each image's src from the API
+                    updateImageSrc(imgElement);
                 }
             }
         </script>

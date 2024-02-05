@@ -23,16 +23,16 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div>
                             <h4 class="text-black text-l">Discover</h4>
-                            <a href="startup-company">
+                            <a href="startup-company.php">
                                 <p class="font-semibold text-2xl" style="color: #ff7a00;">Startup Companies</p>
                             </a>
-                            <a href="startup-enabler">
+                            <a href="startup-enabler.php">
                                 <p class="font-semibold text-2xl" style="color: #ff7a00;">Startup Enablers</p>
                             </a>
-                            <a href="guides">
+                            <a href="guides.php">
                                 <p class="font-semibold text-2xl" style="color: #ff7a00;">Guides</p>
                             </a>
-                            <a href="blogs">
+                            <a href="blogs.php">
                                 <p class="font-semibold text-2xl" style="color: #ff7a00;">Blogs</p>
                             </a>
                         </div>
