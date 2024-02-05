@@ -24,28 +24,8 @@ function fetch_api_data($api_url)
     return $data;
 }
 
-function loadImage($id, $filePath, $imgType, $imgSrc)
-{
-?>
-    <script>
-        const loadImage<?php echo $id . ucfirst($imgType); ?> = async () => {
-            const currentSrc = 'dynamicImg<?php echo ucfirst($imgType); ?>-<?php echo $id; ?>';
-            const res = await fetch(
-                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
-            );
-
-            const blob = await res.blob();
-            const imageUrl = URL.createObjectURL(blob);
-
-            document.getElementById(currentSrc).src = imageUrl;
-        }
-
-        loadImage<?php echo $id . ucfirst($imgType); ?>();
-    </script>
-<?php
-}
-
-$enablers = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
+$api_url = "http://217.196.51.115/m/api/members/enablers";
+$enablers = fetch_api_data($api_url);
 
 if (!$enablers) {
     // Handle the case where the API request failed or returned invalid data
@@ -63,7 +43,7 @@ if (!$enablers) {
         <link rel="stylesheet" href="./dist/output.css">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
-        <title>Startup Enabler</title>
+        <title>Startup Enablers</title>
     </head>
 
     <body>
@@ -87,7 +67,7 @@ if (!$enablers) {
                 $i = 0;
                 foreach ($enablers as $enabler) {
                     $i++;
-                    $setting_institution = isset($enabler->setting_institution) ? htmlspecialchars($enabler->setting_institution) : '';
+                    $setting_institution = isset($enabler['setting_institution']) ? htmlspecialchars($enabler['setting_institution']) : '';
                     $setting_institution_short = strlen($setting_institution) > 20 ? substr($setting_institution, 0, 20) . '...' : $setting_institution;
                     $setting_coverpic = isset($enabler['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $enabler['setting_coverpic'])) : '';
                     $setting_profilepic = isset($enabler['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $enabler['setting_profilepic'])) : '';
@@ -101,63 +81,57 @@ if (!$enablers) {
                         </div>
 
                         <div class="mt-1 mb-3 mr-3 ml-3 flex justify-end">
-                            <?php
-                            $profileUrl = 'startup-enabler-profile?setting_institution=' . urlencode($setting_institution ?? '') . '&member_id=' . urlencode($enabler->member_id ?? '');
-                            ?>
-                            <button class="btn-see_profile w-full" onclick="redirectToProfile('<?php echo $profileUrl; ?>')">See Profile</button>
+                            <script>
+                                // Integrate the redirectToProfile function directly into the loop
+                                function redirectToProfile(profileUrl) {
+                                    window.location.href = profileUrl;
+                                }
+                            </script>
+                            <button class="btn-see_profile w-full" onclick="redirectToProfile('<?php echo htmlspecialchars('startup-enabler-profile.php?setting_institution=' . (isset($setting_institution) ? urlencode($setting_institution) : '') . '&member_id=' . (isset($enabler->member_id) ? urlencode($enabler->member_id) : '')); ?>')">See Profile</button>
                         </div>
-
                     </div>
 
-                    <?php
-                    // Call the loadImage function for each profile and cover image
-                    loadImage($i, 'profile-img', 'Profile', $setting_profilepic);
-                    loadImage($i, 'profile-cover-img', 'Cover', $setting_coverpic);
-                    ?>
                 <?php
                 }
                 ?>
             </div>
 
             <script>
-                function redirectToProfile(profileUrl) {
-                    window.location.href = profileUrl;
+                // Function to update image src from API
+                const updateImageSrc = async (imgElement) => {
+                    // Get the current src value
+                    var currentSrc = imgElement.alt;
+
+                    // Fetch image data from API
+                    const res = await fetch('http://217.196.51.115/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
+                        .then(response => response.blob())
+                        .then(data => {
+                            // Create a blob from the response data
+                            var blob = new Blob([data], {
+                                type: 'image/png'
+                            }); // Adjust type if needed
+
+                            console.log(blob)
+                            // Set the new src value using a blob URL
+                            imgElement.src = URL.createObjectURL(blob);
+                        })
+                        .catch(error => console.error('Error fetching image data:', error));
+                }
+
+                // Loop through images with IDs containing "dynamicImgCover" and "dynamicImgProfile"
+                for (var i = 0; i <= <?php echo count($enablers); ?>; i++) {
+                    var imgCoverElement = document.getElementById("dynamicImgCover-" + i);
+                    var imgProfileElement = document.getElementById("dynamicImgProfile-" + i);
+
+                    // Update each image's src from the API
+                    if (imgCoverElement && imgProfileElement) {
+                        updateImageSrc(imgCoverElement);
+                        updateImageSrc(imgProfileElement);
+                    }
                 }
             </script>
 
         </div>
-
-        <script>
-            // Function to update image src from API
-            const updateImageSrc = async (imgElement) => {
-                // Get the current src value
-                var currentSrc = imgElement.alt;
-
-                // Fetch image data from API
-                const res = await fetch('http://217.196.51.115/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
-                    .then(response => response.blob())
-                    .then(data => {
-                        // Create a blob from the response data
-                        var blob = new Blob([data], {
-                            type: 'image/png'
-                        }); // Adjust type if needed
-
-                        console.log(blob)
-                        // Set the new src value using a blob URL
-                        imgElement.src = URL.createObjectURL(blob);
-                    })
-                    .catch(error => console.error('Error fetching image data:', error));
-            }
-
-            // Loop through images with IDs containing "dynamicImg"
-            for (var i = 1; i <= count($enablers); i++) {
-                var imgElement = document.getElementById("dynamicImgProfile-" + i);
-                if (imgElement) {
-                    // Update each image's src from the API
-                    updateImageSrc(imgElement);
-                }
-            }
-        </script>
 
         <?php include 'footer.php'; ?>
 

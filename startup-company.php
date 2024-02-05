@@ -24,13 +24,14 @@ function fetch_api_data($api_url)
     return $data;
 }
 
-function loadImage($id, $filePath, $imgType, $currentSrc)
+function loadImage($id, $filePath, $imgType)
 {
 ?>
     <script>
         const loadImage<?php echo $id . ucfirst($imgType); ?> = async () => {
+            const currentSrc = document.getElementById('dynamicImg<?php echo ucfirst($imgType); ?>-<?php echo $id; ?>', ).alt;
             const res = await fetch(
-                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent('<?php echo $currentSrc; ?>')}`
+                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
             );
 
             const blob = await res.blob();
@@ -89,30 +90,29 @@ if (!$companies) {
                     // Check if the properties are set before trying to access them
                     $setting_institution = isset($company['setting_institution']) ? htmlspecialchars($company['setting_institution']) : '';
                     $short_setting_institution = strlen($setting_institution) > 20 ? substr($setting_institution, 0, 20) . '...' : $setting_institution;
-                    $current_cover_src = isset($company['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $company['setting_coverpic'])) : '';
-                    $current_profile_src = isset($company['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $company['setting_profilepic'])) : '';
                 ?>
                     <div class="bg-white rounded-lg overflow-hidden shadow-md relative">
-                        <img src="<?php echo $current_cover_src; ?>" alt="<?php echo $current_cover_src; ?>" id="dynamicImgCover-<?php echo $i ?>" class="w-full h-32 object-cover" style="background-color: #888888;">
-                        <img src="<?php echo $current_profile_src; ?>" alt="<?php echo $current_profile_src; ?>" id="dynamicImgProfile-<?php echo $i ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #888888;">
+                        <img src="<?php echo isset($company['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $company['setting_coverpic'])) : ''; ?>" alt="<?php echo isset($company['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $company['setting_coverpic'])) : ''; ?>" id="dynamicImgCover-<?php echo $i ?>" class="w-full h-32 object-cover" style="background-color: #888888;">
+                        <img src="<?php echo isset($company['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $company['setting_profilepic'])) : ''; ?>" alt="<?php echo isset($company['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $company['setting_profilepic'])) : ''; ?>" id="dynamicImgProfile-<?php echo $i ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #888888;">
 
                         <div class="flex flex-col items-center px-4 py-2"> <!-- flex container and center alignment -->
                             <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $short_setting_institution; ?></h2>
                         </div>
 
                         <div class="mt-1 mb-3 mr-3 ml-3 flex justify-end">
-                            <button class="btn-see_profile w-full" onclick="redirectToProfile('<?php echo 'startup-company-profile.php?setting_institution=' . urlencode($setting_institution) . '&member_id=' . urlencode($company['member_id']); ?>')">See Profile</button>
+                            <button class="btn-see_profile w-full" onclick="redirectToProfile('<?php echo htmlspecialchars('startup-company-profile.php?setting_institution=' . urlencode($setting_institution) . '&member_id=' . urlencode($company['member_id'])); ?>')">See Profile</button>
                         </div>
                     </div>
                     <?php
                     // Call the loadImage function for each profile and cover image
-                    loadImage($i, 'profile-img', 'Profile', $current_profile_src);
-                    loadImage($i, 'profile-cover-img', 'Cover', $current_cover_src);
+                    loadImage($i, 'profile-img', 'Profile');
+                    loadImage($i, 'profile-cover-img', 'Cover');
                     ?>
                 <?php
                 }
                 ?>
             </div>
+
 
             <script>
                 function redirectToProfile(profileUrl) {
@@ -144,13 +144,11 @@ if (!$companies) {
                     .catch(error => console.error('Error fetching image data:', error));
             }
 
-            // Loop through images with IDs containing "dynamicImg"
-            for (var i = 1; i <= 3; i++) {
-                var imgElement = document.getElementById("dynamicImg-" + i);
-                if (imgElement) {
-                    // Update each image's src from the API
-                    updateImageSrc(imgElement);
-                }
+            // Loop through images with IDs containing "dynamicImgCover-" and "dynamicImgProfile-"
+            for (var i = 0; i <= <?php echo count($companies); ?>; i++) {
+                // Update each image's src from the API
+                updateImageSrc(document.getElementById("dynamicImgCover-" + i));
+                updateImageSrc(document.getElementById("dynamicImgProfile-" + i));
             }
         </script>
 

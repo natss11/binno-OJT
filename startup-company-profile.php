@@ -108,6 +108,19 @@ if (!$companies) {
 } else {
 ?>
 
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="./dist/output.css">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+        <title>Startup Companies</title>
+    </head>
+
     <body class="bg-gray-100">
         <div class="container mx-auto p-8">
 
@@ -341,9 +354,11 @@ if (!$companies) {
             loadImage()
         </script>
 
+        <?php include 'footer.php'; ?>
+
     </body>
 
-</html>
+    </html>
 
 <?php
 }
