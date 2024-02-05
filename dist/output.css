@@ -504,6 +504,7 @@ button,
   padding: 15px 20px;
   border-radius: 10px;
   text-decoration: none;
+  transition-duration: 0.4s;
 }
 
 .btn-profile {
@@ -521,9 +522,10 @@ button,
 .btn-subscribe {
   background-color: #5c9fef;
   color: white;
-  padding: 10px 10px;
+  padding: 10px 20px;
   border-radius: 20px;
   text-decoration: none;
+  transition-duration: 0.4s;
 }
 
 .btn-subscribe:hover {
@@ -536,6 +538,7 @@ button,
   padding: 15px 20px;
   border-radius: 10px;
   text-decoration: none;
+  transition-duration: 0.4s;
 }
 
 .center-container {
@@ -549,8 +552,7 @@ button,
 }
 
 .blue-underline:hover {
-  text-decoration: underline;
-  color: blue;
+  color: white;
 }
 
 .blue-text {
@@ -711,6 +713,27 @@ button,
 
 #chapter-list a.active {
   color: orange; /* Set text color for better visibility */
+}
+
+.btn-navmenu {
+  background-color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition-duration: 0.4s;
+}
+
+.btn-navmenu:hover {
+  background-color: #5c9fef;
+}
+
+.btn-navmenu2 {
+  background-color: #5c9fef;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition-duration: 0.4s;
 }
 
 /*

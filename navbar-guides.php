@@ -45,32 +45,32 @@
 
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="welcome.php" class="blue-underline">
-                            <span>Discover</span>
+                            <span class="btn-navmenu">Discover</span>
                         </a>
                     </li>
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="posts.php" class="blue-underline">
-                            <span>Posts</span>
+                            <span class="btn-navmenu">Posts</span>
                         </a>
                     </li>
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="events.php" class="blue-underline">
-                            <span>Events</span>
+                            <span class="btn-navmenu">Events</span>
                         </a>
                     </li>
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="blogs.php" class="blue-underline">
-                            <span>Blogs</span>
+                            <span class="btn-navmenu">Blogs</span>
                         </a>
                     </li>
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="guides.php" class="blue-underline">
-                            <span class="blue-text">Guides</span>
+                            <span class="btn-navmenu2">Guides</span>
                         </a>
                     </li>
                     <li style="margin-right: 65px;" class="mr-4 relative group">
-                        <a href="#" class="blue-underline dropdown-toggle">
-                            <span>Profiles</span>
+                        <a href="#" class="btn-navmenu blue-underline dropdown-toggle">
+                            <span class="btn-text">Profiles</span>
                             <!-- dropdown icon -->
                             <span class="dropdown-icon">▼</span>
                         </a>

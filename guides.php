@@ -81,7 +81,7 @@ if (!$programs) {
                                     <p class="text-gray-600 text-sm"><?php echo htmlspecialchars(isset($program['program_dateadded']) ? $program['program_dateadded'] : '', ENT_QUOTES, 'UTF-8'); ?></p>
                                 </div>
                                 <div class="mt-1 mb-3 mr-3 flex justify-end">
-                                    <a href="<?php echo htmlspecialchars('guides-view') . '?program_id=' . (isset($program['program_id']) ? $program['program_id'] : ''); ?>" class="btn-seemore">See Program</a>
+                                    <a href="<?php echo htmlspecialchars('guides-view.php') . '?program_id=' . (isset($program['program_id']) ? $program['program_id'] : ''); ?>" class="btn-seemore">See Program</a>
                                 </div>
                             </div>
                         <?php } ?>
@@ -112,14 +112,11 @@ if (!$programs) {
                     .catch(error => console.error('Error fetching image data:', error));
             }
 
-            // Loop through images with IDs containing "dynamicImg"
-            for (var i = 1; i <= 3; i++) {
-                var imgElement = document.getElementById("dynamicImg-" + i);
-                if (imgElement) {
-                    // Update each image's src from the API
-                    updateImageSrc(imgElement);
-                }
-            }
+            // Loop through images with IDs starting with "dynamicImg-"
+            document.querySelectorAll('[id^="dynamicImg-"]').forEach(imgElement => {
+                // Update each image's src from the API
+                updateImageSrc(imgElement);
+            });
         </script>
 
         <?php include 'footer.php'; ?>

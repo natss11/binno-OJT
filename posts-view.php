@@ -59,7 +59,7 @@
                 </a>
                 <div class="flex flex-row mb-4 mt-5">
                     <div>
-                        <h2 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($post['post_author']); ?></h2>
+                        <h2 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($post['setting_institution']); ?></h2>
                         <p class="text-gray-600 mb-2"><?php echo htmlspecialchars($post['post_dateadded']); ?></p>
                     </div>
                 </div>
