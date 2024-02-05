@@ -1,0 +1,164 @@
+<?php
+
+function fetch_api_data($api_url)
+{
+    // Make the request
+    $response = file_get_contents($api_url);
+
+    // Check for errors
+    if ($response === false) {
+        return false;
+    }
+
+    // Decode JSON response
+    $data = json_decode($response, true);
+
+    set_time_limit(60); // Set to a value greater than 30 seconds
+
+    // Check if the decoding was successful
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        // Handle JSON decoding error
+        return false;
+    }
+
+    return $data;
+}
+
+function loadImage($id, $filePath, $imgType, $currentSrc)
+{
+?>
+    <script>
+        const loadImage<?php echo $id . ucfirst($imgType); ?> = async () => {
+            const res = await fetch(
+                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent('<?php echo $currentSrc; ?>')}`
+            );
+
+            const blob = await res.blob();
+            const imageUrl = URL.createObjectURL(blob);
+
+            document.getElementById('dynamicImg<?php echo ucfirst($imgType); ?>-<?php echo $id; ?>').src = imageUrl;
+        }
+
+        loadImage<?php echo $id . ucfirst($imgType); ?>();
+    </script>
+<?php
+}
+
+$api_url = "http://217.196.51.115/m/api/members/companies";
+$companies = fetch_api_data($api_url);
+
+if (!$companies) {
+    // Handle the case where the API request failed or returned invalid data
+    echo "Failed to fetch companies.";
+} else {
+?>
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="./dist/output.css">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+        <title>Startup Companies</title>
+    </head>
+
+    <body>
+
+        <?php include 'navbar-profiles.php'; ?>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+            <h1 class="font-bold text-3xl md:text-6xl ml-10 mt-5 mb-5" style="color: #ff7a00;">Startups</h1>
+            <p class="text-lg mb-10 mx-20" style="text-align: center;">Welcome to the exciting world of entrepreneurship in the Bicol
+                Region! In this dynamic and rapidly evolving landscape, we embark on a journey to explore and
+                discover the latest startups that are revolutionizing industries, solving pressing challenges,
+                and shaping the future of this vibrant region. From innovative tech ventures to sustainable
+                enterprises, join us as we uncover the diverse and inspiring stories of entrepreneurs
+                who are making their mark on the Bicolano startup scene and beyond.
+            </p>
+
+            <!-- Cards Section -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 mx-20">
+                <?php
+                $i = 0;
+                foreach ($companies as $company) {
+                    $i++;
+                    // Check if the properties are set before trying to access them
+                    $setting_institution = isset($company['setting_institution']) ? htmlspecialchars($company['setting_institution']) : '';
+                    $short_setting_institution = strlen($setting_institution) > 20 ? substr($setting_institution, 0, 20) . '...' : $setting_institution;
+                    $current_cover_src = isset($company['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $company['setting_coverpic'])) : '';
+                    $current_profile_src = isset($company['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $company['setting_profilepic'])) : '';
+                ?>
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md relative">
+                        <img src="<?php echo $current_cover_src; ?>" alt="<?php echo $current_cover_src; ?>" id="dynamicImgCover-<?php echo $i ?>" class="w-full h-32 object-cover" style="background-color: #888888;">
+                        <img src="<?php echo $current_profile_src; ?>" alt="<?php echo $current_profile_src; ?>" id="dynamicImgProfile-<?php echo $i ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #888888;">
+
+                        <div class="flex flex-col items-center px-4 py-2"> <!-- flex container and center alignment -->
+                            <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $short_setting_institution; ?></h2>
+                        </div>
+
+                        <div class="mt-1 mb-3 mr-3 ml-3 flex justify-end">
+                            <button class="btn-see_profile w-full" onclick="redirectToProfile('<?php echo 'startup-company-profile.php?setting_institution=' . urlencode($setting_institution) . '&member_id=' . urlencode($company['member_id']); ?>')">See Profile</button>
+                        </div>
+                    </div>
+                    <?php
+                    // Call the loadImage function for each profile and cover image
+                    loadImage($i, 'profile-img', 'Profile', $current_profile_src);
+                    loadImage($i, 'profile-cover-img', 'Cover', $current_cover_src);
+                    ?>
+                <?php
+                }
+                ?>
+            </div>
+
+            <script>
+                function redirectToProfile(profileUrl) {
+                    window.location.href = profileUrl;
+                }
+            </script>
+
+        </div>
+
+        <script>
+            // Function to update image src from API
+            const updateImageSrc = async (imgElement) => {
+                // Get the current src value
+                var currentSrc = imgElement.alt;
+
+                // Fetch image data from API
+                const res = await fetch('http://217.196.51.115/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
+                    .then(response => response.blob())
+                    .then(data => {
+                        // Create a blob from the response data
+                        var blob = new Blob([data], {
+                            type: 'image/png'
+                        }); // Adjust type if needed
+
+                        console.log(blob)
+                        // Set the new src value using a blob URL
+                        imgElement.src = URL.createObjectURL(blob);
+                    })
+                    .catch(error => console.error('Error fetching image data:', error));
+            }
+
+            // Loop through images with IDs containing "dynamicImg"
+            for (var i = 1; i <= 3; i++) {
+                var imgElement = document.getElementById("dynamicImg-" + i);
+                if (imgElement) {
+                    // Update each image's src from the API
+                    updateImageSrc(imgElement);
+                }
+            }
+        </script>
+
+        <?php include 'footer.php'; ?>
+
+    </body>
+
+    </html>
+<?php
+}
+?>
