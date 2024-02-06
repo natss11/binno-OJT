@@ -11,7 +11,10 @@
     <title>Startup Company</title>
 </head>
 
-<body class="bg-gray-100">
+<body>
+
+    <?php include 'navbar-profiles.php'; ?>
+
     <?php
 
     function fetch_api_data($api_url)
@@ -70,7 +73,7 @@
         <div class="container mx-auto p-8">
 
             <div class="flex items-center mb-5">
-                <a href="#" class="blue-back text-lg">
+                <a href="startup-company.php" class="blue-back text-lg">
                     <i class="fas fa-arrow-left"></i> Back
                 </a>
             </div>
@@ -109,7 +112,7 @@
                     <div class="w-1/3 p-4 bg-gray-200 mt-10">
                         <h7>About Us</h7>
                         <p class="text-sm text-gray-600 mb-5 mt-3 text-justify"><?php echo $selected_company['setting_bio']; ?></p>
-                    
+
                         <h7>Address</h7>
                         <p class="text-m text-gray-600 mb-2 mt-3 text-justify"><?php echo $selected_company['setting_address']; ?></p>
                     </div>
@@ -263,6 +266,8 @@
     <?php
     }
     ?>
+
+    <?php include 'footer.php'; ?>
 
 </body>
 
