@@ -45,69 +45,6 @@ function loadImage($id, $filePath)
 <?php
 }
 
-function loadCoverImage($id, $filePath)
-{
-?>
-    <script>
-        const loadCoverImage<?php echo $id; ?> = async () => {
-            const currentSrc = document.getElementById('<?php echo $id; ?>').alt;
-            const res = await fetch(
-                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
-            );
-
-            const blob = await res.blob();
-            const imageUrl = URL.createObjectURL(blob);
-
-            document.getElementById('<?php echo $id; ?>').src = imageUrl;
-        }
-
-        loadCoverImage<?php echo $id; ?>();
-    </script>
-<?php
-}
-
-function loadProfileImage($id, $filePath)
-{
-?>
-    <script>
-        const loadProfileImage<?php echo $id; ?> = async () => {
-            const currentSrc = document.getElementById('<?php echo $id; ?>').alt;
-            const res = await fetch(
-                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
-            );
-
-            const blob = await res.blob();
-            const imageUrl = URL.createObjectURL(blob);
-
-            document.getElementById('<?php echo $id; ?>').src = imageUrl;
-        }
-
-        loadProfileImage<?php echo $id; ?>();
-    </script>
-<?php
-}
-
-function loadProfilePic($id, $filePath)
-{
-?>
-    <script>
-        const loadProfilePic<?php echo $id; ?> = async () => {
-            const currentSrc = document.getElementById('<?php echo $id; ?>').alt;
-            const res = await fetch(
-                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
-            );
-
-            const blob = await res.blob();
-            const imageUrl = URL.createObjectURL(blob);
-
-            document.getElementById('<?php echo $id; ?>').src = imageUrl;
-        }
-
-        loadProfilePic<?php echo $id; ?>();
-    </script>
-<?php
-}
-
 $enablers = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
 
 if (!$enablers) {
@@ -215,7 +152,7 @@ if (!$enablers) {
                             ?>
                                     <div class="border p-4 mb-4 mt-5 bg-gray-100">
                                         <div class="flex items-center">
-                                            <img id="event_profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
+                                            <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
                                             <div class="ml-4">
                                                 <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
                                                 <p class="text-sm text-gray-600"><?php echo $event['event_datecreated']; ?></p>
@@ -232,7 +169,7 @@ if (!$enablers) {
                                     loadImage('event_pic_' . $event['event_id'], 'event-pics');
 
                                     // Call the function to load the profile pic with a unique ID for each event
-                                    loadProfilePic('event_profile_pic_' . $event['event_id'], 'profile-img');
+                                    loadImage('event_profile_pic_' . $event['event_id'], 'profile-img');
                                 }
                             } else {
                                 // Handle the case where the API request for events failed or returned invalid data
@@ -268,7 +205,7 @@ if (!$enablers) {
                                 ?>
                                         <div class="border p-4 mb-4 mt-5 bg-gray-100">
                                             <div class="flex items-center">
-                                                <img id="blog_profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
+                                                <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
 
                                                 <div class="ml-4">
                                                     <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
@@ -284,7 +221,7 @@ if (!$enablers) {
                                         loadImage('blog_pic_' . $blog['blog_id'], 'blog-pics');
 
                                         // Call the function to load the profile pic with a unique ID for each blog
-                                        loadProfilePic('blog_profile_pic_' . $blog['blog_id'], 'profile-img');
+                                        loadImage('blog_profile_pic_' . $blog['blog_id'], 'profile-img');
                                     }
                                 } else {
                                     // Handle the case where the API request for blogs failed or returned invalid data
@@ -320,8 +257,8 @@ if (!$enablers) {
 
             <?php
                 // Call the function to load cover and profile images
-                loadCoverImage('cover_pic_' . $selected_enabler['member_id'], 'profile-cover-img');
-                loadProfileImage('profile_pic_' . $selected_enabler['member_id'], 'profile-img');
+                loadImage('cover_pic_' . $selected_enabler['member_id'], 'profile-cover-img');
+                loadImage('profile_pic_' . $selected_enabler['member_id'], 'profile-img');
             } else {
                 // Handle the case where the selected enabler is not found
                 echo "Enabler not found.";
@@ -329,23 +266,6 @@ if (!$enablers) {
             ?>
 
         </div>
-
-        <script>
-            const loadImage = async () => {
-                const currentSrc = document.getElementById('profile_img').alt
-                const res = await fetch(
-                    `http://217.196.51.115/m/api/images?filePath=profile-img/${encodeURIComponent(currentSrc)}`
-                )
-
-                const blob = await res.blob();
-                const imageUrl = URL.createObjectURL(blob);
-
-                document.getElementById('profile_img').src = imageUrl;
-
-            }
-
-            loadImage()
-        </script>
 
         <?php include 'footer.php'; ?>
 
