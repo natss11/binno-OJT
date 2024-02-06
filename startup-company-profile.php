@@ -109,9 +109,9 @@
 
                 <!-- Left column for chapters and company description -->
                 <div class="flex container mx-auto p-15 px-36">
-                    <div class="w-1/3 p-4 bg-gray-200 mt-10">
+                    <div class="w-1/3 p-4 bg-gray-200 mt-16">
                         <h7>About Us</h7>
-                        <p class="text-sm text-gray-600 mb-5 mt-3 text-justify"><?php echo $selected_company['setting_bio']; ?></p>
+                        <p class="text-sm text-gray-600 mb-10 mt-3 text-justify"><?php echo $selected_company['setting_bio']; ?></p>
 
                         <h7>Address</h7>
                         <p class="text-sm text-gray-600 mb-2 mt-3 text-justify"><?php echo $selected_company['setting_address']; ?></p>
