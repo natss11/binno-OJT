@@ -66,7 +66,7 @@
 
     if (!$companies) {
         // Handle the case where the API request failed or returned invalid data
-        echo "Failed to fetch enablers.";
+        echo "No companies found.";
     } else {
     ?>
 
@@ -114,7 +114,7 @@
                         <p class="text-sm text-gray-600 mb-5 mt-3 text-justify"><?php echo $selected_company['setting_bio']; ?></p>
 
                         <h7>Address</h7>
-                        <p class="text-m text-gray-600 mb-2 mt-3 text-justify"><?php echo $selected_company['setting_address']; ?></p>
+                        <p class="text-sm text-gray-600 mb-2 mt-3 text-justify"><?php echo $selected_company['setting_address']; ?></p>
                     </div>
 
                     <!-- Right column for data -->
@@ -158,7 +158,7 @@
                                                 <p class="text-sm text-gray-600"><?php echo $event['event_datecreated']; ?></p>
                                             </div>
                                         </div>
-                                        <h2 class="text-l font-bold mt-3 text-justify"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
+                                        <h2 class="text-l font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #888888;">
                                         <p class="text-sm text-gray-600 mb-2 mt-2"><?php echo isset($event['event_date']) ? $event['event_date'] : ''; ?></p>
                                         <p class="text-m text-black-800 text-justify"><?php echo isset($event['event_description']) ? $event['event_description'] : ''; ?></p>
@@ -197,7 +197,7 @@
                                                     <p class="text-sm text-gray-600"><?php echo $post['post_dateadded']; ?></p>
                                                 </div>
                                             </div>
-                                            <h2 class="text-l font-bold mt-3 text-justify"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
+                                            <h2 class="text-l font-bold mt-3"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
                                             <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #888888;">
                                             <p class="text-m text-black-800 text-justify"><?php echo isset($post['post_bodytext']) ? $post['post_bodytext'] : ''; ?></p>
                                         </div>

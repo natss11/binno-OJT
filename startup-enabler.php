@@ -29,7 +29,7 @@ $enablers = fetch_api_data($api_url);
 
 if (!$enablers) {
     // Handle the case where the API request failed or returned invalid data
-    echo "Failed to fetch enablers.";
+    echo "No enablers found.";
 } else {
 ?>
 
@@ -69,12 +69,10 @@ if (!$enablers) {
                     $i++;
                     $setting_institution = isset($enabler['setting_institution']) ? htmlspecialchars($enabler['setting_institution']) : '';
                     $setting_institution_short = strlen($setting_institution) > 20 ? substr($setting_institution, 0, 20) . '...' : $setting_institution;
-                    $setting_coverpic = isset($enabler['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $enabler['setting_coverpic'])) : '';
-                    $setting_profilepic = isset($enabler['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $enabler['setting_profilepic'])) : '';
                 ?>
                     <div class="bg-white rounded-lg overflow-hidden shadow-md relative">
-                        <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-full h-32 object-cover" style="background-color: #888888;">
-                        <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #888888;">
+                        <img src="<?php echo isset($enabler['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $enabler['setting_coverpic'])) : ''; ?>" alt="<?php echo isset($enabler['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $enabler['setting_coverpic'])) : ''; ?>" id="dynamicImgCover-<?php echo $i ?>" class="w-full h-32 object-cover" style="background-color: #888888;">
+                        <img src="<?php echo isset($enabler['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $enabler['setting_profilepic'])) : ''; ?>" alt="<?php echo isset($enabler['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $enabler['setting_profilepic'])) : ''; ?>" id="dynamicImgProfile-<?php echo $i ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #888888;">
 
                         <div class="flex flex-col items-center px-4 py-2">
                             <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $setting_institution_short; ?></h2>

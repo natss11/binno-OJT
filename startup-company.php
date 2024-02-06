@@ -50,7 +50,7 @@ $companies = fetch_api_data($api_url);
 
 if (!$companies) {
     // Handle the case where the API request failed or returned invalid data
-    echo "Failed to fetch companies.";
+    echo "No companies found.";
 } else {
 ?>
 
