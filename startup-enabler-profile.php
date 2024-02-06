@@ -161,11 +161,11 @@ if (!$enablers) {
                 <div class="container mx-auto p-15 px-36">
                     <div class="bg-white rounded-lg overflow-hidden shadow-md mb-5">
                         <!-- Use loadCoverImage for cover pic -->
-                        <img id="cover_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_coverpic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-cover-img/', '', $selected_enabler['setting_coverpic'])); ?>" class="w-full h-64 object-cover" style="background-color: #888888;">
+                        <img id="cover_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_coverpic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-cover-img/', '', $selected_enabler['setting_coverpic'])); ?>" class="w-full h-64 object-cover" style="background-color: #ffffff;">
                     </div>
                     <div class="flex -mt-20 ml-20">
                         <!-- Use loadProfileImage for profile pic -->
-                        <img id="profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_profilepic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white" style="background-color: #888888;">
+                        <img id="profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_profilepic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
                         <div class="px-4 py-2 mt-16 ml-2">
                             <h4 class="text-3xl font-bold mb-2"><?php echo $selected_enabler['setting_institution']; ?></h4>
                             <p class="text-sm text-gray-600 mb-1">Startup Enabler</p>
@@ -213,9 +213,9 @@ if (!$enablers) {
 
                                 foreach ($filtered_events as $event) {
                             ?>
-                                    <div class="border p-4 mb-4 mt-5">
+                                    <div class="border p-4 mb-4 mt-5 bg-gray-100">
                                         <div class="flex items-center">
-                                            <img id="event_profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #888888;">
+                                            <img id="event_profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
                                             <div class="ml-4">
                                                 <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
                                                 <p class="text-sm text-gray-600"><?php echo $event['event_datecreated']; ?></p>
@@ -223,7 +223,7 @@ if (!$enablers) {
                                         </div>
 
                                         <h2 class="text-l font-bold mt-3"><?php echo $event['event_title']; ?></h2>
-                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #888888;">
+                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                         <p class="text-sm text-gray-600 mb-2 mt-2"><?php echo $event['event_date']; ?></p>
                                         <p class="text-m text-black-800 mt-3 text-justify"><?php echo $event['event_description']; ?></p>
                                     </div>
@@ -266,9 +266,9 @@ if (!$enablers) {
 
                                     foreach ($filtered_blogs as $blog) {
                                 ?>
-                                        <div class="border p-4 mb-4 mt-5">
+                                        <div class="border p-4 mb-4 mt-5 bg-gray-100">
                                             <div class="flex items-center">
-                                                <img id="blog_profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #888888;">
+                                                <img id="blog_profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
 
                                                 <div class="ml-4">
                                                     <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
@@ -276,7 +276,7 @@ if (!$enablers) {
                                                 </div>
                                             </div>
                                             <h2 class="text-l font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>
-                                            <img id="blog_pic_<?php echo $blog['blog_id']; ?>" alt="<?php echo $blog['blog_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #888888;">
+                                            <img id="blog_pic_<?php echo $blog['blog_id']; ?>" alt="<?php echo $blog['blog_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                             <p class="text-m text-black-800 mt-3 text-justify"><?php echo $blog['blog_content']; ?></p>
                                         </div>
                                 <?php

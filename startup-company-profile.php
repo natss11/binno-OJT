@@ -96,10 +96,10 @@
             ?>
                 <div class="container mx-auto p-15 px-36">
                     <div class="bg-white rounded-lg overflow-hidden shadow-md mb-5">
-                        <img id="cover_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_coverpic']; ?>" alt="<?php echo str_replace('profile-cover-img/', '', $selected_company['setting_coverpic']); ?>" class="w-full h-64 object-cover" style="background-color: #888888;">
+                        <img id="cover_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_coverpic']; ?>" alt="<?php echo str_replace('profile-cover-img/', '', $selected_company['setting_coverpic']); ?>" class="w-full h-64 object-cover" style="background-color: #ffffff;">
                     </div>
                     <div class="flex -mt-20 ml-20">
-                        <img id="profile_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white" style="background-color: #888888;">
+                        <img id="profile_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
                         <div class="px-4 py-2 mt-16 ml-2">
                             <h4 class="text-3xl font-bold mb-2"><?php echo $selected_company['setting_institution']; ?></h4>
                             <p class="text-sm text-gray-600 mb-2">Startup Company</p>
@@ -149,9 +149,9 @@
 
                                 foreach ($filtered_events as $event) {
                             ?>
-                                    <div class="border p-4 mb-4 mt-5">
+                                    <div class="border p-4 mb-4 mt-5 bg-gray-100">
                                         <div class="flex items-center">
-                                            <img src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #888888;">
+                                            <img src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
 
                                             <div class="ml-4">
                                                 <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
@@ -159,7 +159,7 @@
                                             </div>
                                         </div>
                                         <h2 class="text-l font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
-                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #888888;">
+                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                         <p class="text-sm text-gray-600 mb-2 mt-2"><?php echo isset($event['event_date']) ? $event['event_date'] : ''; ?></p>
                                         <p class="text-m text-black-800 text-justify"><?php echo isset($event['event_description']) ? $event['event_description'] : ''; ?></p>
                                     </div>
@@ -189,16 +189,16 @@
                                 foreach ($posts as $post) {
                                     if ($post['post_author'] === $member_id) {
                             ?>
-                                        <div class="border p-4 mb-4 mt-5">
+                                        <div class="border p-4 mb-4 mt-5 bg-gray-100">
                                             <div class="flex items-center">
-                                                <img src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #888888;">
+                                                <img src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
                                                 <div class="ml-4">
                                                     <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
                                                     <p class="text-sm text-gray-600"><?php echo $post['post_dateadded']; ?></p>
                                                 </div>
                                             </div>
                                             <h2 class="text-l font-bold mt-3"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
-                                            <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #888888;">
+                                            <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                             <p class="text-m text-black-800 text-justify"><?php echo isset($post['post_bodytext']) ? $post['post_bodytext'] : ''; ?></p>
                                         </div>
                             <?php
