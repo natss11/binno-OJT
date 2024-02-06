@@ -11,121 +11,66 @@
     <title>Startup Company</title>
 </head>
 
-<?php
+<body class="bg-gray-100">
+    <?php
 
-function fetch_api_data($api_url)
-{
-    // Make the request
-    $response = file_get_contents($api_url);
+    function fetch_api_data($api_url)
+    {
+        // Make the request
+        $response = file_get_contents($api_url);
 
-    // Check for errors
-    if ($response === false) {
-        return false;
+        // Check for errors
+        if ($response === false) {
+            return false;
+        }
+
+        // Decode JSON response
+        $data = json_decode($response, true);
+
+        set_time_limit(60); // Set to a value greater than 30 seconds
+
+        // Check if the decoding was successful
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            // Handle JSON decoding error
+            return false;
+        }
+
+        return $data;
     }
 
-    // Decode JSON response
-    $data = json_decode($response, true);
+    function loadImage($id, $filePath)
+    {
+    ?>
+        <script>
+            const loadImage<?php echo $id; ?> = async () => {
+                const currentSrc = document.getElementById('<?php echo $id; ?>').alt;
+                const res = await fetch(
+                    `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
+                );
 
-    set_time_limit(60); // Set to a value greater than 30 seconds
+                const blob = await res.blob();
+                const imageUrl = URL.createObjectURL(blob);
 
-    // Check if the decoding was successful
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        // Handle JSON decoding error
-        return false;
+                document.getElementById('<?php echo $id; ?>').src = imageUrl;
+            }
+
+            loadImage<?php echo $id; ?>();
+        </script>
+    <?php
     }
 
-    return $data;
-}
+    $companies = fetch_api_data("http://217.196.51.115/m/api/members/companies");
 
-function loadImage($id, $filePath)
-{
-?>
-    <script>
-        const loadImage<?php echo $id; ?> = async () => {
-            const currentSrc = document.getElementById('<?php echo $id; ?>').alt;
-            const res = await fetch(
-                `http://217.196.51.115/m/api/images?filePath=${filePath}/${encodeURIComponent(currentSrc)}`
-            );
+    if (!$companies) {
+        // Handle the case where the API request failed or returned invalid data
+        echo "Failed to fetch enablers.";
+    } else {
+    ?>
 
-            const blob = await res.blob();
-            const imageUrl = URL.createObjectURL(blob);
-
-            document.getElementById('<?php echo $id; ?>').src = imageUrl;
-        }
-
-        loadImage<?php echo $id; ?>();
-    </script>
-<?php
-}
-
-function loadCoverImage($id, $filePath)
-{
-?>
-    <script>
-        const loadCoverImage<?php echo $id; ?> = async () => {
-            const currentSrc = document.getElementById('<?php echo $id; ?>').alt;
-            const res = await fetch(
-                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
-            );
-
-            const blob = await res.blob();
-            const imageUrl = URL.createObjectURL(blob);
-
-            document.getElementById('<?php echo $id; ?>').src = imageUrl;
-        }
-
-        loadCoverImage<?php echo $id; ?>();
-    </script>
-<?php
-}
-
-function loadProfileImage($id, $filePath)
-{
-?>
-    <script>
-        const loadProfileImage<?php echo $id; ?> = async () => {
-            const currentSrc = document.getElementById('<?php echo $id; ?>').alt;
-            const res = await fetch(
-                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
-            );
-
-            const blob = await res.blob();
-            const imageUrl = URL.createObjectURL(blob);
-
-            document.getElementById('<?php echo $id; ?>').src = imageUrl;
-        }
-
-        loadProfileImage<?php echo $id; ?>();
-    </script>
-<?php
-}
-
-$companies = fetch_api_data("http://217.196.51.115/m/api/members/companies");
-
-if (!$companies) {
-    // Handle the case where the API request failed or returned invalid data
-    echo "Failed to fetch companies.";
-} else {
-?>
-
-    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="./dist/output.css">
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
-        <title>Startup Companies</title>
-    </head>
-
-    <body class="bg-gray-100">
         <div class="container mx-auto p-8">
 
             <div class="flex items-center mb-5">
-                <a href="startup-company.php" class="blue-back text-lg">
+                <a href="#" class="blue-back text-lg">
                     <i class="fas fa-arrow-left"></i> Back
                 </a>
             </div>
@@ -146,18 +91,15 @@ if (!$companies) {
             // Display company details if found
             if (isset($selected_company['setting_institution'])) {
             ?>
-                <div class="px-16">
-                    <p class="text-sm text-gray-600 mx-20 mb-1">Startup Company</p>
-                </div>
                 <div class="container mx-auto p-15 px-36">
                     <div class="bg-white rounded-lg overflow-hidden shadow-md mb-5">
-                        <img id="cover_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo esc_url($selected_company['setting_coverpic']); ?>" alt="<?php echo esc_html(str_replace('profile-cover-img/', '', $selected_company['setting_coverpic'])); ?>" class="w-full h-64 object-cover" style="background-color: #888888;">
+                        <img id="cover_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_coverpic']; ?>" alt="<?php echo str_replace('profile-cover-img/', '', $selected_company['setting_coverpic']); ?>" class="w-full h-64 object-cover" style="background-color: #888888;">
                     </div>
                     <div class="flex -mt-20 ml-20">
-                        <img id="profile_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo esc_url($selected_company['setting_profilepic']); ?>" alt="<?php echo esc_html(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white" style="background-color: #888888;">
+                        <img id="profile_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white" style="background-color: #888888;">
                         <div class="px-4 py-2 mt-16 ml-2">
-                            <h4 class="text-3xl font-bold mb-2"><?php echo esc_html($selected_company['setting_institution']); ?></h4>
-                            <p class="text-m text-gray-600 mb-2"><?php echo esc_html($selected_company['setting_address']); ?></p>
+                            <h4 class="text-3xl font-bold mb-2"><?php echo $selected_company['setting_institution']; ?></h4>
+                            <p class="text-sm text-gray-600 mb-2">Startup Company</p>
                         </div>
                     </div>
                 </div>
@@ -166,7 +108,10 @@ if (!$companies) {
                 <div class="flex container mx-auto p-15 px-36">
                     <div class="w-1/3 p-4 bg-gray-200 mt-10">
                         <h7>About Us</h7>
-                        <p class="text-sm text-gray-600 mb-2 mt-5 text-justify"><?php echo esc_html($selected_company['setting_bio']); ?></p>
+                        <p class="text-sm text-gray-600 mb-5 mt-3 text-justify"><?php echo $selected_company['setting_bio']; ?></p>
+                    
+                        <h7>Address</h7>
+                        <p class="text-m text-gray-600 mb-2 mt-3 text-justify"><?php echo $selected_company['setting_address']; ?></p>
                     </div>
 
                     <!-- Right column for data -->
@@ -178,7 +123,7 @@ if (!$companies) {
                         </div>
 
                         <!-- Events content -->
-                        <div id="eventsContent" class="mt-10 ml-5">
+                        <div id="eventsContent" class="ml-5">
                             <h10>Events</h10>
                             <?php
                             // Fetch events for the specific member
@@ -203,17 +148,17 @@ if (!$companies) {
                             ?>
                                     <div class="border p-4 mb-4 mt-5">
                                         <div class="flex items-center">
-                                            <img src="<?php echo esc_url($selected_company['setting_profilepic']); ?>" alt="<?php echo esc_html(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #888888;">
+                                            <img src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #888888;">
 
                                             <div class="ml-4">
-                                                <h4 class="text-xl font-bold"><?php echo esc_html($selected_company['setting_institution']); ?></h4>
-                                                <p class="text-sm text-gray-600"><?php echo esc_html($event['event_datecreated']); ?></p>
+                                                <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
+                                                <p class="text-sm text-gray-600"><?php echo $event['event_datecreated']; ?></p>
                                             </div>
                                         </div>
-                                        <h2 class="text-l font-bold mt-3"><?php echo isset($event['event_title']) ? esc_html($event['event_title']) : ''; ?></h2>
-                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo esc_html($event['event_img']); ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #888888;">
-                                        <p class="text-sm text-gray-600 mb-2 mt-2"><?php echo isset($event['event_date']) ? esc_html($event['event_date']) : ''; ?></p>
-                                        <p class="text-m text-black-800"><?php echo isset($event['event_description']) ? esc_html($event['event_description']) : ''; ?></p>
+                                        <h2 class="text-l font-bold mt-3 text-justify"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
+                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #888888;">
+                                        <p class="text-sm text-gray-600 mb-2 mt-2"><?php echo isset($event['event_date']) ? $event['event_date'] : ''; ?></p>
+                                        <p class="text-m text-black-800 text-justify"><?php echo isset($event['event_description']) ? $event['event_description'] : ''; ?></p>
                                     </div>
                             <?php
                                     // Call the function to load the image
@@ -224,27 +169,9 @@ if (!$companies) {
                                 echo "Failed to fetch events.";
                             }
                             ?>
-
-                            <script>
-                                const loadImage = async () => {
-                                    const currentSrc = document.getElementById('event_pic').alt
-                                    const res = await fetch(
-                                        `http://217.196.51.115/m/api/images?filePath=event-pics/${encodeURIComponent(currentSrc)}`
-                                    )
-
-                                    const blob = await res.blob();
-                                    const imageUrl = URL.createObjectURL(blob);
-
-                                    document.getElementById('event_pic').src = imageUrl;
-
-                                }
-
-                                loadImage()
-                            </script>
-
                         </div>
 
-                        <div id="postsContent" class="mt-10 ml-5" style="display: none;">
+                        <div id="postsContent" class="ml-5" style="display: none;">
                             <h10>Posts</h10>
                             <?php
                             // Fetch posts for the specific member
@@ -261,16 +188,15 @@ if (!$companies) {
                             ?>
                                         <div class="border p-4 mb-4 mt-5">
                                             <div class="flex items-center">
-                                                <img src="<?php echo esc_url($selected_company['setting_profilepic']); ?>" alt="<?php echo esc_html(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #888888;">
-
+                                                <img src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #888888;">
                                                 <div class="ml-4">
-                                                    <h4 class="text-xl font-bold"><?php echo esc_html($selected_company['setting_institution']); ?></h4>
-                                                    <p class="text-sm text-gray-600"><?php echo esc_html($post['post_dateadded']); ?></p>
+                                                    <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
+                                                    <p class="text-sm text-gray-600"><?php echo $post['post_dateadded']; ?></p>
                                                 </div>
                                             </div>
-                                            <h2 class="text-l font-bold mt-3"><?php echo isset($post['post_heading']) ? esc_html($post['post_heading']) : ''; ?></h2>
-                                            <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo esc_html($post['post_img']); ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #888888;">
-                                            <p class="text-m text-black-800"><?php echo isset($post['post_bodytext']) ? esc_html($post['post_bodytext']) : ''; ?></p>
+                                            <h2 class="text-l font-bold mt-3 text-justify"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
+                                            <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #888888;">
+                                            <p class="text-m text-black-800 text-justify"><?php echo isset($post['post_bodytext']) ? $post['post_bodytext'] : ''; ?></p>
                                         </div>
                             <?php
                                         // Call the function to load the image
@@ -281,29 +207,9 @@ if (!$companies) {
                                 // Handle the case where the API request for posts failed or returned invalid data
                                 echo "Failed to fetch posts.";
                             }
-
                             ?>
-
-                            <script>
-                                const loadImage = async () => {
-                                    const currentSrc = document.getElementById('post_pic').alt
-                                    const res = await fetch(
-                                        `http://217.196.51.115/m/api/images?filePath=post-pics/${encodeURIComponent(currentSrc)}`
-                                    )
-
-                                    const blob = await res.blob();
-                                    const imageUrl = URL.createObjectURL(blob);
-
-                                    document.getElementById('post_pic').src = imageUrl;
-
-                                }
-
-                                loadImage()
-                            </script>
-
                         </div>
                     </div>
-
                 </div>
                 <!-- JavaScript to handle tab switching -->
                 <script>
@@ -327,8 +233,8 @@ if (!$companies) {
 
             <?php
                 // Call the function to load cover and profile images
-                loadCoverImage('cover_pic_' . $selected_company['member_id'], 'profile-cover-img');
-                loadProfileImage('profile_pic_' . $selected_company['member_id'], 'profile-img');
+                loadImage('cover_pic_' . $selected_company['member_id'], 'profile-cover-img');
+                loadImage('profile_pic_' . $selected_company['member_id'], 'profile-img');
             } else {
                 // Handle the case where the selected company or its institution is not found
                 echo "Company not found.";
@@ -354,12 +260,10 @@ if (!$companies) {
             loadImage()
         </script>
 
-        <?php include 'footer.php'; ?>
+    <?php
+    }
+    ?>
 
-    </body>
+</body>
 
-    </html>
-
-<?php
-}
-?>
+</html>

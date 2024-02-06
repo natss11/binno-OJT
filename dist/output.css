@@ -707,11 +707,6 @@ button,
   /* Font weight for the active button */
 }
 
-.tab-btn.active {
-  color: #ffffff; /* Change the color to your desired active color */
-  background-color: #007bff; /* Change the background color to your desired active color */
-  border-color: #007bff; /* Change the border color to your desired active color */
-}
 
 #chapter-list a.active {
   color: orange; /* Set text color for better visibility */
