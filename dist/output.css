@@ -707,9 +707,19 @@ button,
   /* Font weight for the active button */
 }
 
+.see-more-link {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.see-more-link:hover {
+  color: darkblue;
+}
 
 #chapter-list a.active {
-  color: orange; /* Set text color for better visibility */
+  color: orange;
+  /* Set text color for better visibility */
 }
 
 .btn-navmenu {

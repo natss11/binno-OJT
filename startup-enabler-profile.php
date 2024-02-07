@@ -130,7 +130,7 @@ if (!$enablers) {
 
                         <!-- Events content -->
                         <div id="eventsContent" class="ml-5">
-                            <h10>Events</h10>
+                            <h2>Events</h2>
                             <?php
                             // Fetch events for the specific member
                             $events_url = "http://217.196.51.115/m/api/events/";
@@ -149,6 +149,9 @@ if (!$enablers) {
                                 });
 
                                 foreach ($filtered_events as $event) {
+                                    $description_words = explode(" ", $event['event_description']);
+                                    $short_description = implode(" ", array_slice($description_words, 0, 50));
+                                    $remaining_description = implode(" ", array_slice($description_words, 50));
                             ?>
                                     <div class="border p-4 mb-4 mt-5">
                                         <div class="flex items-center">
@@ -162,8 +165,21 @@ if (!$enablers) {
                                         <h2 class="text-sm font-bold mt-3"><?php echo $event['event_title']; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                         <p class="text-sm text-gray-600 mb-2 mt-2"><?php echo $event['event_date']; ?></p>
-                                        <p class="text-sm text-black-800 mt-3 text-justify"><?php echo $event['event_description']; ?></p>
+                                        <p class="text-sm text-black-800 mt-3 text-justify">
+                                            <?php echo $short_description; ?>
+                                            <?php if (count($description_words) > 50) : ?>
+                                                <span id="full_description_<?php echo $event['event_id']; ?>" class="full-content hidden"><?php echo $remaining_description; ?></span>
+                                                <span id="toggle_description_<?php echo $event['event_id']; ?>" class="see-more-link cursor-pointer text-blue-500">See more</span>
+                                            <?php endif; ?>
+                                        </p>
                                     </div>
+                                    <script>
+                                        document.getElementById('toggle_description_<?php echo $event['event_id']; ?>').addEventListener('click', function() {
+                                            var fullDescription = document.getElementById('full_description_<?php echo $event['event_id']; ?>');
+                                            fullDescription.classList.toggle('hidden');
+                                            this.textContent = fullDescription.classList.contains('hidden') ? 'See more' : 'See less';
+                                        });
+                                    </script>
                             <?php
                                     // Call the function to load the image
                                     loadImage('event_pic_' . $event['event_id'], 'event-pics');
@@ -177,12 +193,22 @@ if (!$enablers) {
                             }
                             ?>
 
+                            <script>
+                                // Add event listener for "See more" link
+                                document.querySelectorAll('.see-more-link').forEach(link => {
+                                    link.addEventListener('click', function(e) {
+                                        e.preventDefault();
+                                        const parent = e.target.closest('.border');
+                                        parent.querySelector('.full-content').classList.toggle('hidden');
+                                        e.target.textContent = e.target.textContent === 'See more' ? 'See less' : 'See more';
+                                    });
+                                });
+                            </script>
                         </div>
 
                         <!-- Blogs content (hidden by default) -->
                         <div id="blogsContent" class="ml-5" style="display: none;">
                             <h10>Blogs</h10>
-
                             <div id="blogsContent" class="mt-5">
                                 <?php
                                 // Fetch blogs for the specific member
@@ -202,8 +228,16 @@ if (!$enablers) {
                                     });
 
                                     foreach ($filtered_blogs as $blog) {
+                                        // Check if content length is more than 50 words
+                                        $content_words = str_word_count($blog['blog_content']);
+                                        $display_see_more = $content_words > 50;
+
+                                        // Limit content display to 50 words
+                                        $display_content = implode(' ', array_slice(explode(' ', $blog['blog_content']), 0, 50));
+
+                                        // Output blog content with "See more" link if applicable
                                 ?>
-                                        <div class="border p-4 mb-4 mt-5">
+                                        <div class="border p-4 mb-4 mt-5 position-relative">
                                             <div class="flex items-center">
                                                 <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full">
                                                 <div class="ml-4">
@@ -213,7 +247,13 @@ if (!$enablers) {
                                             </div>
                                             <h2 class="text-sm font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>
                                             <img id="blog_pic_<?php echo $blog['blog_id']; ?>" alt="<?php echo $blog['blog_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                            <p class="text-sm text-black-800 mt-3 text-justify"><?php echo $blog['blog_content']; ?></p>
+                                            <p class="text-sm text-black-800 mt-3 text-justify">
+                                                <?php echo $display_content; ?>
+                                                <?php if ($display_see_more) { ?>
+                                                    <span class="full-content hidden"><?php echo $blog['blog_content']; ?></span>
+                                                    <span class="see-more position-absolute bottom-0 end-0 mb-2 me-2"> <a href="#" class="see-more-link">See more</a></span>
+                                                <?php } ?>
+                                            </p>
                                         </div>
                                 <?php
                                         // Call the function to load the image
@@ -228,33 +268,42 @@ if (!$enablers) {
                                 }
                                 ?>
                             </div>
-
+                            <script>
+                                // Add event listener for "See more" link
+                                document.querySelectorAll('.see-more-link').forEach(link => {
+                                    link.addEventListener('click', function(e) {
+                                        e.preventDefault();
+                                        const parent = e.target.closest('.border');
+                                        parent.querySelector('.full-content').classList.toggle('hidden');
+                                        e.target.textContent = e.target.textContent === 'See more' ? 'See less' : 'See more';
+                                    });
+                                });
+                            </script>
                         </div>
+
+                        <!-- JavaScript to handle tab switching -->
+                        <script>
+                            function showContent(tabName, tabBtn) {
+                                // Hide all content
+                                document.getElementById('eventsContent').style.display = 'none';
+                                document.getElementById('blogsContent').style.display = 'none';
+
+                                // Deactivate all tabs
+                                document.querySelectorAll('.tab-btn').forEach(function(tabBtn) {
+                                    tabBtn.classList.remove('active');
+                                });
+
+                                // Show the selected content
+                                document.getElementById(tabName + 'Content').style.display = 'block';
+
+                                // Activate the selected tab
+                                tabBtn.classList.add('active');
+                            }
+                        </script>
+
                     </div>
 
-                    <!-- JavaScript to handle tab switching -->
-                    <script>
-                        function showContent(tabName, tabBtn) {
-                            // Hide all content
-                            document.getElementById('eventsContent').style.display = 'none';
-                            document.getElementById('blogsContent').style.display = 'none';
-
-                            // Deactivate all tabs
-                            document.querySelectorAll('.tab-btn').forEach(function(tabBtn) {
-                                tabBtn.classList.remove('active');
-                            });
-
-                            // Show the selected content
-                            document.getElementById(tabName + 'Content').style.display = 'block';
-
-                            // Activate the selected tab
-                            tabBtn.classList.add('active');
-                        }
-                    </script>
-
-                </div>
-
-            <?php
+                <?php
                 // Call the function to load cover and profile images
                 loadImage('cover_pic_' . $selected_enabler['member_id'], 'profile-cover-img');
                 loadImage('profile_pic_' . $selected_enabler['member_id'], 'profile-img');
@@ -262,11 +311,11 @@ if (!$enablers) {
                 // Handle the case where the selected enabler is not found
                 echo "Enabler not found.";
             }
-            ?>
+                ?>
 
-        </div>
+                </div>
 
-        <?php include 'footer.php'; ?>
+                <?php include 'footer.php'; ?>
 
     </body>
 
