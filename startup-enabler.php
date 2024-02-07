@@ -93,7 +93,7 @@ if (!$enablers) {
                     $setting_profilepic = isset($enabler['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $enabler['setting_profilepic'])) : '';
                 ?>
                     <div class="bg-white rounded-lg overflow-hidden shadow-md relative">
-                        <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-full h-32 object-cover" style="background-color: #ffffff;">
+                        <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-64 h-32 object-cover" style="background-color: #ffffff;">
                         <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #ffffff;">
 
                         <div class="flex flex-col items-center px-4 py-2">

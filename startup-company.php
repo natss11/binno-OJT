@@ -89,14 +89,16 @@ if (!$companies) {
                     $i++;
                     // Check if the properties are set before trying to access them
                     $setting_institution = isset($company['setting_institution']) ? htmlspecialchars($company['setting_institution']) : '';
-                    $short_setting_institution = strlen($setting_institution) > 20 ? substr($setting_institution, 0, 20) . '...' : $setting_institution;
+                    $setting_institution_short = strlen($setting_institution) > 20 ? substr($setting_institution, 0, 20) . '...' : $setting_institution;
+                    $setting_coverpic = isset($company['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $company['setting_coverpic'])) : '';
+                    $setting_profilepic = isset($company['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $company['setting_profilepic'])) : '';
                 ?>
                     <div class="bg-white rounded-lg overflow-hidden shadow-md relative">
-                        <img src="<?php echo isset($company['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $company['setting_coverpic'])) : ''; ?>" alt="<?php echo isset($company['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $company['setting_coverpic'])) : ''; ?>" id="dynamicImgCover-<?php echo $i ?>" class="w-full h-32 object-cover" style="background-color: #ffffff;">
-                        <img src="<?php echo isset($company['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $company['setting_profilepic'])) : ''; ?>" alt="<?php echo isset($company['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $company['setting_profilepic'])) : ''; ?>" id="dynamicImgProfile-<?php echo $i ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #ffffff;">
+                        <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-64 h-32 object-cover" style="background-color: #ffffff;">
+                        <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #ffffff;">
 
                         <div class="flex flex-col items-center px-4 py-2"> <!-- flex container and center alignment -->
-                            <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $short_setting_institution; ?></h2>
+                            <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $setting_institution_short; ?></h2>
                         </div>
 
                         <div class="mt-1 mb-3 mr-3 ml-3 flex justify-end">
