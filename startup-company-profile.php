@@ -149,23 +149,25 @@
 
                                 foreach ($filtered_events as $event) {
                             ?>
-                                    <div class="border p-4 mb-4 mt-5 bg-gray-100">
+                                    <div class="border p-4 mb-4 mt-5">
                                         <div class="flex items-center">
-                                            <img src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
-
+                                            <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full">
                                             <div class="ml-4">
                                                 <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
                                                 <p class="text-sm text-gray-600"><?php echo $event['event_datecreated']; ?></p>
                                             </div>
                                         </div>
-                                        <h2 class="text-l font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
+                                        <h2 class="text-sm font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                         <p class="text-sm text-gray-600 mb-2 mt-2"><?php echo isset($event['event_date']) ? $event['event_date'] : ''; ?></p>
-                                        <p class="text-m text-black-800 text-justify"><?php echo isset($event['event_description']) ? $event['event_description'] : ''; ?></p>
+                                        <p class="text-sm text-black-800 text-justify"><?php echo isset($event['event_description']) ? $event['event_description'] : ''; ?></p>
                                     </div>
                             <?php
                                     // Call the function to load the image
                                     loadImage('event_pic_' . $event['event_id'], 'event-pics');
+
+                                    // Call the function to load the profile pic with a unique ID for each event
+                                    loadImage('event_profile_pic_' . $event['event_id'], 'profile-img');
                                 }
                             } else {
                                 // Handle the case where the API request for events failed or returned invalid data
@@ -189,21 +191,24 @@
                                 foreach ($posts as $post) {
                                     if ($post['post_author'] === $member_id) {
                             ?>
-                                        <div class="border p-4 mb-4 mt-5 bg-gray-100">
+                                        <div class="border p-4 mb-4 mt-5">
                                             <div class="flex items-center">
-                                                <img src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
+                                                <img id="post_profile_pic_<?php echo $post['post_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full">
                                                 <div class="ml-4">
                                                     <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
                                                     <p class="text-sm text-gray-600"><?php echo $post['post_dateadded']; ?></p>
                                                 </div>
                                             </div>
-                                            <h2 class="text-l font-bold mt-3"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
+                                            <h2 class="text-sm font-bold mt-3"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
                                             <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                            <p class="text-m text-black-800 text-justify"><?php echo isset($post['post_bodytext']) ? $post['post_bodytext'] : ''; ?></p>
+                                            <p class="text-sm text-black-800 text-justify"><?php echo isset($post['post_bodytext']) ? $post['post_bodytext'] : ''; ?></p>
                                         </div>
                             <?php
                                         // Call the function to load the image
                                         loadImage('post_pic_' . $post['post_id'], 'post-pics');
+
+                                        // Call the function to load the profile pic with a unique ID for each event
+                                        loadImage('post_profile_pic_' . $post['post_id'], 'profile-img');
                                     }
                                 }
                             } else {

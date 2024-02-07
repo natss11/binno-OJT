@@ -145,13 +145,11 @@ if (!$enablers) {
                     .catch(error => console.error('Error fetching image data:', error));
             }
 
-            // Loop through images with IDs containing "dynamicImg"
-            for (var i = 1; i <= 3; i++) {
-                var imgElement = document.getElementById("dynamicImg-" + i);
-                if (imgElement) {
-                    // Update each image's src from the API
-                    updateImageSrc(imgElement);
-                }
+            // Loop through images with IDs containing "dynamicImgCover-" and "dynamicImgProfile-"
+            for (var i = 0; i <= <?php echo count($enabler); ?>; i++) {
+                // Update each image's src from the API
+                updateImageSrc(document.getElementById("dynamicImgCover-" + i));
+                updateImageSrc(document.getElementById("dynamicImgProfile-" + i));
             }
         </script>
 

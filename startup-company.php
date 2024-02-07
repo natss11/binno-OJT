@@ -29,7 +29,7 @@ function loadImage($id, $filePath, $imgType)
 ?>
     <script>
         const loadImage<?php echo $id . ucfirst($imgType); ?> = async () => {
-            const currentSrc = document.getElementById('dynamicImg<?php echo ucfirst($imgType); ?>-<?php echo $id; ?>', ).alt;
+            const currentSrc = document.getElementById('dynamicImg<?php echo ucfirst($imgType); ?>-<?php echo $id; ?>').alt;
             const res = await fetch(
                 `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
             );
@@ -107,8 +107,8 @@ if (!$companies) {
                     </div>
                     <?php
                     // Call the loadImage function for each profile and cover image
-                    loadImage($i, 'profile-img', 'Profile');
                     loadImage($i, 'profile-cover-img', 'Cover');
+                    loadImage($i, 'profile-img', 'Profile');
                     ?>
                 <?php
                 }

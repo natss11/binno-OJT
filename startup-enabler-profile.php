@@ -112,7 +112,7 @@ if (!$enablers) {
 
                 <!-- Left column for chapters and company description -->
                 <div class="flex container mx-auto p-15 px-36">
-                    <div class="w-1/3 p-4 bg-gray-200 mt-16">
+                    <div class="left-column w-1/3 p-4 bg-gray-200 mt-16">
                         <h7>Company Description</h7>
                         <p class="text-sm text-gray-600 mb-10 mt-3 text-justify"><?php echo $selected_enabler['setting_bio']; ?></p>
 
@@ -121,7 +121,7 @@ if (!$enablers) {
                     </div>
 
                     <!-- Right column for data -->
-                    <div class="w-3/4 p-4 flex flex-col gap-4">
+                    <div class="right-column w-3/4 p-4 flex flex-col gap-4">
                         <!-- Tab buttons -->
                         <div class="flex justify-end gap-10 text-xl">
                             <button class="tab-btn active" onclick="showContent('events', this)">Events</button>
@@ -150,19 +150,19 @@ if (!$enablers) {
 
                                 foreach ($filtered_events as $event) {
                             ?>
-                                    <div class="border p-4 mb-4 mt-5 bg-gray-100">
+                                    <div class="border p-4 mb-4 mt-5">
                                         <div class="flex items-center">
-                                            <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
+                                            <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full">
                                             <div class="ml-4">
                                                 <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
                                                 <p class="text-sm text-gray-600"><?php echo $event['event_datecreated']; ?></p>
                                             </div>
                                         </div>
 
-                                        <h2 class="text-l font-bold mt-3"><?php echo $event['event_title']; ?></h2>
+                                        <h2 class="text-sm font-bold mt-3"><?php echo $event['event_title']; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                         <p class="text-sm text-gray-600 mb-2 mt-2"><?php echo $event['event_date']; ?></p>
-                                        <p class="text-m text-black-800 mt-3 text-justify"><?php echo $event['event_description']; ?></p>
+                                        <p class="text-sm text-black-800 mt-3 text-justify"><?php echo $event['event_description']; ?></p>
                                     </div>
                             <?php
                                     // Call the function to load the image
@@ -203,18 +203,17 @@ if (!$enablers) {
 
                                     foreach ($filtered_blogs as $blog) {
                                 ?>
-                                        <div class="border p-4 mb-4 mt-5 bg-gray-100">
+                                        <div class="border p-4 mb-4 mt-5">
                                             <div class="flex items-center">
-                                                <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
-
+                                                <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full">
                                                 <div class="ml-4">
                                                     <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
                                                     <p class="text-sm text-gray-600"><?php echo $blog['blog_dateadded']; ?></p>
                                                 </div>
                                             </div>
-                                            <h2 class="text-l font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>
+                                            <h2 class="text-sm font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>
                                             <img id="blog_pic_<?php echo $blog['blog_id']; ?>" alt="<?php echo $blog['blog_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                            <p class="text-m text-black-800 mt-3 text-justify"><?php echo $blog['blog_content']; ?></p>
+                                            <p class="text-sm text-black-800 mt-3 text-justify"><?php echo $blog['blog_content']; ?></p>
                                         </div>
                                 <?php
                                         // Call the function to load the image
