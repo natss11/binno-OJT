@@ -148,6 +148,14 @@
                                 });
 
                                 foreach ($filtered_events as $event) {
+                                    // Limit description to 50 words
+                                    $description_words = explode(' ', $event['event_description']);
+                                    $short_description = implode(' ', array_slice($description_words, 0, 50));
+                                    $long_description = implode(' ', array_slice($description_words, 50));
+
+                                    // Check if the description has 50 or fewer words
+                                    $display_see_more = count($description_words) > 50;
+
                             ?>
                                     <div class="border p-4 mb-4 mt-5">
                                         <div class="flex items-center">
@@ -159,8 +167,21 @@
                                         </div>
                                         <h2 class="text-sm font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                        <p class="text-sm text-gray-600 mb-2 mt-2"><?php echo isset($event['event_date']) ? $event['event_date'] : ''; ?></p>
-                                        <p class="text-sm text-black-800 text-justify"><?php echo isset($event['event_description']) ? $event['event_description'] : ''; ?></p>
+                                        <p class="text-sm text-gray-600 mb-2 mt-2">
+                                            <?php
+                                            // Display short description and toggle with JavaScript
+                                            echo $short_description;
+                                            ?>
+                                            <?php if ($display_see_more) : ?>
+                                                <span id="toggle_<?php echo $event['event_id']; ?>" class="see-more" style="display: inline;">
+                                                    ... <a href="javascript:void(0);" onclick="toggleDescription('<?php echo $event['event_id']; ?>')">See more</a>
+                                                </span>
+                                            <?php endif; ?>
+                                            <span id="expanded_<?php echo $event['event_id']; ?>" style="display: none;">
+                                                <?php echo $long_description; ?>
+                                                <a href="javascript:void(0);" onclick="toggleDescription('<?php echo $event['event_id']; ?>')" class="see-less">See less</a>
+                                            </span>
+                                        </p>
                                     </div>
                             <?php
                                     // Call the function to load the image
@@ -175,9 +196,23 @@
                             }
                             ?>
                         </div>
+                        <script>
+                            function toggleDescription(eventId) {
+                                var toggleSpan = document.getElementById('toggle_' + eventId);
+                                var expandedSpan = document.getElementById('expanded_' + eventId);
 
-                        <div id="postsContent" class="ml-5" style="display: none;">
-                            <h10>Posts</h10>
+                                if (toggleSpan.style.display === "inline") {
+                                    toggleSpan.style.display = "none";
+                                    expandedSpan.style.display = "inline";
+                                } else {
+                                    toggleSpan.style.display = "inline";
+                                    expandedSpan.style.display = "none";
+                                }
+                            }
+                        </script>
+
+                        <div id="postsContent" class="ml-5">
+                            <h5>Posts</h5>
                             <?php
                             // Fetch posts for the specific member
                             $posts_url = "http://217.196.51.115/m/api/posts/";
@@ -190,6 +225,11 @@
                                 // Filter and display posts for the specific member
                                 foreach ($posts as $post) {
                                     if ($post['post_author'] === $member_id) {
+                                        // Limit post body text to 50 words
+                                        $bodytext_words = explode(' ', $post['post_bodytext']);
+                                        $short_bodytext = implode(' ', array_slice($bodytext_words, 0, 50));
+                                        $long_bodytext = implode(' ', array_slice($bodytext_words, 50));
+                                        $display_see_more = count($bodytext_words) > 50;
                             ?>
                                         <div class="border p-4 mb-4 mt-5">
                                             <div class="flex items-center">
@@ -201,13 +241,24 @@
                                             </div>
                                             <h2 class="text-sm font-bold mt-3"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
                                             <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                            <p class="text-sm text-black-800 text-justify"><?php echo isset($post['post_bodytext']) ? $post['post_bodytext'] : ''; ?></p>
+                                            <p class="text-sm text-black-800 text-justify mb-2 mt-2">
+                                                <?php echo $short_bodytext; ?>
+                                                <?php if ($display_see_more) : ?>
+                                                    <span id="toggle_<?php echo $post['post_id']; ?>" class="see-more" style="display: inline;">
+                                                        ... <a href="javascript:void(0);" onclick="toggleDescription('<?php echo $post['post_id']; ?>')">See more</a>
+                                                    </span>
+                                                <?php endif; ?>
+                                                <span id="expanded_<?php echo $post['post_id']; ?>" style="display: none;">
+                                                    <?php echo $long_bodytext; ?>
+                                                    <a href="javascript:void(0);" onclick="toggleDescription('<?php echo $post['post_id']; ?>')" class="see-less">See less</a>
+                                                </span>
+                                            </p>
                                         </div>
                             <?php
                                         // Call the function to load the image
                                         loadImage('post_pic_' . $post['post_id'], 'post-pics');
 
-                                        // Call the function to load the profile pic with a unique ID for each event
+                                        // Call the function to load the profile pic with a unique ID for each post
                                         loadImage('post_profile_pic_' . $post['post_id'], 'profile-img');
                                     }
                                 }
@@ -217,8 +268,10 @@
                             }
                             ?>
                         </div>
+
                     </div>
                 </div>
+
                 <!-- JavaScript to handle tab switching -->
                 <script>
                     function showContent(tabName, tabBtn) {

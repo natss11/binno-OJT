@@ -717,6 +717,16 @@ button,
   color: darkblue;
 }
 
+.see-more a {
+  color: blue;
+  text-decoration: underline;
+}
+
+.see-less {
+  color: blue;
+  text-decoration: underline;
+}
+
 #chapter-list a.active {
   color: orange;
   /* Set text color for better visibility */
