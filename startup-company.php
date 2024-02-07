@@ -24,14 +24,13 @@ function fetch_api_data($api_url)
     return $data;
 }
 
-function loadImage($id, $filePath, $imgType)
+function loadImage($id, $filePath, $imgType, $src)
 {
 ?>
     <script>
         const loadImage<?php echo $id . ucfirst($imgType); ?> = async () => {
-            const currentSrc = document.getElementById('dynamicImg<?php echo ucfirst($imgType); ?>-<?php echo $id; ?>').alt;
             const res = await fetch(
-                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
+                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent('<?php echo $src; ?>')}`
             );
 
             const blob = await res.blob();
@@ -84,7 +83,7 @@ if (!$companies) {
             <!-- Cards Section -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 mx-20">
                 <?php
-                $i = 0;
+                $i = 1;
                 foreach ($companies as $company) {
                     $i++;
                     // Check if the properties are set before trying to access them
@@ -95,7 +94,7 @@ if (!$companies) {
                 ?>
                     <div class="bg-white rounded-lg overflow-hidden shadow-md relative">
                         <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-64 h-32 object-cover" style="background-color: #ffffff;">
-                        <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #ffffff;">
+                        <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2 z-10" style="background-color: #ffffff;">
 
                         <div class="flex flex-col items-center px-4 py-2"> <!-- flex container and center alignment -->
                             <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $setting_institution_short; ?></h2>
@@ -107,14 +106,13 @@ if (!$companies) {
                     </div>
                     <?php
                     // Call the loadImage function for each profile and cover image
-                    loadImage($i, 'profile-cover-img', 'Cover');
-                    loadImage($i, 'profile-img', 'Profile');
+                    loadImage($i, 'profile-cover-img', 'Cover', $setting_coverpic);
+                    loadImage($i, 'profile-img', 'Profile', $setting_profilepic);
                     ?>
                 <?php
                 }
                 ?>
             </div>
-
 
             <script>
                 function redirectToProfile(profileUrl) {

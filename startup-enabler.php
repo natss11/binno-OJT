@@ -24,14 +24,13 @@ function fetch_api_data($api_url)
     return $data;
 }
 
-function loadImage($id, $filePath, $imgType)
+function loadImage($id, $filePath, $imgType, $src)
 {
 ?>
     <script>
         const loadImage<?php echo $id . ucfirst($imgType); ?> = async () => {
-            const currentSrc = document.getElementById('dynamicImg<?php echo ucfirst($imgType); ?>-<?php echo $id; ?>', ).alt;
             const res = await fetch(
-                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
+                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent('<?php echo $src; ?>')}`
             );
 
             const blob = await res.blob();
@@ -84,7 +83,7 @@ if (!$enablers) {
             <!-- Cards Section -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 mx-20">
                 <?php
-                $i = 0;
+                $i = 1;
                 foreach ($enablers as $enabler) {
                     $i++;
                     $setting_institution = isset($enabler['setting_institution']) ? htmlspecialchars($enabler['setting_institution']) : '';
@@ -107,8 +106,8 @@ if (!$enablers) {
 
                     <?php
                     // Call the loadImage function for each profile and cover image
-                    loadImage($i, 'profile-img', 'Profile');
-                    loadImage($i, 'profile-cover-img', 'Cover');
+                    loadImage($i, 'profile-img', 'Profile', $setting_profilepic);
+                    loadImage($i, 'profile-cover-img', 'Cover', $setting_coverpic);
                     ?>
                 <?php
                 }
@@ -146,7 +145,7 @@ if (!$enablers) {
             }
 
             // Loop through images with IDs containing "dynamicImgCover-" and "dynamicImgProfile-"
-            for (var i = 0; i <= <?php echo count($enabler); ?>; i++) {
+            for (var i = 1; i <= <?php echo count($enablers); ?>; i++) {
                 // Update each image's src from the API
                 updateImageSrc(document.getElementById("dynamicImgCover-" + i));
                 updateImageSrc(document.getElementById("dynamicImgProfile-" + i));
