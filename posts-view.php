@@ -44,7 +44,7 @@
 
     // Check if a valid post ID is provided
     if ($post_id > 0) {
-        $posts = fetch_api_data("http://217.196.51.115/m/api/posts/$post_id");
+        $posts = fetch_api_data("https://binnostartup.site/m/api/posts/$post_id");
 
         if ($posts) {
             $post = $posts[0];
@@ -79,7 +79,7 @@
         const loadImage = async () => {
             const currentSrc = document.getElementById('post_pic').alt;
             const res = await fetch(
-                `http://217.196.51.115/m/api/images?filePath=post-pics/${encodeURIComponent(currentSrc)}`
+                `https://binnostartup.site/m/api/images?filePath=post-pics/${encodeURIComponent(currentSrc)}`
             );
 
             const blob = await res.blob();

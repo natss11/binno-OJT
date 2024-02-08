@@ -31,7 +31,7 @@ function loadImage($id, $filePath)
         const loadImage<?php echo $id; ?> = async () => {
             const currentSrc = document.getElementById('<?php echo $id; ?>').alt;
             const res = await fetch(
-                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
+                `https://binnostartup.site/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
             );
 
             const blob = await res.blob();
@@ -45,7 +45,7 @@ function loadImage($id, $filePath)
 <?php
 }
 
-$enablers = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
+$enablers = fetch_api_data("https://binnostartup.site/m/api/members/enablers");
 
 if (!$enablers) {
     // Handle the case where the API request failed or returned invalid data
@@ -133,7 +133,7 @@ if (!$enablers) {
                             <h2>Events</h2>
                             <?php
                             // Fetch events for the specific member
-                            $events_url = "http://217.196.51.115/m/api/events/";
+                            $events_url = "https://binnostartup.site/m/api/events/";
                             $member_id = $selected_enabler['member_id'];
                             $events = fetch_api_data($events_url);
 
@@ -212,7 +212,7 @@ if (!$enablers) {
                             <div id="blogsContent" class="mt-5">
                                 <?php
                                 // Fetch blogs for the specific member
-                                $blogs_url = "http://217.196.51.115/m/api/blogs/";
+                                $blogs_url = "https://binnostartup.site/m/api/blogs/";
                                 $member_id = $selected_enabler['member_id'];
                                 $blogs = fetch_api_data($blogs_url);
 
