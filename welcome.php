@@ -24,9 +24,9 @@ function fetch_api_data($api_url)
     return $data;
 }
 
-$posts = fetch_api_data("https://binnostartup.site/m/api/posts/");
-$events = fetch_api_data("https://binnostartup.site/m/api/events/");
-$blogs = fetch_api_data("https://binnostartup.site/m/api/blogs/");
+$posts = fetch_api_data("https://217.196.51.115/m/api/posts/");
+$events = fetch_api_data("https://217.196.51.115/m/api/events/");
+$blogs = fetch_api_data("https://217.196.51.115/m/api/blogs/");
 
 if (!$posts || !$events || !$blogs) {
     // Handle the case where the API request failed or returned invalid data
@@ -129,7 +129,7 @@ if (!$posts || !$events || !$blogs) {
 
                         // Function to fetch image data from API
                         async function updateImageSrc(imgSrc) {
-                            imgSrc.src = `https://binnostartup.site/m/api/images?filePath=post-pics/${imgSrc.alt}`
+                            imgSrc.src = `https://217.196.51.115/m/api/images?filePath=post-pics/${imgSrc.alt}`
                             console.log(imgSrc)
                         }
 
@@ -212,7 +212,7 @@ if (!$posts || !$events || !$blogs) {
 
                         // Function to fetch image data from API
                         async function updateImageSrc(imgSrc) {
-                            imgSrc.src = `https://binnostartup.site/m/api/images?filePath=event-pics/${imgSrc.alt}`
+                            imgSrc.src = `https://217.196.51.115/m/api/images?filePath=event-pics/${imgSrc.alt}`
                             console.log(imgSrc)
                         }
 
@@ -289,7 +289,7 @@ if (!$posts || !$events || !$blogs) {
 
                         // Function to fetch image data from API
                         async function updateBlogImageSrc(imgSrc) {
-                            imgSrc.src = `https://binnostartup.site/m/api/images?filePath=blog-pics/${imgSrc.alt}`;
+                            imgSrc.src = `https://217.196.51.115/m/api/images?filePath=blog-pics/${imgSrc.alt}`;
                             console.log(imgSrc);
                         }
 
