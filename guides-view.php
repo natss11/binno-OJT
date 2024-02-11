@@ -1,5 +1,4 @@
 <?php
-
 function fetch_api_data($api_url)
 {
     // Make the request
@@ -26,13 +25,28 @@ function fetch_api_data($api_url)
 
 $program_id = isset($_GET['program_id']) ? $_GET['program_id'] : 0;
 
-$api_url = "http://217.196.51.115/m/api/programs/$program_id";
-$programs = fetch_api_data($api_url);
+// Fetch program data
+$api_url_programs = "http://217.196.51.115/m/api/programs/$program_id";
+$programs = fetch_api_data($api_url_programs);
 
 if (!$programs) {
     // Handle the case where the API request failed or returned invalid data
     echo "Failed to fetch guides";
 } else {
+    // Fetch enablers data
+    $api_url_enablers = "http://217.196.51.115/m/api/members/enablers";
+    $enablers = fetch_api_data($api_url_enablers);
+
+    // Find the author's name based on program_author and member_id
+    $author_name = '';
+    if (isset($programs['program_author'])) {
+        foreach ($enablers as $enabler) {
+            if ($enabler['member_id'] == $programs['program_author']) {
+                $author_name = $enabler['setting_institution'];
+                break;
+            }
+        }
+    }
 ?>
 
     <!DOCTYPE html>
@@ -82,7 +96,7 @@ if (!$programs) {
                 <?php
                 // Display initial content
                 if ($programs) {
-                    echo "<h9 class='element_p'>" . (isset($programs['program_author']) ? htmlspecialchars($programs['program_author']) : '') . "</h9>";
+                    echo "<h9 class='element_p'>$author_name</h9>"; // Display author's name
                     echo "<h1 class='element_h1'>" . (isset($programs['program_heading']) ? htmlspecialchars($programs['program_heading']) : '') . "</h1>";
                     echo "<p class='element_p'>" . (isset($programs['program_description']) ? htmlspecialchars($programs['program_description']) : '') . "</p>";
                 } else {

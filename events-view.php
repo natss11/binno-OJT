@@ -13,42 +13,63 @@
 
 <body>
 
-    <?php
+<?php
+function fetch_api_data($api_url)
+{
+    // Make the request
+    $response = file_get_contents($api_url);
 
-    function fetch_api_data($api_url)
-    {
-        // Make the request
-        $response = file_get_contents($api_url);
-
-        // Check for errors
-        if ($response === false) {
-            return false;
-        }
-
-        // Decode JSON response
-        $data = json_decode($response, true);
-
-        set_time_limit(60); // Set to a value greater than 30 seconds
-
-        // Check if the decoding was successful
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            // Handle JSON decoding error
-            return false;
-        }
-
-        return $data;
+    // Check for errors
+    if ($response === false) {
+        return false;
     }
 
-    // Get the event ID from the query parameter
-    $event_id = isset($_GET['event_id']) ? ($_GET['event_id']) : 0;
+    // Decode JSON response
+    $data = json_decode($response, true);
 
-    // Check if a valid event ID is provided
-    if ($event_id > 0) {
-        $events = fetch_api_data("http://217.196.51.115/m/api/events/$event_id");
+    // Check if the decoding was successful
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        // Handle JSON decoding error
+        return false;
+    }
 
-        if ($events) {
-            $event = $events[0];
-    ?>
+    return $data;
+}
+
+// Get the event ID from the query parameter
+$event_id = isset($_GET['event_id']) ? ($_GET['event_id']) : 0;
+
+// Check if a valid event ID is provided
+if ($event_id > 0) {
+    $events = fetch_api_data("http://217.196.51.115/m/api/events/$event_id");
+
+    if ($events) {
+        $event = $events[0];
+
+        // Fetch data from both member APIs
+        $enablers = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
+        $companies = fetch_api_data("http://217.196.51.115/m/api/members/companies");
+
+        if ($enablers && $companies) {
+            // Search for the author's name based on member_id
+            $authorName = '';
+            foreach ($enablers as $enabler) {
+                if ($enabler['member_id'] == $event['event_author']) {
+                    $authorName = $enabler['setting_institution'];
+                    break;
+                }
+            }
+
+            if (!$authorName) {
+                foreach ($companies as $company) {
+                    if ($company['member_id'] == $event['event_author']) {
+                        $authorName = $company['setting_institution'];
+                        break;
+                    }
+                }
+            }
+
+            ?>
 
             <?php include 'navbar-events.php'; ?>
 
@@ -59,10 +80,7 @@
                 </a>
                 <div class="flex flex-row mb-4 mt-5">
                     <div>
-                        <?php
-                        // Assuming wpgetapi_endpoint is a custom function, you might need to replace it
-                        ?>
-                        <h2 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($event['event_author']); ?></h2>
+                        <?php echo '<h2 class="text-xl font-semibold mb-2">' . htmlspecialchars($authorName) . '</h2>';?>
                         <p class="text-gray-600 mb-2">Created: <?php echo date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
                     </div>
                 </div>
@@ -99,3 +117,7 @@
 </body>
 
 </html>
+
+<?php 
+}
+?>

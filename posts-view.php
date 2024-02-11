@@ -48,6 +48,22 @@
 
         if ($posts) {
             $post = $posts[0];
+
+            // Fetch author name from members/companies endpoint
+            $author_id = $post['post_author'];
+            $members = fetch_api_data("http://217.196.51.115/m/api/members/companies");
+
+            if ($members) {
+                // Find the author's name based on member_id
+                $author_name = '';
+                foreach ($members as $member) {
+                    if ($member['member_id'] == $author_id) {
+                        $author_name = $member['setting_institution'];
+                        break;
+                    }
+                }
+            }
+
     ?>
 
             <?php include 'navbar-posts.php'; ?>
@@ -59,7 +75,7 @@
                 </a>
                 <div class="flex flex-row mb-4 mt-5">
                     <div>
-                        <h2 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($post['post_author']); ?></h2>
+                        <h2 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($author_name); ?></h2>
                         <p class="text-gray-600 mb-2"><?php echo date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
                     </div>
                 </div>

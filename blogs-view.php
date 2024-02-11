@@ -27,11 +27,20 @@ function fetch_api_data($api_url)
 $blog_id = isset($_GET['blog_id']) ? $_GET['blog_id'] : null;
 
 $blogs = fetch_api_data("http://217.196.51.115/m/api/blogs/$blog_id");
+$authors = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
 
-if (!$blogs) {
+if (!$blogs || !$authors) {
     // Handle the case where the API request failed or returned invalid data
-    echo "Failed to fetch blogs.";
+    echo "Failed to fetch blogs or authors.";
 } else {
+    // Find the author name based on the blog author's member_id
+    $author_name = '';
+    foreach ($authors as $author) {
+        if ($author['member_id'] === $blogs['blog_author']) {
+            $author_name = $author['setting_institution'];
+            break;
+        }
+    }
 ?>
 
     <!DOCTYPE html>
@@ -59,12 +68,12 @@ if (!$blogs) {
                 </a>
 
                 <div class="flex flex-col mt-5">
-                    <?php if (isset($blogs['blog_author'])) : ?>
-                        <h3 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($blogs['blog_author']); ?></h3>
+                    <?php if ($author_name) : ?>
+                        <h3 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($author_name); ?></h3>
                     <?php endif; ?>
                     <?php if (isset($blogs['blog_dateadded'])) : ?>
                         <p class="text-gray-600 text-sm mb-2"><?php echo date('F j, Y', strtotime($blogs['blog_dateadded'])); ?></p>
-                        <?php endif; ?>
+                    <?php endif; ?>
                     <?php if (isset($blogs['blog_title'])) : ?>
                         <h2 class="text-3xl font-semibold mb-2"><?php echo htmlspecialchars($blogs['blog_title']); ?></h2>
                     <?php endif; ?>
