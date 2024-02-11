@@ -81,7 +81,7 @@
                 </div>
                 <img id="post_pic" src="<?php echo htmlspecialchars($post['post_img']); ?>" alt="<?php echo htmlspecialchars($post['post_img']); ?>" class="w-full h-full object-cover mb-2" style="background-color: #888888;">
                 <h2 class="text-2xl font-semibold mt-5 mb-2"><?php echo htmlspecialchars($post['post_heading']); ?></h2>
-                <p class="text-gray-600 mb-5" style="text-align: justify;"><?php echo htmlspecialchars($post['post_bodytext']); ?></p>
+                <p class="text-gray-600 mb-5"><?php echo htmlspecialchars($post['post_bodytext']); ?></p>
             </div>
     <?php
         } else {

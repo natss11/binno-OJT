@@ -90,9 +90,6 @@ if (!$programs) {
 
             <!-- Right column for data -->
             <div class="w-3/4 p-4 flex flex flex-col gap-4" id="content-container">
-                <div>
-                    <!-- Cover Photo -->
-                </div>
                 <?php
                 // Display initial content
                 if ($programs) {
