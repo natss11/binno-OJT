@@ -26,7 +26,7 @@ function fetch_api_data($api_url)
 
 $blog_id = isset($_GET['blog_id']) ? $_GET['blog_id'] : null;
 
-$blogs = fetch_api_data("https://binnostartup.site/m/api/blogs/$blog_id");
+$blogs = fetch_api_data("http://217.196.51.115/m/api/blogs/$blog_id");
 
 if (!$blogs) {
     // Handle the case where the API request failed or returned invalid data
@@ -82,7 +82,7 @@ if (!$blogs) {
             const loadImage = async () => {
                 const currentSrc = document.getElementById('blog_pic').alt
                 const res = await fetch(
-                    `https://binnostartup.site/m/api/images?filePath=blog-pics/${encodeURIComponent(currentSrc)}`
+                    `http://217.196.51.115/m/api/images?filePath=blog-pics/${encodeURIComponent(currentSrc)}`
                 )
 
                 const blob = await res.blob();

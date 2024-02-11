@@ -26,7 +26,7 @@ function fetch_api_data($api_url)
 
 $program_id = isset($_GET['program_id']) ? $_GET['program_id'] : 0;
 
-$api_url = "https://binnostartup.site/m/api/programs/$program_id";
+$api_url = "http://217.196.51.115/m/api/programs/$program_id";
 $programs = fetch_api_data($api_url);
 
 if (!$programs) {
@@ -131,7 +131,7 @@ if (!$programs) {
             const loadImage = async () => {
                 const currentSrc = document.getElementById('guide_pic').alt
                 const res = await fetch(
-                    `https://binnostartup.site/m/api/images?filePath=guide-pics/${encodeURIComponent(currentSrc)}`
+                    `http://217.196.51.115/m/api/images?filePath=guide-pics/${encodeURIComponent(currentSrc)}`
                 )
 
                 const blob = await res.blob();
