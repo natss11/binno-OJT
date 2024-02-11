@@ -111,10 +111,10 @@
                 <div class="flex container mx-auto p-15 px-36">
                     <div class="w-1/3 p-4 bg-gray-200 mt-16">
                         <h7>About Us</h7>
-                        <p class="text-sm text-gray-600 mb-10 mt-3 text-justify"><?php echo $selected_company['setting_bio']; ?></p>
+                        <p class="text-sm text-gray-600 mb-10 mt-3"><?php echo $selected_company['setting_bio']; ?></p>
 
                         <h7>Address</h7>
-                        <p class="text-sm text-gray-600 mb-2 mt-3 text-justify"><?php echo $selected_company['setting_address']; ?></p>
+                        <p class="text-sm text-gray-600 mb-2 mt-3"><?php echo $selected_company['setting_address']; ?></p>
                     </div>
 
                     <!-- Right column for data -->
@@ -168,7 +168,7 @@
                                         <h2 class="text-sm font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                         <p class="text-sm text-gray-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
-                                        <p class="text-sm text-gray-600 mb-2 mt-2">
+                                        <p class="text-sm text-black-800 mb-2 mt-2">
                                             <?php
                                             // Display short description and toggle with JavaScript
                                             echo $short_description;
@@ -213,7 +213,7 @@
                         </script>
 
                         <div id="postsContent" class="ml-5">
-                            <h5>Posts</h5>
+                            <h10>Posts</h10>
                             <?php
                             // Fetch posts for the specific member
                             $posts_url = "http://217.196.51.115/m/api/posts/";
@@ -242,7 +242,7 @@
                                             </div>
                                             <h2 class="text-sm font-bold mt-3"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
                                             <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                            <p class="text-sm text-black-800 text-justify mb-2 mt-2">
+                                            <p class="text-sm text-black-800 mb-2 mt-2">
                                                 <?php echo $short_bodytext; ?>
                                                 <?php if ($display_see_more) : ?>
                                                     <span id="toggle_<?php echo $post['post_id']; ?>" class="see-more" style="display: inline;">

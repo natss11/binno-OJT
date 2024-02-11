@@ -114,10 +114,10 @@ if (!$enablers) {
                 <div class="flex container mx-auto p-15 px-36">
                     <div class="left-column w-1/3 p-4 bg-gray-200 mt-16">
                         <h7>Company Description</h7>
-                        <p class="text-sm text-gray-600 mb-10 mt-3 text-justify"><?php echo $selected_enabler['setting_bio']; ?></p>
+                        <p class="text-sm text-gray-600 mb-10 mt-3"><?php echo $selected_enabler['setting_bio']; ?></p>
 
                         <h7>Company Address</h7>
-                        <p class="text-sm text-gray-600 mb-2 mt-3 text-justify"><?php echo $selected_enabler['setting_address']; ?></p>
+                        <p class="text-sm text-gray-600 mb-2 mt-3"><?php echo $selected_enabler['setting_address']; ?></p>
                     </div>
 
                     <!-- Right column for data -->
@@ -165,7 +165,7 @@ if (!$enablers) {
                                         <h2 class="text-sm font-bold mt-3"><?php echo $event['event_title']; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                         <p class="text-sm text-gray-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
-                                        <p class="text-sm text-black-800 mt-3 text-justify">
+                                        <p class="text-sm text-black-800 mt-3">
                                             <?php echo $short_description; ?>
                                             <?php if (count($description_words) > 50) : ?>
                                                 <span id="full_description_<?php echo $event['event_id']; ?>" class="full-content hidden"><?php echo $remaining_description; ?></span>
@@ -247,7 +247,7 @@ if (!$enablers) {
                                             </div>
                                             <h2 class="text-sm font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>
                                             <img id="blog_pic_<?php echo $blog['blog_id']; ?>" alt="<?php echo $blog['blog_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                            <p class="text-sm text-black-800 mt-3 text-justify">
+                                            <p class="text-sm text-black-800 mt-3">
                                                 <?php echo $display_content; ?>
                                                 <?php if ($display_see_more) { ?>
                                                     <span class="full-content hidden"><?php echo $blog['blog_content']; ?></span>
