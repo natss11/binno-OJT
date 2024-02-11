@@ -41,7 +41,7 @@ if (!$programs) {
         <link rel="stylesheet" href="./dist/output.css">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
-        <title>GUIDES</title>
+        <title>BINNO | GUIDES</title>
     </head>
 
     <body>
