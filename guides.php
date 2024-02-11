@@ -48,7 +48,7 @@ if (!$programs) {
 
         <?php include 'navbar-guides.php'; ?>
 
-        <main class="container mx-16 flex justify-center items-center">
+        <main class="flex justify-center">
             <div class="container mx-16">
                 <h3 class="font-semibold text-3xl md:text-5xl">Guides</h3>
 

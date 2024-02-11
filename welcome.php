@@ -50,11 +50,11 @@ if (!$posts || !$events || !$blogs) {
 
         <?php include 'navbar.php'; ?>
 
-        <main class="container mx-16 flex justify-center items-center">
+        <main class="flex justify-center">
             <div class="container mx-16">
 
                 <!-- Display Startup Posts -->
-                <h3 class="font-semibold text-3xl md:text-5xl">Startup Posts</h3>
+                <h3 class="font-semibold text-3xl md:text-5xl">Posts</h3>
                 <div class="container mx-auto p-8 px-16 flex flex-col md:flex-column">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="cardContainer">
 

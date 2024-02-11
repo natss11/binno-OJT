@@ -49,7 +49,7 @@ if (!$events) {
 
         <?php include 'navbar-events.php'; ?>
 
-        <main class="container mx-16 flex justify-center items-center">
+        <main class="flex justify-center">
             <div class="container mx-16">
                 <h3 class="font-semibold text-3xl md:text-5xl">Events</h3>
 
