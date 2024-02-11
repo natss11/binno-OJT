@@ -77,7 +77,7 @@ if (!$blogs) {
                                             }
                                             echo '</h2>';
                                             ?>
-                                            <p class="text-gray-600 text-sm"><?php echo htmlspecialchars($blog['blog_dateadded']); ?></p>
+                                            <p class="text-gray-600 text-sm"><?php echo date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
                                         </div>
                                     </div>
                                 </div>

@@ -67,7 +67,6 @@ if (!$posts || !$events || !$blogs) {
                         // Display only the first 3 posts
                         for ($i = 0; $i < min(3, count($posts)); $i++) {
                             $post = $posts[$i];
-                            $shortened_heading = substr($post['post_heading'], 0, 15);
                         ?>
                             <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg h-full">
                                 <img src="<?= htmlspecialchars($post['post_img']); ?>" alt="<?= htmlspecialchars($post['post_img']); ?>" id="dynamicPostImg-<?= $i + 1 ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
@@ -75,7 +74,7 @@ if (!$posts || !$events || !$blogs) {
                                     <div class="flex items-center mb-2">
                                         <div>
                                             <h2 class="text-2xl font-semibold"><?= htmlspecialchars($post['post_heading']); ?></h2>
-                                            <p class="text-gray-600 text-sm"><?= htmlspecialchars($post['post_dateadded']); ?></p>
+                                            <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -104,21 +103,27 @@ if (!$posts || !$events || !$blogs) {
                                 const card = document.createElement('div');
                                 card.className = 'card-container bg-white rounded-lg overflow-hidden shadow-lg h-full';
 
-                                // Limit the post_heading to 15 characters and append '...'
-                                const truncatedHeading = cards[i].post_heading.length > 15 ?
-                                    cards[i].post_heading.slice(0, 15) + '...' :
-                                    cards[i].post_heading;
+                                const heading = cards[i].post_heading;
+                                const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
                                 card.innerHTML = `
-    <img src="${cards[i].post_img}" alt="${cards[i].post_img}" id="dynamicPostImg-${i}" class="w-full h-40 object-cover" style="background-color: #888888;">
-    <div class="p-4">
-        <div class="flex items-center mb-2">
-            <div>
-                <h2 class="text-2xl font-semibold">${truncatedHeading}</h2>
-                <p class="text-gray-600 text-sm">${cards[i].post_dateadded}</p>
-            </div>
+<img src="${cards[i].post_img}" alt="${cards[i].post_img}" id="dynamicPostImg-${i}" class="w-full h-40 object-cover" style="background-color: #888888;">
+<div class="p-4">
+    <div class="flex items-center mb-2">
+        <div>
+            <h2 class="text-2xl font-semibold">${heading}</h2>
+            <p class="text-gray-600 text-sm">${formatDate(cards[i].post_dateadded)}</p>
         </div>
-    </div>`;
+    </div>
+</div>`;
+
+                                function formatDate(dateString) {
+                                    const date = new Date(dateString);
+                                    const month = months[date.getMonth()];
+                                    const day = date.getDate();
+                                    const year = date.getFullYear();
+                                    return `${month} ${day}, ${year}`;
+                                }
 
                                 cardContainer.appendChild(card);
                             }
@@ -165,7 +170,7 @@ if (!$posts || !$events || !$blogs) {
                                     <div class="flex items-center mb-2">
                                         <div>
                                             <h2 class="text-2xl font-semibold"><?= htmlspecialchars($event['event_title']); ?></h2>
-                                            <p class="text-gray-600 text-sm"><?= htmlspecialchars($event['event_datecreated']); ?></p>
+                                            <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -185,24 +190,20 @@ if (!$posts || !$events || !$blogs) {
                             const startIndex = currentEventPage * eventCardsPerPage;
                             const endIndex = startIndex + eventCardsPerPage;
 
-                            for (let i = 0; i < 3; i++) {
+                            for (let i = 0; i < eventCardsPerPage; i++) { // Adjusted loop condition
                                 const card = document.createElement('div');
                                 card.className = 'card-container bg-white rounded-lg overflow-hidden shadow-lg h-full';
 
-                                const truncatedTitle = eventCards[i].event_title.length > 15 ?
-                                    eventCards[i].event_title.slice(0, 15) + '...' :
-                                    eventCards[i].event_title;
-
                                 card.innerHTML = `
-        <img src="${eventCards[i].event_img}" alt="${eventCards[i].event_img}" id="dynamicEventImg-${i}" class="w-full h-40 object-cover" style="background-color: #888888;">
-        <div class="p-4">
-            <div class="flex items-center mb-2">
-                <div>
-                    <h2 class="text-2xl font-semibold">${truncatedTitle}</h2>
-                    <p class="text-gray-600 text-sm">${eventCards[i].event_datecreated}</p>
+            <img src="${eventCards[i].event_img}" alt="${eventCards[i].event_img}" id="dynamicEventImg-${i}" class="w-full h-40 object-cover" style="background-color: #888888;">
+            <div class="p-4">
+                <div class="flex items-center mb-2">
+                    <div>
+                        <h2 class="text-2xl font-semibold">${eventCards[i].event_title}</h2> <!-- No truncation here -->
+                        <p class="text-gray-600 text-sm">${new Date(eventCards[i].event_datecreated).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                    </div>
                 </div>
-            </div>
-        </div>`;
+            </div>`;
                                 eventCardContainer.appendChild(card);
                             }
                         }
@@ -217,7 +218,7 @@ if (!$posts || !$events || !$blogs) {
                         }
 
                         // Loop through images with IDs containing "dynamicEventImg"
-                        for (var i = 0; i <= 3; i++) {
+                        for (var i = 0; i < eventCardsPerPage; i++) { // Adjusted loop condition
                             var imgElement = document.getElementById("dynamicEventImg-" + i);
                             updateImageSrc(imgElement);
                             console.log(`dynamicEventImg-${i}: `, imgElement);
@@ -246,7 +247,7 @@ if (!$posts || !$events || !$blogs) {
                                     <div class="flex items-center mb-2">
                                         <div>
                                             <h2 class="text-2xl font-semibold"><?= htmlspecialchars($blog['blog_title']); ?></h2>
-                                            <p class="text-gray-600 text-sm"><?= htmlspecialchars($blog['blog_dateadded']); ?></p>
+                                            <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -265,18 +266,15 @@ if (!$posts || !$events || !$blogs) {
                                 const blogCard = document.createElement('div');
                                 blogCard.className = 'card-container bg-white rounded-lg overflow-hidden shadow-lg h-full';
 
-                                // Limiting the display of blog_title to 15 characters and adding '...'
-                                const truncatedTitle = blogCards[i].blog_title.length > 15 ?
-                                    blogCards[i].blog_title.slice(0, 15) + '...' :
-                                    blogCards[i].blog_title;
+                                const title = blogCards[i].blog_title;
 
                                 blogCard.innerHTML = `
         <img src="${blogCards[i].blog_img}" alt="${blogCards[i].blog_img}" id="dynamicBlogImg-${i}" class="w-full h-40 object-cover" style="background-color: #888888;">
         <div class="p-4">
             <div class="flex items-center mb-2">
                 <div>
-                    <h2 class="text-2xl font-semibold">${truncatedTitle}</h2>
-                    <p class="text-gray-600 text-sm">${blogCards[i].blog_dateadded}</p>
+                    <h2 class="text-2xl font-semibold">${title}</h2>
+                    <p class="text-gray-600 text-sm">${new Date(blogCards[i].blog_dateadded).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
                 </div>
             </div>
         </div>`;

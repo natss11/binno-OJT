@@ -72,7 +72,7 @@ if (!$posts) {
                                     <img src="<?php echo htmlspecialchars($post['post_img']); ?>" alt="<?php echo htmlspecialchars(($post['post_img'])); ?>" id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                     <div class="p-4 object-cover ml-5">
                                         <h2 class="text-2xl font-semibold"><?php echo htmlspecialchars($shortened_heading); ?></h2>
-                                        <p class="text-gray-600 text-sm"><?php echo htmlspecialchars($post['post_dateadded']); ?></p>
+                                        <p class="text-gray-600 text-sm"><?php echo htmlspecialchars(date('F j, Y', strtotime($post['post_dateadded']))); ?></p>
                                     </div>
                                     <div class="mt-1 mb-3 mr-3 flex justify-end">
                                         <a href="posts-view.php?post_id=<?php echo $post['post_id']; ?>" class="btn-seemore">See Post</a>

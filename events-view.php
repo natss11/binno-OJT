@@ -63,7 +63,7 @@
                         // Assuming wpgetapi_endpoint is a custom function, you might need to replace it
                         ?>
                         <h2 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($event['event_author']); ?></h2>
-                        <p class="text-gray-600 mb-2"><?php echo htmlspecialchars($event['event_datecreated']); ?></p>
+                        <p class="text-gray-600 mb-2">Created: <?php echo date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
                     </div>
                 </div>
                 <img id="event_pic" src="<?php echo htmlspecialchars($event['event_img']); ?>" alt="<?php echo htmlspecialchars($event['event_img']); ?>" class="w-full h-full object-cover mb-2" style="background-color: #888888;">

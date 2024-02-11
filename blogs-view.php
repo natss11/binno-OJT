@@ -63,8 +63,8 @@ if (!$blogs) {
                         <h3 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($blogs['blog_author']); ?></h3>
                     <?php endif; ?>
                     <?php if (isset($blogs['blog_dateadded'])) : ?>
-                        <p class="text-gray-600 text-sm mb-2"><?php echo htmlspecialchars($blogs['blog_dateadded']); ?></p>
-                    <?php endif; ?>
+                        <p class="text-gray-600 text-sm mb-2"><?php echo date('F j, Y', strtotime($blogs['blog_dateadded'])); ?></p>
+                        <?php endif; ?>
                     <?php if (isset($blogs['blog_title'])) : ?>
                         <h2 class="text-3xl font-semibold mb-2"><?php echo htmlspecialchars($blogs['blog_title']); ?></h2>
                     <?php endif; ?>

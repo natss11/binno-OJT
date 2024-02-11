@@ -60,7 +60,7 @@
                 <div class="flex flex-row mb-4 mt-5">
                     <div>
                         <h2 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($post['post_author']); ?></h2>
-                        <p class="text-gray-600 mb-2"><?php echo htmlspecialchars($post['post_dateadded']); ?></p>
+                        <p class="text-gray-600 mb-2"><?php echo date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
                     </div>
                 </div>
                 <img id="post_pic" src="<?php echo htmlspecialchars($post['post_img']); ?>" alt="<?php echo htmlspecialchars($post['post_img']); ?>" class="w-full h-full object-cover mb-2" style="background-color: #888888;">

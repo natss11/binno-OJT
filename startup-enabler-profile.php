@@ -129,8 +129,8 @@ if (!$enablers) {
                         </div>
 
                         <!-- Events content -->
-                        <div id="eventsContent" class="ml-5">
-                            <h2>Events</h2>
+                        <div id="eventsContent" class="ml-5" >
+                            <h10>Events</h10>
                             <?php
                             // Fetch events for the specific member
                             $events_url = "http://217.196.51.115/m/api/events/";
@@ -158,13 +158,13 @@ if (!$enablers) {
                                             <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full">
                                             <div class="ml-4">
                                                 <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
-                                                <p class="text-sm text-gray-600"><?php echo $event['event_datecreated']; ?></p>
+                                                <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
                                             </div>
                                         </div>
 
                                         <h2 class="text-sm font-bold mt-3"><?php echo $event['event_title']; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                        <p class="text-sm text-gray-600 mb-2 mt-2"><?php echo $event['event_date']; ?></p>
+                                        <p class="text-sm text-gray-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
                                         <p class="text-sm text-black-800 mt-3 text-justify">
                                             <?php echo $short_description; ?>
                                             <?php if (count($description_words) > 50) : ?>
@@ -242,7 +242,7 @@ if (!$enablers) {
                                                 <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full">
                                                 <div class="ml-4">
                                                     <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
-                                                    <p class="text-sm text-gray-600"><?php echo $blog['blog_dateadded']; ?></p>
+                                                    <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
                                                 </div>
                                             </div>
                                             <h2 class="text-sm font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>

@@ -78,7 +78,7 @@ if (!$programs) {
                                         echo htmlspecialchars(strlen($heading) > 15 ? substr($heading, 0, 15) . '...' : $heading, ENT_QUOTES, 'UTF-8');
                                         ?>
                                     </h2>
-                                    <p class="text-gray-600 text-sm"><?php echo htmlspecialchars(isset($program['program_dateadded']) ? $program['program_dateadded'] : '', ENT_QUOTES, 'UTF-8'); ?></p>
+                                    <p class="text-gray-600 text-sm"><?php echo date('F j, Y', strtotime(isset($program['program_dateadded']) ? $program['program_dateadded'] : '')); ?></p>
                                 </div>
                                 <div class="mt-1 mb-3 mr-3 flex justify-end">
                                     <a href="<?php echo htmlspecialchars('guides-view.php') . '?program_id=' . (isset($program['program_id']) ? $program['program_id'] : ''); ?>" class="btn-seemore">See Program</a>

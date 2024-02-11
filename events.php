@@ -76,7 +76,7 @@ if (!$events) {
                                             echo strlen($limitedTitle) > 15 ? substr($limitedTitle, 0, 15) . '...' : $limitedTitle;
                                             ?>
                                         </h2>
-                                        <p class="text-gray-600 text-sm"><?php echo htmlspecialchars($event['event_date']); ?></p>
+                                        <p class="text-gray-600 text-sm">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
                                     </div>
                                     <div class="mt-1 mb-3 mr-3 flex justify-end">
                                         <a href="events-view.php?event_id=<?php echo $event['event_id']; ?>" class="btn-seemore">See Event</a>
