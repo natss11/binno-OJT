@@ -213,7 +213,17 @@
                         </script>
 
                         <div id="postsContent" class="ml-5">
-                            <h10>Posts</h10>
+                            <div class="flex justify-between mb-3">
+                                <h10>Posts</h10>
+                                <div>
+                                    <select id="categorySelect" class="block w-full py-2 px-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onchange="filterPosts()">
+                                        <option value="">All Posts</option>
+                                        <option value="Milestone">Milestone</option>
+                                        <option value="Promotion">Promotion</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <?php
                             // Fetch posts for the specific member
                             $posts_url = "http://217.196.51.115/m/api/posts/";
@@ -232,7 +242,7 @@
                                         $long_bodytext = implode(' ', array_slice($bodytext_words, 50));
                                         $display_see_more = count($bodytext_words) > 50;
                             ?>
-                                        <div class="border p-4 mb-4 mt-5">
+                                        <div class="border p-4 mb-4 mt-5 post-item <?php echo $post['post_category']; ?>">
                                             <div class="flex items-center">
                                                 <img id="post_profile_pic_<?php echo $post['post_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full">
                                                 <div class="ml-4">
@@ -269,6 +279,28 @@
                             }
                             ?>
                         </div>
+                        <script>
+                            function filterPosts() {
+                                var category = document.getElementById("categorySelect").value;
+                                var posts = document.getElementsByClassName("post-item");
+
+                                if (category === "") {
+                                    // Show all posts if no category is selected
+                                    for (var i = 0; i < posts.length; i++) {
+                                        posts[i].style.display = "block";
+                                    }
+                                } else {
+                                    // Hide posts that do not match the selected category
+                                    for (var i = 0; i < posts.length; i++) {
+                                        if (!posts[i].classList.contains(category)) {
+                                            posts[i].style.display = "none";
+                                        } else {
+                                            posts[i].style.display = "block";
+                                        }
+                                    }
+                                }
+                            }
+                        </script>
 
                     </div>
                 </div>
