@@ -1,4 +1,6 @@
 <?php
+
+// Function to fetch data from API
 function fetch_api_data($api_url)
 {
     // Make the request
@@ -23,6 +25,38 @@ function fetch_api_data($api_url)
     return $data;
 }
 
+function loadProfilePic($authorProfilePic)
+{
+?>
+    <script>
+        // Function to load and display profile picture
+        function displayProfilePic(profilePicUrl) {
+            const imgElement = document.getElementById('author_profile_pic');
+            imgElement.src = profilePicUrl;
+            imgElement.style.display = 'block'; // Show the image
+        }
+
+        // Load the profile picture
+        fetch("<?php echo $authorProfilePic; ?>")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const imageUrl = URL.createObjectURL(blob);
+                console.log('Profile picture loaded successfully');
+                displayProfilePic(imageUrl); // Display the profile picture
+            })
+            .catch(error => {
+                console.error('Error fetching profile picture:', error);
+            });
+    </script>
+<?php
+}
+
+// Get the program ID from the query parameter
 $program_id = isset($_GET['program_id']) ? $_GET['program_id'] : 0;
 
 // Fetch program data
@@ -39,10 +73,13 @@ if (!$programs) {
 
     // Find the author's name based on program_author and member_id
     $author_name = '';
+    $author_profile_pic = ''; // Variable to hold the profile picture URL
     if (isset($programs['program_author'])) {
         foreach ($enablers as $enabler) {
             if ($enabler['member_id'] == $programs['program_author']) {
                 $author_name = $enabler['setting_institution'];
+                $author_profile_pic = $enabler['setting_profilepic']; // Get the author's profile picture
+                loadProfilePic($author_profile_pic); // Call the function to load and display the profile picture
                 break;
             }
         }
@@ -93,7 +130,16 @@ if (!$programs) {
                 <?php
                 // Display initial content
                 if ($programs) {
-                    echo "<h9 class='element_p'>$author_name</h9>"; // Display author's name
+                    echo "<img src='{$programs['program_img']}' alt='{$programs['program_img']}' id='guide_pic' class='w-full h-64 object-cover shadow-lg'>";
+
+                    echo "<div class='flex items-center mt-4'>";
+                    echo "<img src='$author_profile_pic' alt='$author_profile_pic' id='author_profile_pic' class='w-16 h-16 object-cover rounded-full border-2 border-white shadow-lg'>";
+                    echo "<div class='ml-4'>";
+                    echo "<h2 class='text-xl font-semibold'>" . htmlspecialchars($author_name) . "</h2>";
+                    echo "<p class='text-gray-600 text-sm'>" . (isset($programs['program_dateadded']) ? htmlspecialchars($programs['program_dateadded']) : '') . "</p>";
+                    echo "</div>";
+                    echo "</div>";
+
                     echo "<h1 class='element_h1'>" . (isset($programs['program_heading']) ? htmlspecialchars($programs['program_heading']) : '') . "</h1>";
                     echo "<p class='element_p'>" . (isset($programs['program_description']) ? htmlspecialchars($programs['program_description']) : '') . "</p>";
                 } else {
@@ -138,21 +184,50 @@ if (!$programs) {
             }
         </script>
 
+        <!-- Load image script -->
         <script>
-            const loadImage = async () => {
-                const currentSrc = document.getElementById('guide_pic').alt
-                const res = await fetch(
-                    `http://217.196.51.115/m/api/images?filePath=guide-pics/${encodeURIComponent(currentSrc)}`
-                )
+            // Function to update image src from API
+            const updateImageSrc = async (imgElement) => {
+                // Get the current src value
+                var currentSrc = imgElement.alt;
 
-                const blob = await res.blob();
-                const imageUrl = URL.createObjectURL(blob);
+                // Fetch image data from API
+                const res = await fetch('http://217.196.51.115/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
+                    .then(response => response.blob())
+                    .then(data => {
+                        // Create a blob from the response data
+                        var blob = new Blob([data], {
+                            type: 'image/png'
+                        }); // Adjust type if needed
 
-                document.getElementById('guide_pic').src = imageUrl;
-
+                        // Set the new src value using a blob URL
+                        imgElement.src = URL.createObjectURL(blob);
+                    })
+                    .catch(error => console.error('Error fetching image data:', error));
             }
 
-            loadImage()
+            // Update author's profile picture
+            updateImageSrc(document.getElementById("author_profile_pic"));
+
+            // Update program picture
+            updateImageSrc(document.getElementById('guide_pic'));
+
+            // Ensure the program picture is displayed after the DOM is loaded
+            document.addEventListener('DOMContentLoaded', function() {
+                const loadImage = async () => {
+                    const currentSrc = document.getElementById('guide_pic').alt;
+                    const res = await fetch(
+                        `http://217.196.51.115/m/api/images?filePath=guide-pics/${encodeURIComponent(currentSrc)}`
+                    );
+
+                    const blob = await res.blob();
+                    const imageUrl = URL.createObjectURL(blob);
+
+                    document.getElementById('guide_pic').src = imageUrl;
+                }
+
+                loadImage();
+            });
         </script>
 
         <?php include 'footer.php'; ?>
