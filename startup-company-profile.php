@@ -167,7 +167,7 @@
                                         </div>
                                         <h2 class="text-sm font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                        <p class="text-sm text-black-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
+                                        <p class="text-sm font-semibold text-black-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
                                         <p class="text-sm text-black-800 mb-2 mt-2">
                                             <?php
                                             // Display short description and toggle with JavaScript
