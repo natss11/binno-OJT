@@ -157,9 +157,9 @@
                                     $display_see_more = count($description_words) > 50;
 
                             ?>
-                                    <div class="border p-4 mb-4 mt-5">
+                                    <div class="border p-4 mb-4 mt-5 bg-gray-100">
                                         <div class="flex items-center">
-                                            <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full">
+                                            <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                             <div class="ml-4">
                                                 <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
                                                 <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
@@ -167,7 +167,7 @@
                                         </div>
                                         <h2 class="text-sm font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                        <p class="text-sm text-gray-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
+                                        <p class="text-sm text-black-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
                                         <p class="text-sm text-black-800 mb-2 mt-2">
                                             <?php
                                             // Display short description and toggle with JavaScript
@@ -242,9 +242,9 @@
                                         $long_bodytext = implode(' ', array_slice($bodytext_words, 50));
                                         $display_see_more = count($bodytext_words) > 50;
                             ?>
-                                        <div class="border p-4 mb-4 mt-5 post-item <?php echo $post['post_category']; ?>">
+                                        <div class="bg-gray-100 border p-4 mb-4 mt-5 post-item <?php echo $post['post_category']; ?>">
                                             <div class="flex items-center">
-                                                <img id="post_profile_pic_<?php echo $post['post_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full">
+                                                <img id="post_profile_pic_<?php echo $post['post_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                                 <div class="ml-4">
                                                     <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
                                                     <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($post['post_dateadded'])); ?></p>

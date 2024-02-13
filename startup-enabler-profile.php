@@ -153,9 +153,9 @@ if (!$enablers) {
                                     $short_description = implode(" ", array_slice($description_words, 0, 50));
                                     $remaining_description = implode(" ", array_slice($description_words, 50));
                             ?>
-                                    <div class="border p-4 mb-4 mt-5">
+                                    <div class="border p-4 mb-4 mt-5 bg-gray-100">
                                         <div class="flex items-center">
-                                            <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full">
+                                            <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                             <div class="ml-4">
                                                 <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
                                                 <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
@@ -164,7 +164,7 @@ if (!$enablers) {
 
                                         <h2 class="text-sm font-bold mt-3"><?php echo $event['event_title']; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                        <p class="text-sm text-gray-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
+                                        <p class="text-sm text-black-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
                                         <p class="text-sm text-black-800 mt-3">
                                             <?php echo $short_description; ?>
                                             <?php if (count($description_words) > 50) : ?>
@@ -237,9 +237,9 @@ if (!$enablers) {
 
                                         // Output blog content with "See more" link if applicable
                                 ?>
-                                        <div class="border p-4 mb-4 mt-5 position-relative">
+                                        <div class="border p-4 mb-4 mt-5 position-relative bg-gray-100">
                                             <div class="flex items-center">
-                                                <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full">
+                                                <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                                 <div class="ml-4">
                                                     <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
                                                     <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
