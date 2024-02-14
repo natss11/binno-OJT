@@ -66,26 +66,25 @@ if (!$blogs) {
                         foreach ($blogs as $blog) :
                             $i++;
                         ?>
-                            <div class="bg-white rounded-lg overflow-hidden shadow-lg">
-                                <img src="<?php echo htmlspecialchars($blog['blog_img']); ?>" alt="<?php echo htmlspecialchars($blog['blog_img']); ?>" id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
-                                <div class="p-4">
-                                    <div class="flex items-center mb-2">
-                                        <div>
-                                            <?php
-                                            $limited_title = substr($blog['blog_title'], 0, 15);
-                                            echo '<h2 class="text-2xl font-semibold">' . htmlspecialchars($limited_title);
-                                            if (strlen($blog['blog_title']) > 15) {
-                                                echo '...';
-                                            }
-                                            echo '</h2>';
-                                            ?>
-                                            <p class="text-gray-600 text-sm"><?php echo date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
+                            <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
+                                <a href="blogs-view.php?blog_id=<?php echo $blog['blog_id']; ?>" class="link">
+                                    <img src="<?php echo htmlspecialchars($blog['blog_img']); ?>" alt="<?php echo htmlspecialchars($blog['blog_img']); ?>" id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                    <div class="p-4">
+                                        <div class="flex items-center mb-2">
+                                            <div>
+                                                <?php
+                                                $limited_title = substr($blog['blog_title'], 0, 15);
+                                                echo '<h2 class="text-2xl font-semibold">' . htmlspecialchars($limited_title);
+                                                if (strlen($blog['blog_title']) > 15) {
+                                                    echo '...';
+                                                }
+                                                echo '</h2>';
+                                                ?>
+                                                <p class="text-gray-600 text-sm"><?php echo date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="mt-1 mb-3 mr-3 flex justify-end">
-                                    <a href="blogs-view.php?blog_id=<?php echo $blog['blog_id']; ?>" class="btn-seemore">See Blog</a>
-                                </div>
+                                </a>
                             </div>
                         <?php endforeach; ?>
                     </div>

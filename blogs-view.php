@@ -100,7 +100,7 @@ if (!$blogs || !$authors) {
                         <?php endif; ?>
                         <div class="ml-4">
                             <?php if ($author_name) : ?>
-                                <h3 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($author_name); ?></h3>
+                                <h2 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($author_name); ?></h2>
                             <?php endif; ?>
                             <?php if (isset($blogs['blog_dateadded'])) : ?>
                                 <p class="text-gray-600 text-sm mb-2"><?php echo date('F j, Y', strtotime($blogs['blog_dateadded'])); ?></p>

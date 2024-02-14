@@ -59,7 +59,6 @@ if (!$posts || !$events || !$blogs) {
                 </div>
                 <div class="container mx-auto p-8 px-16 flex flex-col md:flex-column">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="cardContainer">
-
                         <?php
                         // Sort the posts array by post date in descending order
                         usort($posts, function ($a, $b) {
@@ -71,86 +70,37 @@ if (!$posts || !$events || !$blogs) {
                             $post = $posts[$i];
                         ?>
                             <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg h-full">
-                                <img src="<?= htmlspecialchars($post['post_img']); ?>" alt="<?= htmlspecialchars($post['post_img']); ?>" id="dynamicPostImg-<?= $i + 1 ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
-                                <div class="p-4">
-                                    <div class="flex items-center mb-2">
-                                        <div>
-                                            <h2 class="text-2xl font-semibold"><?= htmlspecialchars($post['post_heading']); ?></h2>
-                                            <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
+                                <a href="posts-view.php?post_id=<?= $post['post_id']; ?>" class="link">
+                                    <img src="<?= htmlspecialchars($post['post_img']); ?>" alt="<?= htmlspecialchars($post['post_img']); ?>" id="dynamicPostImg-<?= $i + 1 ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                    <div class="p-4">
+                                        <div class="flex items-center mb-2">
+                                            <div>
+                                                <h2 class="text-2xl font-semibold"><?= htmlspecialchars($post['post_heading']); ?></h2>
+                                                <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
+                                            </div>
                                         </div>
                                     </div>
-
-                                </div>
+                                </a>
                             </div>
                         <?php
                         }
                         ?>
-
                     </div>
 
                     <script>
-                        const cardsPerPage = 3;
-                        let currentPage = 0;
                         const cards = <?php echo json_encode($posts); ?>;
-
-                        function displayCards() {
-                            const cardContainer = document.getElementById('cardContainer');
-
-                            // Clear card container
-                            cardContainer.innerHTML = '';
-
-                            const startIndex = currentPage * cardsPerPage;
-                            const endIndex = startIndex + cardsPerPage;
-
-                            for (let i = startIndex; i < endIndex && i < cards.length; i++) {
-                                const card = document.createElement('div');
-                                card.className = 'card-container bg-white rounded-lg overflow-hidden shadow-lg h-full';
-
-                                const heading = cards[i].post_heading;
-                                const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-                                card.innerHTML = `
-                                    <a href="youtube.com">
-                                        <img src="${cards[i].post_img}" alt="${cards[i].post_img}" id="dynamicPostImg-${i}" class="w-full h-40 object-cover" style="background-color: #888888;">
-                                        <div class="p-4">
-                                            <div class="flex items-center mb-2">
-                                                <div>
-                                                    <h2 class="text-2xl font-semibold">${heading}</h2>
-                                                    <p class="text-gray-600 text-sm">${formatDate(cards[i].post_dateadded)}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>`;
-
-                                function formatDate(dateString) {
-                                    const date = new Date(dateString);
-                                    const month = months[date.getMonth()];
-                                    const day = date.getDate();
-                                    const year = date.getFullYear();
-                                    return `${month} ${day}, ${year}`;
-                                }
-
-                                cardContainer.appendChild(card);
-                            }
-                        }
-
-                        // Initial display
-                        displayCards();
 
                         // Function to fetch image data from API
                         async function updateImageSrc(imgSrc) {
-                            imgSrc.src = `http://217.196.51.115/m/api/images?filePath=post-pics/${imgSrc.alt}`
-                            console.log(imgSrc)
+                            imgSrc.src = `http://217.196.51.115/m/api/images?filePath=post-pics/${imgSrc.alt}`;
+                            console.log(imgSrc);
                         }
 
                         // Loop through images with IDs containing "dynamicPostImg"
-                        for (let i = 0; i < 3; i++) {
-                            const imgElement = document.getElementById(`dynamicPostImg-${i}`);
-                            if (imgElement) {
-                                updateImageSrc(imgElement);
-                                console.log(`dynamicPostImg-${i}: `, imgElement);
-                            }
-                        }
+                        document.querySelectorAll('[id^="dynamicPostImg-"]').forEach((imgElement, index) => {
+                            // Update each image's src from the API
+                            updateImageSrc(imgElement);
+                        });
                     </script>
                 </div>
 
@@ -172,51 +122,23 @@ if (!$posts || !$events || !$blogs) {
                             $i++;
                         ?>
                             <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg h-full">
-                                <img src="<?= htmlspecialchars($event['event_img']); ?>" alt="<?= htmlspecialchars($event['event_img']); ?>" id="dynamicEventImg-<?= $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
-                                <div class="p-4">
-                                    <div class="flex items-center mb-2">
-                                        <div>
-                                            <h2 class="text-2xl font-semibold"><?= htmlspecialchars($event['event_title']); ?></h2>
-                                            <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
+                                <a href="events-view.php?event_id=<?= $event['event_id']; ?>" class="link">
+                                    <img src="<?= htmlspecialchars($event['event_img']); ?>" alt="<?= htmlspecialchars($event['event_img']); ?>" id="dynamicEventImg-<?= $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                    <div class="p-4">
+                                        <div class="flex items-center mb-2">
+                                            <div>
+                                                <h2 class="text-2xl font-semibold"><?= htmlspecialchars($event['event_title']); ?></h2>
+                                                <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         <?php endforeach; ?>
                     </div>
 
                     <script>
-                        const eventCardsPerPage = 3;
-                        let currentEventPage = 0;
                         const eventCards = <?php echo json_encode($events); ?>;
-
-                        function displayEventCards() {
-                            const eventCardContainer = document.getElementById('eventCardContainer');
-                            eventCardContainer.innerHTML = '';
-
-                            const startIndex = currentEventPage * eventCardsPerPage;
-                            const endIndex = startIndex + eventCardsPerPage;
-
-                            for (let i = 0; i < eventCardsPerPage; i++) { // Adjusted loop condition
-                                const card = document.createElement('div');
-                                card.className = 'card-container bg-white rounded-lg overflow-hidden shadow-lg h-full';
-
-                                card.innerHTML = `
-            <img src="${eventCards[i].event_img}" alt="${eventCards[i].event_img}" id="dynamicEventImg-${i}" class="w-full h-40 object-cover" style="background-color: #888888;">
-            <div class="p-4">
-                <div class="flex items-center mb-2">
-                    <div>
-                        <h2 class="text-2xl font-semibold">${eventCards[i].event_title}</h2> <!-- No truncation here -->
-                        <p class="text-gray-600 text-sm">${new Date(eventCards[i].event_datecreated).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
-                    </div>
-                </div>
-            </div>`;
-                                eventCardContainer.appendChild(card);
-                            }
-                        }
-
-                        // Initial display
-                        displayEventCards();
 
                         // Function to fetch image data from API
                         async function updateImageSrc(imgSrc) {
@@ -225,11 +147,10 @@ if (!$posts || !$events || !$blogs) {
                         }
 
                         // Loop through images with IDs containing "dynamicEventImg"
-                        for (var i = 0; i < eventCardsPerPage; i++) { // Adjusted loop condition
-                            var imgElement = document.getElementById("dynamicEventImg-" + i);
+                        document.querySelectorAll('[id^="dynamicEventImg-"]').forEach((imgElement, index) => {
+                            // Update each image's src from the API
                             updateImageSrc(imgElement);
-                            console.log(`dynamicEventImg-${i}: `, imgElement);
-                        }
+                        });
                     </script>
                 </div>
 
@@ -251,48 +172,23 @@ if (!$posts || !$events || !$blogs) {
                             $i++;
                         ?>
                             <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg h-full">
-                                <img src="<?= htmlspecialchars($blog['blog_img']); ?>" alt="<?= htmlspecialchars($blog['blog_img']); ?>" id="dynamicBlogImg-<?= $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
-                                <div class="p-4">
-                                    <div class="flex items-center mb-2">
-                                        <div>
-                                            <h2 class="text-2xl font-semibold"><?= htmlspecialchars($blog['blog_title']); ?></h2>
-                                            <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
+                                <a href="blogs-view.php?blog_id=<?= $blog['blog_id']; ?>" class="link">
+                                    <img src="<?= htmlspecialchars($blog['blog_img']); ?>" alt="<?= htmlspecialchars($blog['blog_img']); ?>" id="dynamicBlogImg-<?= $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                    <div class="p-4">
+                                        <div class="flex items-center mb-2">
+                                            <div>
+                                                <h2 class="text-2xl font-semibold"><?= htmlspecialchars($blog['blog_title']); ?></h2>
+                                                <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         <?php endforeach; ?>
                     </div>
 
                     <script>
                         const blogCards = <?php echo json_encode($blogs); ?>;
-
-                        function displayBlogCards() {
-                            const blogCardContainer = document.getElementById('blogCardContainer');
-                            blogCardContainer.innerHTML = '';
-
-                            for (let i = 0; i < 3; i++) {
-                                const blogCard = document.createElement('div');
-                                blogCard.className = 'card-container bg-white rounded-lg overflow-hidden shadow-lg h-full';
-
-                                const title = blogCards[i].blog_title;
-
-                                blogCard.innerHTML = `
-        <img src="${blogCards[i].blog_img}" alt="${blogCards[i].blog_img}" id="dynamicBlogImg-${i}" class="w-full h-40 object-cover" style="background-color: #888888;">
-        <div class="p-4">
-            <div class="flex items-center mb-2">
-                <div>
-                    <h2 class="text-2xl font-semibold">${title}</h2>
-                    <p class="text-gray-600 text-sm">${new Date(blogCards[i].blog_dateadded).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
-                </div>
-            </div>
-        </div>`;
-                                blogCardContainer.appendChild(blogCard);
-                            }
-                        }
-
-                        // Initial display
-                        displayBlogCards();
 
                         // Function to fetch image data from API
                         async function updateBlogImageSrc(imgSrc) {
@@ -301,13 +197,10 @@ if (!$posts || !$events || !$blogs) {
                         }
 
                         // Loop through images with IDs containing "dynamicBlogImg"
-                        for (let i = 0; i < 3; i++) {
-                            const imgElement = document.getElementById(`dynamicBlogImg-${i}`);
-                            if (imgElement) {
-                                updateBlogImageSrc(imgElement);
-                                console.log(`dynamicBlogImg-${i}: `, imgElement);
-                            }
-                        }
+                        document.querySelectorAll('[id^="dynamicBlogImg-"]').forEach((imgElement, index) => {
+                            // Update each image's src from the API
+                            updateBlogImageSrc(imgElement);
+                        });
                     </script>
                 </div>
             </div>

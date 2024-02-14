@@ -71,20 +71,19 @@ if (!$programs) {
                         foreach ($programs as $program) {
                             $i++;
                         ?>
-                            <div class="bg-white rounded-lg overflow-hidden shadow-lg">
-                                <img src=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> alt=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
-                                <div class="p-4 object-cover ml-5">
-                                    <h2 class="text-2xl font-semibold">
-                                        <?php
-                                        $heading = isset($program['program_heading']) ? $program['program_heading'] : '';
-                                        echo htmlspecialchars(strlen($heading) > 15 ? substr($heading, 0, 15) . '...' : $heading, ENT_QUOTES, 'UTF-8');
-                                        ?>
-                                    </h2>
-                                    <p class="text-gray-600 text-sm"><?php echo date('F j, Y', strtotime(isset($program['program_dateadded']) ? $program['program_dateadded'] : '')); ?></p>
-                                </div>
-                                <div class="mt-1 mb-3 mr-3 flex justify-end">
-                                    <a href="<?php echo htmlspecialchars('guides-view.php') . '?program_id=' . (isset($program['program_id']) ? $program['program_id'] : ''); ?>" class="btn-seemore">See Program</a>
-                                </div>
+                            <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
+                                <a href="<?php echo htmlspecialchars('guides-view.php') . '?program_id=' . (isset($program['program_id']) ? $program['program_id'] : ''); ?>" class="link">
+                                    <img src=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> alt=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                    <div class="p-4 object-cover ml-5">
+                                        <h2 class="text-2xl font-semibold">
+                                            <?php
+                                            $heading = isset($program['program_heading']) ? $program['program_heading'] : '';
+                                            echo htmlspecialchars(strlen($heading) > 15 ? substr($heading, 0, 15) . '...' : $heading, ENT_QUOTES, 'UTF-8');
+                                            ?>
+                                        </h2>
+                                        <p class="text-gray-600 text-sm"><?php echo date('F j, Y', strtotime(isset($program['program_dateadded']) ? $program['program_dateadded'] : '')); ?></p>
+                                    </div>
+                                </a>
                             </div>
                         <?php } ?>
                     </div>

@@ -498,6 +498,36 @@ button,
   cursor: pointer;
 }
 
+.card-container {
+  /* Normal styles for the card container */
+  transition: transform 0.3s ease;
+  /* Add transition for smooth effect */
+}
+
+.card-container:hover {
+  /* Styles for the card container when hovered */
+  transform: scale(1.05);
+  /* Scale up a bit when hovered */
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+  /* Add shadow when hovered */
+  /* Add any other styles you want for hover effect */
+}
+
+.link {
+  /* Normal styles for the link */
+  text-decoration: none;
+  /* Remove default underline */
+  color: inherit;
+  /* Inherit text color from parent */
+}
+
+.link:hover {
+  /* Styles for the link when hovered */
+  text-decoration: underline;
+  /* Underline when hovered */
+  /* Add any other styles you want for hover effect */
+}
+
 .btn-blue {
   background-color: #5c9fef;
   color: white;
@@ -769,7 +799,8 @@ button,
 
 .btn-navmenu:hover,
 .btn-navmenu:focus {
-  color: darkorange; /* Ensure text color remains visible */
+  color: darkorange;
+  /* Ensure text color remains visible */
 }
 
 .btn-navmenu2 {
@@ -777,7 +808,7 @@ button,
   border-radius: 10px;
   text-decoration: none;
   transition-duration: 0.4s;
-  
+
 }
 
 /*
