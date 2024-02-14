@@ -667,32 +667,6 @@ button,
   border-radius: 10px;
 }
 
-.btn-seemore {
-  background-color: orange;
-  color: white;
-  padding: 5px 20px;
-  border-radius: 20px;
-  text-decoration: none;
-  transition-duration: 0.4s;
-}
-
-.btn-seemore:hover {
-  background-color: darkorange;
-}
-
-.btn-see_profile {
-  background-color: orange;
-  color: white;
-  padding: 5px 20px;
-  border-radius: 20px;
-  text-decoration: none;
-  transition-duration: 0.4s;
-}
-
-.btn-see_profile:hover {
-  background-color: darkorange;
-}
-
 .custom-dropdown {
   width: 180px;
 }
