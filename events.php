@@ -51,7 +51,9 @@ if (!$events) {
 
         <main class="flex justify-center">
             <div class="container mx-16">
-                <h3 class="font-semibold text-3xl md:text-5xl">Events</h3>
+                <div class="text-center">
+                    <h3 class="font-bold text-3xl md:text-4xl">Events</h3>
+                </div>
 
                 <div class="container mx-auto p-8 px-16 flex flex-col md:flex-column">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

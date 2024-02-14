@@ -54,7 +54,9 @@ if (!$posts || !$events || !$blogs) {
             <div class="container mx-16">
 
                 <!-- Display Startup Posts -->
-                <h3 class="font-semibold text-3xl md:text-5xl">Posts</h3>
+                <div class="text-center">
+                    <h3 class="font-bold text-3xl md:text-4xl">Latest Posts</h3>
+                </div>
                 <div class="container mx-auto p-8 px-16 flex flex-col md:flex-column">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="cardContainer">
 
@@ -77,6 +79,7 @@ if (!$posts || !$events || !$blogs) {
                                             <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         <?php
@@ -107,15 +110,17 @@ if (!$posts || !$events || !$blogs) {
                                 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
                                 card.innerHTML = `
-<img src="${cards[i].post_img}" alt="${cards[i].post_img}" id="dynamicPostImg-${i}" class="w-full h-40 object-cover" style="background-color: #888888;">
-<div class="p-4">
-    <div class="flex items-center mb-2">
-        <div>
-            <h2 class="text-2xl font-semibold">${heading}</h2>
-            <p class="text-gray-600 text-sm">${formatDate(cards[i].post_dateadded)}</p>
-        </div>
-    </div>
-</div>`;
+                                    <a href="youtube.com">
+                                        <img src="${cards[i].post_img}" alt="${cards[i].post_img}" id="dynamicPostImg-${i}" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                        <div class="p-4">
+                                            <div class="flex items-center mb-2">
+                                                <div>
+                                                    <h2 class="text-2xl font-semibold">${heading}</h2>
+                                                    <p class="text-gray-600 text-sm">${formatDate(cards[i].post_dateadded)}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>`;
 
                                 function formatDate(dateString) {
                                     const date = new Date(dateString);
@@ -150,7 +155,9 @@ if (!$posts || !$events || !$blogs) {
                 </div>
 
                 <!-- Display Events -->
-                <h3 class="font-semibold text-3xl md:text-5xl">Events</h3>
+                <div class="text-center">
+                    <h3 class="font-bold text-3xl md:text-4xl">Latest Events</h3>
+                </div>
                 <div class="container mx-auto p-8 px-16 flex flex-col md:flex-column">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="eventCardContainer">
 
@@ -227,7 +234,9 @@ if (!$posts || !$events || !$blogs) {
                 </div>
 
                 <!-- Display Blogs -->
-                <h3 class="font-semibold text-3xl md:text-5xl">Blogs</h3>
+                <div class="text-center">
+                    <h3 class="font-bold text-3xl md:text-4xl">Latest Blogs</h3>
+                </div>
                 <div class="container mx-auto p-8 px-16 flex flex-col md:flex-column">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="blogCardContainer">
 
