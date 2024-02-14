@@ -112,10 +112,10 @@
                         </div>
                     </div>
 
-                    <img id="event_pic" src="<?php echo htmlspecialchars($event['event_img']); ?>" alt="<?php echo htmlspecialchars($event['event_img']); ?>" class="w-full h-full object-cover mb-2" style="background-color: #888888;">
-                    <p class="text-m font-semibold text-black-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
                     <h2 class="text-2xl font-semibold mt-5 mb-2"><?php echo htmlspecialchars($event['event_title']); ?></h2>
-                    <p class="mb-5"><?php echo htmlspecialchars($event['event_description']); ?></p>
+                    <img id="event_pic" src="<?php echo htmlspecialchars($event['event_img']); ?>" alt="<?php echo htmlspecialchars($event['event_img']); ?>" class="w-full h-full object-cover mb-2" style="background-color: #888888;">
+                    <p class="text-m font-semibold text-black-600 mb-2 mt-5">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
+                    <p class="mb-5 mt-5"><?php echo htmlspecialchars($event['event_description']); ?></p>
                 </div>
 
                 <?php

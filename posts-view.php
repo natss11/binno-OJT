@@ -113,9 +113,9 @@
                         </div>
                     </div>
                 </div>
-                <img id="post_pic" src="<?php echo htmlspecialchars($post['post_img']); ?>" alt="<?php echo htmlspecialchars($post['post_img']); ?>" class="w-full h-full object-cover mb-2" style="background-color: #888888;">
                 <h2 class="text-2xl font-semibold mt-5 mb-2"><?php echo htmlspecialchars($post['post_heading']); ?></h2>
-                <p class="mb-5"><?php echo htmlspecialchars($post['post_bodytext']); ?></p>
+                <img id="post_pic" src="<?php echo htmlspecialchars($post['post_img']); ?>" alt="<?php echo htmlspecialchars($post['post_img']); ?>" class="w-full h-full object-cover mb-2" style="background-color: #888888;">
+                <p class="mt-5 mb-5"><?php echo htmlspecialchars($post['post_bodytext']); ?></p>
             </div>
 
     <?php
