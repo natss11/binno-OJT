@@ -47,9 +47,9 @@
                         <div class="newsletter mb-4">
                             <h4 class="text-black text-l">Newsletter</h4>
                             <p class="text-black text-sm">Become a part of the revolution by being up-to-date with our latest offering by startups and startup enablers!</p>
-                            <form action="/subscribe" method="post" class="flex items-center">
+                            <form id="newsletterForm" class="flex items-center">
                                 <div class="relative mt-3 md:mt-0">
-                                    <input type="text" placeholder="Enter your email here..." class="px-6 py-2 rounded-full border shadow-md focus:outline-none focus:ring focus:border-blue-300 md:w-full" />
+                                    <input id="emailInput" type="email" placeholder="Enter your email here..." class="px-6 py-2 rounded-full border shadow-md focus:outline-none focus:ring focus:border-blue-300 md:w-full" />
                                 </div>
                                 <button type="submit" class="btn-subscribe ml-2">
                                     <span>Subscribe</span>
@@ -61,6 +61,45 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            $(document).ready(function() {
+                // Intercept form submission
+                $('#newsletterForm').submit(function(event) {
+                    event.preventDefault(); // Prevent default form submission
+
+                    // Get email input value
+                    var email = $('#emailInput').val();
+
+                    // Check if email is empty
+                    if (!email) {
+                        alert('Please enter your email.');
+                        return; // Exit function if email is empty
+                    }
+
+                    // Make AJAX POST request to your API
+                    $.ajax({
+                        url: 'http://217.196.51.115/m/api/newsletter/subscribe', // Your API endpoint
+                        method: 'POST',
+                        data: {
+                            email: email
+                        },
+                        success: function(response) {
+                            // Handle success response
+                            console.log(response);
+                            // Optionally, display a success message to the user
+                            alert(response.result);
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error response
+                            console.error(xhr.responseText);
+                            // Optionally, display an error message to the user
+                            alert('An error occurred. Please try again later.');
+                        }
+                    });
+                });
+            });
+        </script>
 
         <?php
         $currentYear = date("Y");
