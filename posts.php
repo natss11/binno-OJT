@@ -68,13 +68,12 @@ if (!$posts) {
                             // Check if the required properties exist in the current post
                             if (isset($post['post_dateadded']) && isset($post['post_img']) && isset($post['post_heading'])) {
                                 // Limit the display of post_heading to 20 characters and append '...'
-                                $shortened_heading = strlen($post['post_heading']) > 15 ? substr($post['post_heading'], 0, 15) . '...' : $post['post_heading'];
                         ?>
                                 <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
                                     <a href="posts-view.php?post_id=<?php echo $post['post_id']; ?>" class="link">
                                         <img src="<?php echo htmlspecialchars($post['post_img']); ?>" alt="<?php echo htmlspecialchars(($post['post_img'])); ?>" id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                         <div class="p-4 object-cover ml-5">
-                                            <h2 class="text-2xl font-semibold"><?php echo htmlspecialchars($shortened_heading); ?></h2>
+                                            <h2 class="text-2xl font-semibold"><?php echo htmlspecialchars($post['post_heading']); ?></h2>
                                             <p class="text-gray-600 text-sm"><?php echo htmlspecialchars(date('F j, Y', strtotime($post['post_dateadded']))); ?></p>
                                         </div>
                                     </a>

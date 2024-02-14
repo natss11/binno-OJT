@@ -73,12 +73,7 @@ if (!$events) {
                                     <a href="events-view.php?event_id=<?php echo $event['event_id']; ?>" class="link">
                                         <img src="<?php echo htmlspecialchars($event['event_img']); ?>" alt="<?php echo htmlspecialchars($event['event_img']); ?>" id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                         <div class="p-4 object-cover ml-5">
-                                            <h2 class="text-2xl font-semibold">
-                                                <?php
-                                                $limitedTitle = htmlspecialchars($event['event_title']);
-                                                echo strlen($limitedTitle) > 15 ? substr($limitedTitle, 0, 15) . '...' : $limitedTitle;
-                                                ?>
-                                            </h2>
+                                            <h2 class="text-2xl font-semibold"><?php echo htmlspecialchars($event['event_title']); ?></h2>
                                             <p class="text-gray-600 text-sm">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
                                         </div>
                                     </a>

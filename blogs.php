@@ -72,14 +72,7 @@ if (!$blogs) {
                                     <div class="p-4">
                                         <div class="flex items-center mb-2">
                                             <div>
-                                                <?php
-                                                $limited_title = substr($blog['blog_title'], 0, 15);
-                                                echo '<h2 class="text-2xl font-semibold">' . htmlspecialchars($limited_title);
-                                                if (strlen($blog['blog_title']) > 15) {
-                                                    echo '...';
-                                                }
-                                                echo '</h2>';
-                                                ?>
+                                                <h2 class="text-2xl font-semibold"><?php echo htmlspecialchars($blog['blog_title']); ?></h2>
                                                 <p class="text-gray-600 text-sm"><?php echo date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
                                             </div>
                                         </div>

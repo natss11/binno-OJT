@@ -75,12 +75,7 @@ if (!$programs) {
                                 <a href="<?php echo htmlspecialchars('guides-view.php') . '?program_id=' . (isset($program['program_id']) ? $program['program_id'] : ''); ?>" class="link">
                                     <img src=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> alt=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                     <div class="p-4 object-cover ml-5">
-                                        <h2 class="text-2xl font-semibold">
-                                            <?php
-                                            $heading = isset($program['program_heading']) ? $program['program_heading'] : '';
-                                            echo htmlspecialchars(strlen($heading) > 15 ? substr($heading, 0, 15) . '...' : $heading, ENT_QUOTES, 'UTF-8');
-                                            ?>
-                                        </h2>
+                                        <h2 class="text-2xl font-semibold"><?php echo htmlspecialchars($program['program_heading']); ?></h2>
                                         <p class="text-gray-600 text-sm"><?php echo date('F j, Y', strtotime(isset($program['program_dateadded']) ? $program['program_dateadded'] : '')); ?></p>
                                     </div>
                                 </a>
