@@ -97,6 +97,15 @@ if (!$enablers) {
 
                             <div class="flex flex-col items-center px-4 py-2">
                                 <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $setting_institution; ?></h2>
+                                <p class="mb-2 mt-2" style="text-align: center;">
+                                    <?php
+                                    $words = str_word_count($enabler['setting_bio'], 1);
+                                    echo htmlspecialchars(implode(' ', array_slice($words, 0, 10)));
+                                    if (count($words) > 10) {
+                                        echo '...';
+                                    }
+                                    ?>
+                                </p>
                             </div>
                         </a>
                     </div>

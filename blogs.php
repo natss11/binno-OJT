@@ -73,7 +73,7 @@ if (!$blogs) {
                                         <div class="flex items-center mb-2">
                                             <div>
                                                 <h2 class="text-2xl font-semibold"><?php echo htmlspecialchars($blog['blog_title']); ?></h2>
-                                                <p class="text-gray-600 text-sm"><?php echo date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
+                                                <p class="text-gray-600 text-sm mb-2"><?php echo date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
                                             </div>
                                         </div>
                                     </div>

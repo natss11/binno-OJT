@@ -88,7 +88,6 @@ if (!$companies) {
                     $i++;
                     // Check if the properties are set before trying to access them
                     $setting_institution = isset($company['setting_institution']) ? htmlspecialchars($company['setting_institution']) : '';
-                    $setting_institution_short = strlen($setting_institution) > 20 ? substr($setting_institution, 0, 20) . '...' : $setting_institution;
                     $setting_coverpic = isset($company['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $company['setting_coverpic'])) : '';
                     $setting_profilepic = isset($company['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $company['setting_profilepic'])) : '';
                 ?>
@@ -98,7 +97,16 @@ if (!$companies) {
                             <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2 z-10" style="background-color: #ffffff;">
 
                             <div class="flex flex-col items-center px-4 py-2"> <!-- flex container and center alignment -->
-                                <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $setting_institution_short; ?></h2>
+                                <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $setting_institution; ?></h2>
+                                <p class="mb-2 mt-2" style="text-align: center;">
+                                    <?php
+                                    $words = str_word_count($company['setting_bio'], 1);
+                                    echo htmlspecialchars(implode(' ', array_slice($words, 0, 10)));
+                                    if (count($words) > 10) {
+                                        echo '...';
+                                    }
+                                    ?>
+                                </p>
                             </div>
                         </a>
                     </div>
