@@ -69,7 +69,7 @@
                         </a>
                     </li>
                     <li style="margin-right: 65px;" class="mr-4 relative group">
-                        <a href="#" class="btn-navmenu2 blue-underline blue-text dropdown-toggle">
+                        <a href="#" class="btn-navmenu2 btn-navmenu blue-text dropdown-toggle">
                             <span class="btn-text">Profiles</span>
                             <!-- dropdown icon -->
                             <span class="dropdown-icon">▼</span>

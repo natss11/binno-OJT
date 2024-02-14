@@ -87,21 +87,18 @@ if (!$enablers) {
                 foreach ($enablers as $enabler) {
                     $i++;
                     $setting_institution = isset($enabler['setting_institution']) ? htmlspecialchars($enabler['setting_institution']) : '';
-                    $setting_institution_short = strlen($setting_institution) > 20 ? substr($setting_institution, 0, 20) . '...' : $setting_institution;
                     $setting_coverpic = isset($enabler['setting_coverpic']) ? htmlspecialchars(str_replace('profile-cover-img/', '', $enabler['setting_coverpic'])) : '';
                     $setting_profilepic = isset($enabler['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $enabler['setting_profilepic'])) : '';
                 ?>
-                    <div class="bg-white rounded-lg overflow-hidden shadow-md relative">
-                        <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-64 h-32 object-cover" style="background-color: #ffffff;">
-                        <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #ffffff;">
+                    <div class="card-container bg-white rounded-lg overflow-hidden shadow-md relative">
+                        <a onclick="redirectToProfile('<?php echo htmlspecialchars('startup-enabler-profile.php?setting_institution=' . urlencode($setting_institution) . '&member_id=' . urlencode($enabler['member_id'])); ?>')" class="link">
+                            <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-64 h-32 object-cover" style="background-color: #ffffff;">
+                            <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #ffffff;">
 
-                        <div class="flex flex-col items-center px-4 py-2">
-                            <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $setting_institution_short; ?></h2>
-                        </div>
-
-                        <div class="mt-1 mb-3 mr-3 ml-3 flex justify-end">
-                            <button class="btn-see_profile w-full" onclick="redirectToProfile('<?php echo htmlspecialchars('startup-enabler-profile.php?setting_institution=' . urlencode($setting_institution) . '&member_id=' . urlencode($enabler['member_id'])); ?>')">See Profile</button>
-                        </div>
+                            <div class="flex flex-col items-center px-4 py-2">
+                                <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $setting_institution; ?></h2>
+                            </div>
+                        </a>
                     </div>
 
                     <?php
