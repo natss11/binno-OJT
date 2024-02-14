@@ -75,7 +75,7 @@ if (!$posts || !$events || !$blogs) {
                                     <div class="p-4">
                                         <div class="flex items-center mb-2">
                                             <div>
-                                                <h2 class="text-2xl font-semibold"><?= htmlspecialchars($post['post_heading']); ?></h2>
+                                                <h2 class="text-2xl font-semibold"><?php echo strlen($post['post_heading']) > 20 ? htmlspecialchars(substr($post['post_heading'], 0, 20)) . '...' : htmlspecialchars($post['post_heading']); ?></h2>
                                                 <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
                                             </div>
                                         </div>
@@ -127,7 +127,7 @@ if (!$posts || !$events || !$blogs) {
                                     <div class="p-4">
                                         <div class="flex items-center mb-2">
                                             <div>
-                                                <h2 class="text-2xl font-semibold"><?= htmlspecialchars($event['event_title']); ?></h2>
+                                                <h2 class="text-2xl font-semibold"><?php echo strlen($event['event_title']) > 20 ? htmlspecialchars(substr($event['event_title'], 0, 20)) . '...' : htmlspecialchars($event['event_title']); ?></h2>
                                                 <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
                                             </div>
                                         </div>
@@ -177,7 +177,7 @@ if (!$posts || !$events || !$blogs) {
                                     <div class="p-4">
                                         <div class="flex items-center mb-2">
                                             <div>
-                                                <h2 class="text-2xl font-semibold"><?= htmlspecialchars($blog['blog_title']); ?></h2>
+                                                <h2 class="text-2xl font-semibold"><?php echo strlen($blog['blog_title']) > 20 ? htmlspecialchars(substr($blog['blog_title'], 0, 20)) . '...' : htmlspecialchars($blog['blog_title']); ?></h2>
                                                 <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
                                             </div>
                                         </div>
