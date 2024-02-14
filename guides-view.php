@@ -136,7 +136,7 @@ if (!$programs) {
                     echo "<img src='$author_profile_pic' alt='$author_profile_pic' id='author_profile_pic' class='w-16 h-16 object-cover rounded-full border-2 border-white shadow-lg'>";
                     echo "<div class='ml-4'>";
                     echo "<h2 class='text-xl font-semibold'>" . htmlspecialchars($author_name) . "</h2>";
-                    echo "<p class='text-gray-600 text-sm'>" . (isset($programs['program_dateadded']) ? htmlspecialchars($programs['program_dateadded']) : '') . "</p>";
+                    echo "<p class='text-gray-600 text-sm'>" . (isset($programs['program_dateadded']) ? date('F j, Y', strtotime($programs['program_dateadded'])) : '') . "</p>";
                     echo "</div>";
                     echo "</div>";
 
