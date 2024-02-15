@@ -780,9 +780,12 @@ button,
 .btn-navmenu2 {
   color: darkorange;
   border-radius: 10px;
-  text-decoration: none;
   transition-duration: 0.4s;
-
+  position: relative; 
+  text-decoration: underline;
+  text-decoration-color: darkorange; /* add this line */
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px; 
 }
 
 /*
