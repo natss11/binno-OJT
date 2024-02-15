@@ -111,7 +111,7 @@ if (!$blogs || !$authors) {
                         <h2 class="text-3xl font-semibold mt-5"><?php echo htmlspecialchars($blogs['blog_title']); ?></h2>
                     <?php endif; ?>
                     <?php if (isset($blogs['blog_img'])) : ?>
-                        <img id="blog_pic" src="<?php echo $blogs['blog_img']; ?>" alt="<?php echo htmlspecialchars($blogs['blog_img']); ?>" class="mt-5 w-full h-full object-cover" style="background-color: #888888;">
+                        <img id="blog_pic" src="<?php echo $blogs['blog_img']; ?>" alt="<?php echo htmlspecialchars($blogs['blog_img']); ?>" class="mt-5 w-full h-full object-cover shadow-lg" style="background-color: #888888;">
                     <?php endif; ?>
                     <?php if (isset($blogs['blog_content'])) : ?>
                         <p class="mb-5 mt-5"><?php echo htmlspecialchars($blogs['blog_content']); ?></p>
