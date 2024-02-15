@@ -85,38 +85,39 @@ if (!$blogs || !$authors) {
 
         <?php include 'navbar-blogs.php'; ?>
 
-        <main class="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-            <div class="container mx-auto p-8 max-w-5xl mx-auto">
-                <!-- Back icon with link to 'blogs' page -->
-                <a href="<?php echo htmlspecialchars("blogs.php"); ?>" class="blue-back text-lg">
-                    <i class="fas fa-arrow-left"></i> Back
-                </a>
+        <div class="container mx-auto p-8 max-w-5xl mx-auto">
+            <!-- Back icon with link to 'blogs' page -->
+            <a href="<?php echo htmlspecialchars("blogs.php"); ?>" class="blue-back text-lg">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
 
-                <div class="flex flex-col mt-5">
-                    <div class="flex items-center mb-3">
-                        <?php if ($author_profilepic) : ?>
-                            <!-- Display the author's profile picture -->
-                            <img src="<?php echo $author_profilepic; ?>" alt="<?php echo $author_profilepic; ?>" id="author_profile_pic" class="w-16 h-16 object-cover rounded-full border-2 border-white shadow-lg">
+        <main class="container mx-auto p-8 max-w-5xl mx-auto bg-gray-100 mb-10">
+
+            <div class="flex flex-col">
+                <div class="flex items-center mb-3">
+                    <?php if ($author_profilepic) : ?>
+                        <!-- Display the author's profile picture -->
+                        <img src="<?php echo $author_profilepic; ?>" alt="<?php echo $author_profilepic; ?>" id="author_profile_pic" class="w-16 h-16 object-cover rounded-full border-2 border-white shadow-lg">
+                    <?php endif; ?>
+                    <div class="ml-4">
+                        <?php if ($author_name) : ?>
+                            <h2 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($author_name); ?></h2>
                         <?php endif; ?>
-                        <div class="ml-4">
-                            <?php if ($author_name) : ?>
-                                <h2 class="text-xl font-semibold mb-2"><?php echo htmlspecialchars($author_name); ?></h2>
-                            <?php endif; ?>
-                            <?php if (isset($blogs['blog_dateadded'])) : ?>
-                                <p class="text-gray-600 text-sm mb-2"><?php echo date('F j, Y', strtotime($blogs['blog_dateadded'])); ?></p>
-                            <?php endif; ?>
-                        </div>
+                        <?php if (isset($blogs['blog_dateadded'])) : ?>
+                            <p class="text-gray-600 text-sm mb-2"><?php echo date('F j, Y', strtotime($blogs['blog_dateadded'])); ?></p>
+                        <?php endif; ?>
                     </div>
-                    <?php if (isset($blogs['blog_title'])) : ?>
-                        <h2 class="text-3xl font-semibold mt-5"><?php echo htmlspecialchars($blogs['blog_title']); ?></h2>
-                    <?php endif; ?>
-                    <?php if (isset($blogs['blog_img'])) : ?>
-                        <img id="blog_pic" src="<?php echo $blogs['blog_img']; ?>" alt="<?php echo htmlspecialchars($blogs['blog_img']); ?>" class="mt-5 w-full h-full object-cover shadow-lg" style="background-color: #888888;">
-                    <?php endif; ?>
-                    <?php if (isset($blogs['blog_content'])) : ?>
-                        <p class="mb-5 mt-5"><?php echo htmlspecialchars($blogs['blog_content']); ?></p>
-                    <?php endif; ?>
                 </div>
+                <?php if (isset($blogs['blog_title'])) : ?>
+                    <h2 class="text-3xl font-semibold mt-3"><?php echo htmlspecialchars($blogs['blog_title']); ?></h2>
+                <?php endif; ?>
+                <?php if (isset($blogs['blog_img'])) : ?>
+                    <img id="blog_pic" src="<?php echo $blogs['blog_img']; ?>" alt="<?php echo htmlspecialchars($blogs['blog_img']); ?>" class="mt-5 w-full h-full object-cover shadow-lg" style="background-color: #888888;">
+                <?php endif; ?>
+                <?php if (isset($blogs['blog_content'])) : ?>
+                    <p class="mb-5 mt-5"><?php echo htmlspecialchars($blogs['blog_content']); ?></p>
+                <?php endif; ?>
             </div>
         </main>
 

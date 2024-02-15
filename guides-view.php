@@ -126,7 +126,7 @@ if (!$programs) {
             </div>
 
             <!-- Right column for data -->
-            <div class="w-3/4 p-4 flex flex flex-col gap-4" id="content-container">
+            <div class="w-3/4 p-4 flex flex flex-col gap-4 bg-gray-100 mb-10" id="content-container">
                 <?php
                 // Display initial content
                 if ($programs) {

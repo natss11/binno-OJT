@@ -103,7 +103,10 @@
                 <a href="posts.php" class="blue-back text-lg">
                     <i class="fas fa-arrow-left"></i> Back
                 </a>
-                <div class="flex flex-row mb-4 mt-5">
+            </div>
+
+            <div class="container mx-auto p-8 max-w-5xl mx-auto bg-gray-100 mb-10">
+                <div class="flex flex-row mb-4">
                     <div class="flex items-center">
                         <!-- Display the author's profile picture -->
                         <img src="<?php echo $author_profilepic; ?>" alt="<?php echo $author_profilepic; ?>" id="author_profile_pic" class="w-16 h-16 object-cover rounded-full border-2 border-white shadow-lg">
