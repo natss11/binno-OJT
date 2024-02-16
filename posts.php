@@ -55,7 +55,7 @@ if (!$posts) {
                 </div>
 
                 <div class="container mx-auto p-8 px-16 flex flex-col md:flex-column">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <?php
                         //'post_dateadded' property
                         usort($posts, function ($a, $b) {

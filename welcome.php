@@ -58,7 +58,7 @@ if (!$posts || !$events || !$blogs) {
                     <h3 class="font-bold text-3xl md:text-4xl">Latest Posts</h3>
                 </div>
                 <div class="container mx-auto p-8 px-16 flex flex-col md:flex-column">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="cardContainer">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cardContainer">
                         <?php
                         // Sort the posts array by post date in descending order
                         usort($posts, function ($a, $b) {
@@ -109,7 +109,7 @@ if (!$posts || !$events || !$blogs) {
                     <h3 class="font-bold text-3xl md:text-4xl">Latest Events</h3>
                 </div>
                 <div class="container mx-auto p-8 px-16 flex flex-col md:flex-column">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="eventCardContainer">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="eventCardContainer">
 
                         <?php
                         // Sort events array by date in descending order
@@ -159,7 +159,7 @@ if (!$posts || !$events || !$blogs) {
                     <h3 class="font-bold text-3xl md:text-4xl">Latest Blogs</h3>
                 </div>
                 <div class="container mx-auto p-8 px-16 flex flex-col md:flex-column">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="blogCardContainer">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="blogCardContainer">
 
                         <?php
                         // Sort blogs by 'blog_dateadded' in descending order
