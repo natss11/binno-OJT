@@ -118,7 +118,7 @@ Remove the default font size and weight for headings.
 }
 
 .element_a:hover {
-  color: orange;
+  color: #FF7A00;
   text-decoration: underline;
 }
 
@@ -144,7 +144,7 @@ h2 {
 /* Style for h3 */
 h3 {
   font-size: 1.2em;
-  color: darkorange;
+  color: #FF7A00;
   font-weight: bold;
   /* Add any other styles you want for h3 */
 }
@@ -172,7 +172,7 @@ h6 {
 
 h7 {
   font-size: 1.25rem;
-  color: orange;
+  color: #FF7A00;
   font-weight: bold;
 }
 
@@ -194,7 +194,7 @@ h9 {
 
 h10 {
   font-size: 2em;
-  color: orange;
+  color: #FF7A00;
   font-weight: bold;
   /* Add any other styles you want for h2 */
 }
@@ -511,6 +511,7 @@ button,
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
   /* Add shadow when hovered */
   /* Add any other styles you want for hover effect */
+  background-color: #FF7A00;
 }
 
 .link {
@@ -608,7 +609,7 @@ button,
 }
 
 .orange-text:hover {
-  color: orange;
+  color: #FF7A00;
 }
 
 /* Style for the custom button */
@@ -639,7 +640,7 @@ button,
 }
 
 .btn-sub {
-  background-color: orange;
+  background-color: #FF7A00;
   color: white;
   padding: 10px 100px;
   border-radius: 20px;
@@ -672,7 +673,7 @@ button,
 }
 
 .mt-4.flex.justify-end button {
-  background-color: orange;
+  background-color: #FF7A00;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -697,7 +698,7 @@ button,
 
 .tab-btn:hover {
   /* Set the styles for the buttons on hover */
-  color: orange;
+  color: #FF7A00;
   /* Text color on hover */
   font-weight: bold;
   /* Font weight on hover */
@@ -705,7 +706,7 @@ button,
 
 .tab-btn.active {
   /* Set styles for the active button */
-  color: orange;
+  color: #FF7A00;
   /* Text color for the active button */
   font-weight: bold;
   /* Font weight for the active button */
@@ -732,7 +733,7 @@ button,
 }
 
 #chapter-list a.active {
-  color: orange;
+  color: #FF7A00;
   /* Set text color for better visibility */
 }
 
@@ -765,7 +766,7 @@ button,
 .btn-navmenu:hover::after,
 .btn-navmenu:focus::after {
   /* Change to :focus for click effect */
-  background-color: darkorange;
+  background-color: #FF7A00;
   /* Change to desired color */
   transform: scaleX(1);
   /* Make the underline visible */
@@ -773,17 +774,17 @@ button,
 
 .btn-navmenu:hover,
 .btn-navmenu:focus {
-  color: darkorange;
+  color: #FF7A00;
   /* Ensure text color remains visible */
 }
 
 .btn-navmenu2 {
-  color: darkorange;
+  color: #FF7A00;
   border-radius: 10px;
   transition-duration: 0.4s;
   position: relative; 
   text-decoration: underline;
-  text-decoration-color: darkorange; /* add this line */
+  text-decoration-color: #FF7A00; /* add this line */
   text-decoration-thickness: 2px;
   text-underline-offset: 3px; 
 }
