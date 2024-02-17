@@ -55,7 +55,7 @@ if (!$events) {
                     <h3 class="font-bold text-3xl md:text-4xl">Events</h3>
                 </div>
 
-                <div class="container mx-auto p-8 px-16 flex flex-col md:flex-column">
+                <div class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <?php
                         // Sort the events array by date in descending order

@@ -10,6 +10,65 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
     <title>BINNO</title>
 
+    <style>
+        .menu-icon {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                cursor: pointer;
+            }
+
+            .menu-icon i {
+                font-size: 24px;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 80px;
+                /* Adjust as per your design */
+                right: 0;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                padding: 10px;
+                border-radius: 5px;
+            }
+
+            .nav-menu.show {
+                display: block;
+            }
+
+            .nav-menu li {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .nav-menu li a {
+                display: block;
+                padding: 10px;
+                color: #333;
+                text-decoration: none;
+            }
+
+            .nav-menu li a:hover {
+                background-color: #5c9fef;
+            }
+
+            /* Blue hover for menu icon */
+            .menu-icon:hover .nav-menu li a {
+                color: #5c9fef;
+                text-decoration: none;
+            }
+        }
+    </style>
+
     <script>
         $(document).ready(function() {
             $('.dropdown-toggle').on('click', function(e) {
@@ -40,8 +99,13 @@
                     </a>
                 </div>
 
+                <!-- Menu Icon for smaller screens -->
+                <div class="menu-icon md:hidden">
+                    <i class="fas fa-bars" id="menuToggle"></i>
+                </div>
+
                 <!-- Navigation menu -->
-                <ul class="md:flex md:justify-end">
+                <ul class="md:flex md:justify-end nav-menu" id="navMenu">
 
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="welcome.php" class="blue-underline">
@@ -93,6 +157,22 @@
             </nav>
         </div>
     </header>
+
+    <script>
+        $(document).ready(function() {
+            $('#menuToggle').click(function() {
+                $('#navMenu').toggleClass('show');
+            });
+
+            // Hide dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.dropdown-toggle').length && !$(e.target).closest('#menuToggle').length) {
+                    $('.dropdown-toggle').next('ul').addClass('hidden');
+                    $('#navMenu').removeClass('show');
+                }
+            });
+        });
+    </script>
 
 </body>
 
