@@ -57,10 +57,6 @@
                 text-decoration: none;
             }
 
-            .nav-menu li a:hover {
-                background-color: #5c9fef;
-            }
-
             /* Blue hover for menu icon */
             .menu-icon:hover .nav-menu li a {
                 color: #5c9fef;
