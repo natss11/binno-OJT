@@ -109,16 +109,16 @@ if (!$programs) {
                 <i class="fas fa-arrow-left"></i> Back
             </a>
         </div>
-        <div class="flex container mx-auto p-8 px-42">
+        <div class="flex flex-col lg:flex-row container mx-auto p-8 lg:px-20">
             <!-- Left column for chapters -->
-            <div class="w-1/4 p-4">
+            <div class="w-full lg:w-1/4 p-4">
                 <h1 class="element_h1">Chapters</h1>
                 <ul id="chapter-list" class="mt-5">
                     <?php
                     // Display chapters
                     if (isset($programs['program_pages']) && is_array($programs['program_pages'])) {
                         foreach ($programs['program_pages'] as $index => $page) {
-                            echo "<li class='mt-10'><a href='#' onclick='loadChapter($index)' class='element_a'>{$page['program_pages_title']}</a></li>";
+                            echo "<li class='mt-4 lg:mt-10'><a href='#' onclick='loadChapter($index)' class='element_a'>{$page['program_pages_title']}</a></li>";
                         }
                     }
                     ?>
@@ -126,7 +126,7 @@ if (!$programs) {
             </div>
 
             <!-- Right column for data -->
-            <div class="w-3/4 p-4 flex flex flex-col gap-4 bg-gray-100 mb-10" id="content-container">
+            <div class="w-full lg:w-3/4 p-4 flex flex-col gap-4 bg-gray-100 mb-10" id="content-container">
                 <?php
                 // Display initial content
                 if ($programs) {
@@ -140,7 +140,7 @@ if (!$programs) {
                     echo "</div>";
                     echo "</div>";
 
-                    echo "<h1 class='element_h1'>" . (isset($programs['program_heading']) ? htmlspecialchars($programs['program_heading']) : '') . "</h1>";
+                    echo "<h1 class='element_h1 mt-4 lg:mt-6'>" . (isset($programs['program_heading']) ? htmlspecialchars($programs['program_heading']) : '') . "</h1>";
                     echo "<p class='element_p'>" . (isset($programs['program_description']) ? htmlspecialchars($programs['program_description']) : '') . "</p>";
                 } else {
                     echo "Failed to fetch data.";

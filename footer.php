@@ -15,7 +15,7 @@
         <div class="px-16 flex flex-col md:flex-column">
             <div class="flex flex-wrap items-center justify-center">
                 <div class="logo">
-                    <a href="/">
+                    <a href="welcome.php">
                         <img class="w-32 h-32" src="logo/logo.png" alt="Logo">
                     </a>
                 </div>

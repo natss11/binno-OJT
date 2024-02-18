@@ -94,7 +94,7 @@
         <div>
             <nav class="h-40 px-5 py-4 md:py-0 md:px-10 flex flex-col md:flex-row justify-between items-center">
                 <div class="logo mb-4 md:mb-0">
-                    <a href="/">
+                    <a href="welcome.php">
                         <img class="w-52 h-52 md:w-64 md:h-64 mb-4" src="logo/logo.png" alt="Logo">
                     </a>
                 </div>

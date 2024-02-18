@@ -95,7 +95,7 @@ if (!$enablers) {
             if ($selected_enabler) {
             ?>
 
-                <div class="container mx-auto p-15 px-36">
+                <div class="container mx-auto p-15 sm:px-36">
                     <div class="bg-white rounded-lg overflow-hidden shadow-md mb-5">
                         <!-- Use loadCoverImage for cover pic -->
                         <img id="cover_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_coverpic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-cover-img/', '', $selected_enabler['setting_coverpic'])); ?>" class="w-full h-64 object-cover shadow-lg" style="background-color: #ffffff;">
@@ -110,26 +110,19 @@ if (!$enablers) {
                     </div>
                 </div>
 
-                <!-- Left column for chapters and company description -->
-                <div class="flex container mx-auto p-15 px-36">
-                    <div class="left-column w-1/3 p-4 bg-gray-200 mt-16">
-                        <h7>Company Description</h7>
-                        <p class="text-sm text-gray-600 mb-10 mt-3"><?php echo $selected_enabler['setting_bio']; ?></p>
+                <div class="container mx-auto sm:px-36">
 
-                        <h7>Company Address</h7>
-                        <p class="text-sm text-gray-600 mb-2 mt-3"><?php echo $selected_enabler['setting_address']; ?></p>
-                    </div>
-
-                    <!-- Right column for data -->
-                    <div class="right-column w-3/4 p-4 flex flex-col gap-4">
+                    <div class="p-4 flex flex-col gap-4">
                         <!-- Tab buttons -->
                         <div class="flex justify-end gap-10 text-xl">
                             <button class="tab-btn active" onclick="showContent('events', this)">Events</button>
                             <button class="tab-btn" onclick="showContent('blogs', this)">Blogs</button>
+                            <button class="tab-btn" onclick="showContent('about', this)">About</button>
                         </div>
 
+
                         <!-- Events content -->
-                        <div id="eventsContent" class="ml-5" >
+                        <div id="eventsContent" class="ml-5">
                             <h10>Events</h10>
                             <?php
                             // Fetch events for the specific member
@@ -163,7 +156,7 @@ if (!$enablers) {
                                         </div>
 
                                         <h2 class="text-sm font-bold mt-3"><?php echo $event['event_title']; ?></h2>
-                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
+                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                         <p class="text-sm font-semibold text-black-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
                                         <p class="text-sm text-black-800 mt-3">
                                             <?php echo $short_description; ?>
@@ -246,7 +239,7 @@ if (!$enablers) {
                                                 </div>
                                             </div>
                                             <h2 class="text-sm font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>
-                                            <img id="blog_pic_<?php echo $blog['blog_id']; ?>" alt="<?php echo $blog['blog_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
+                                            <img id="blog_pic_<?php echo $blog['blog_id']; ?>" alt="<?php echo $blog['blog_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                             <p class="text-sm text-black-800 mt-3">
                                                 <?php echo $display_content; ?>
                                                 <?php if ($display_see_more) { ?>
@@ -281,12 +274,26 @@ if (!$enablers) {
                             </script>
                         </div>
 
+                        <div id="aboutContent" class="ml-5" style="display: none;">
+                            <h10>About Us</h10>
+                            <div id="aboutContent" class="mt-5">
+                                <div class="p-4 bg-gray-200">
+                                    <h7 class="text-lg font-semibold">Company Description</h7>
+                                    <p class="text-sm mb-10 mt-3"><?php echo $selected_enabler['setting_bio']; ?></p>
+
+                                    <h7 class="text-lg font-semibold">Company Address</h7>
+                                    <p class="text-sm mb-2 mt-3"><?php echo $selected_enabler['setting_address']; ?></p>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- JavaScript to handle tab switching -->
                         <script>
                             function showContent(tabName, tabBtn) {
                                 // Hide all content
                                 document.getElementById('eventsContent').style.display = 'none';
                                 document.getElementById('blogsContent').style.display = 'none';
+                                document.getElementById('aboutContent').style.display = 'none';
 
                                 // Deactivate all tabs
                                 document.querySelectorAll('.tab-btn').forEach(function(tabBtn) {
@@ -314,8 +321,6 @@ if (!$enablers) {
                 ?>
 
                 </div>
-
-                <?php include 'footer.php'; ?>
 
     </body>
 

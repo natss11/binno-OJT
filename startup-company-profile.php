@@ -94,7 +94,7 @@
             // Display company details if found
             if (isset($selected_company['setting_institution'])) {
             ?>
-                <div class="container mx-auto p-15 px-36">
+                <div class="container mx-auto p-15 sm:px-36">
                     <div class="bg-white rounded-lg overflow-hidden shadow-md mb-5">
                         <img id="cover_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_coverpic']; ?>" alt="<?php echo str_replace('profile-cover-img/', '', $selected_company['setting_coverpic']); ?>" class="w-full h-64 object-cover shadow-lg" style="background-color: #ffffff;">
                     </div>
@@ -107,22 +107,13 @@
                     </div>
                 </div>
 
-                <!-- Left column for chapters and company description -->
-                <div class="flex container mx-auto p-15 px-36">
-                    <div class="w-1/3 p-4 bg-gray-200 mt-16">
-                        <h7>About Us</h7>
-                        <p class="text-sm text-gray-600 mb-10 mt-3"><?php echo $selected_company['setting_bio']; ?></p>
+                <div class="container mx-auto sm:px-36">
 
-                        <h7>Address</h7>
-                        <p class="text-sm text-gray-600 mb-2 mt-3"><?php echo $selected_company['setting_address']; ?></p>
-                    </div>
-
-                    <!-- Right column for data -->
-                    <div class="w-3/4 p-4 flex flex-col gap-4">
                         <!-- Tab buttons -->
                         <div class="flex justify-end gap-10 text-xl">
                             <button class="tab-btn active" onclick="showContent('events', this)">Events</button>
                             <button class="tab-btn" onclick="showContent('posts', this)">Posts</button>
+                            <button class="tab-btn" onclick="showContent('about', this)">About</button>
                         </div>
 
                         <!-- Events content -->
@@ -166,7 +157,7 @@
                                             </div>
                                         </div>
                                         <h2 class="text-sm font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
-                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
+                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                         <p class="text-sm font-semibold text-black-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
                                         <p class="text-sm text-black-800 mb-2 mt-2">
                                             <?php
@@ -216,7 +207,7 @@
                             <div class="flex justify-between mb-3">
                                 <h10>Posts</h10>
                                 <div>
-                                    <select id="categorySelect" class="block w-full py-2 px-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onchange="filterPosts()">
+                                    <select id="categorySelect" class="mt-3 block w-full py-2 px-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onchange="filterPosts()">
                                         <option value="">All Posts</option>
                                         <option value="Milestone">Milestone</option>
                                         <option value="Promotion">Promotion</option>
@@ -251,7 +242,7 @@
                                                 </div>
                                             </div>
                                             <h2 class="text-sm font-bold mt-3"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
-                                            <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-64 object-cover mb-2 mt-3" style="background-color: #ffffff;">
+                                            <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                             <p class="text-sm text-black-800 mb-2 mt-2">
                                                 <?php echo $short_bodytext; ?>
                                                 <?php if ($display_see_more) : ?>
@@ -279,6 +270,20 @@
                             }
                             ?>
                         </div>
+
+                        <div id="aboutContent" class="ml-5" style="display: none;">
+                            <h10>About Us</h10>
+                            <div id="aboutContent" class="mt-5">
+                                <div class="p-4 bg-gray-200">
+                                    <h7>About Us</h7>
+                                    <p class="text-sm text-gray-600 mb-10 mt-3"><?php echo $selected_company['setting_bio']; ?></p>
+
+                                    <h7>Address</h7>
+                                    <p class="text-sm text-gray-600 mb-2 mt-3"><?php echo $selected_company['setting_address']; ?></p>
+                                </div>
+                            </div>
+                        </div>
+
                         <script>
                             function filterPosts() {
                                 var category = document.getElementById("categorySelect").value;
@@ -301,8 +306,6 @@
                                 }
                             }
                         </script>
-
-                    </div>
                 </div>
 
                 <!-- JavaScript to handle tab switching -->
@@ -357,8 +360,6 @@
     <?php
     }
     ?>
-
-    <?php include 'footer.php'; ?>
 
 </body>
 
