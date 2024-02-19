@@ -49,8 +49,8 @@ function loadProfilePic($authorProfilePic)
 
 $blog_id = isset($_GET['blog_id']) ? $_GET['blog_id'] : null;
 
-$blogs = fetch_api_data("http://217.196.51.115/m/api/blogs/$blog_id");
-$authors = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
+$blogs = fetch_api_data("http://binnostartup.site/m/api/blogs/$blog_id");
+$authors = fetch_api_data("http://binnostartup.site/m/api/members/enablers");
 
 if (!$blogs || !$authors) {
     // Handle the case where the API request failed or returned invalid data
@@ -128,7 +128,7 @@ if (!$blogs || !$authors) {
                 var currentSrc = imgElement.alt;
 
                 // Fetch image data from API
-                const res = await fetch('http://217.196.51.115/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
+                const res = await fetch('http://binnostartup.site/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
                     .then(response => response.blob())
                     .then(data => {
                         // Create a blob from the response data
@@ -154,7 +154,7 @@ if (!$blogs || !$authors) {
                 const loadImage = async () => {
                     const currentSrc = document.getElementById('blog_pic').alt;
                     const res = await fetch(
-                        `http://217.196.51.115/m/api/images?filePath=blog-pics/${encodeURIComponent(currentSrc)}`
+                        `http://binnostartup.site/m/api/images?filePath=blog-pics/${encodeURIComponent(currentSrc)}`
                     );
 
                     const blob = await res.blob();
