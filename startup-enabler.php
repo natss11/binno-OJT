@@ -70,7 +70,7 @@ if (!$enablers) {
         <?php include 'navbar-profiles.php'; ?>
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-            <h1 class="font-bold text-3xl md:text-6xl ml-10 mt-5 mb-5" style="color: #ff7a00;">Startup Enablers</h1>
+            <h1 class="font-bold text-3xl md:text-6xl text-center mt-5 mb-5" style="color: #ff7a00;">Startup Enablers</h1>
             <p class="text-lg mb-10 mx-20" style="text-align: center;">Welcome to an exciting glimpse into
                 the vibrant and dynamic world of startup enablers in the Bicol Region! Nestled in the Philippines,
                 this picturesque region is not only known for its natural beauty but also for

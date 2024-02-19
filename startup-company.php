@@ -71,7 +71,7 @@ if (!$companies) {
         <?php include 'navbar-profiles.php'; ?>
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-            <h1 class="font-bold text-3xl md:text-6xl ml-10 mt-5 mb-5" style="color: #ff7a00;">Startup Companies</h1>
+            <h1 class="font-bold text-3xl md:text-6xl text-center mt-5 mb-5" style="color: #ff7a00;">Startup Companies</h1>
             <p class="text-lg mb-10 mx-20" style="text-align: center;">Welcome to the exciting world of entrepreneurship in the Bicol
                 Region! In this dynamic and rapidly evolving landscape, we embark on a journey to explore and
                 discover the latest startups that are revolutionizing industries, solving pressing challenges,
