@@ -60,7 +60,7 @@ function loadProfilePic($authorProfilePic)
 $program_id = isset($_GET['program_id']) ? $_GET['program_id'] : 0;
 
 // Fetch program data
-$api_url_programs = "http://binnostartup.site/m/api/programs/$program_id";
+$api_url_programs = "https://binnostartup.site/m/api/programs/$program_id";
 $programs = fetch_api_data($api_url_programs);
 
 if (!$programs) {
@@ -68,7 +68,7 @@ if (!$programs) {
     echo "Failed to fetch guides";
 } else {
     // Fetch enablers data
-    $api_url_enablers = "http://binnostartup.site/m/api/members/enablers";
+    $api_url_enablers = "https://binnostartup.site/m/api/members/enablers";
     $enablers = fetch_api_data($api_url_enablers);
 
     // Find the author's name based on program_author and member_id
@@ -192,7 +192,7 @@ if (!$programs) {
                 var currentSrc = imgElement.alt;
 
                 // Fetch image data from API
-                const res = await fetch('http://binnostartup.site/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
+                const res = await fetch('https://binnostartup.site/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
                     .then(response => response.blob())
                     .then(data => {
                         // Create a blob from the response data
@@ -217,7 +217,7 @@ if (!$programs) {
                 const loadImage = async () => {
                     const currentSrc = document.getElementById('guide_pic').alt;
                     const res = await fetch(
-                        `http://binnostartup.site/m/api/images?filePath=guide-pics/${encodeURIComponent(currentSrc)}`
+                        `https://binnostartup.site/m/api/images?filePath=guide-pics/${encodeURIComponent(currentSrc)}`
                     );
 
                     const blob = await res.blob();
