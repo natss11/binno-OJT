@@ -105,8 +105,6 @@ Remove the default font size and weight for headings.
 
 .element_p {
   font-size: 1.5rem;
-  /* Equivalent to text-sm in Tailwind */
-  text-align: justify;
 }
 
 .element_a {
