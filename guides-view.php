@@ -133,7 +133,7 @@ if (!$programs) {
                     echo "<h1 class='element_h1'>" . (isset($programs['program_heading']) ? htmlspecialchars($programs['program_heading']) : '') . "</h1>";
                     echo "<img src='{$programs['program_img']}' alt='{$programs['program_img']}' id='guide_pic' class='w-full h-64 object-cover shadow-lg'>";
 
-                    echo "<div class='flex items-center mt-4'>";
+                    echo "<div class='flex items-center mt-4 mb-2'>";
                     echo "<img src='$author_profile_pic' alt='$author_profile_pic' id='author_profile_pic' class='w-16 h-16 object-cover rounded-full border-2 border-white shadow-lg'>";
                     echo "<div class='ml-4'>";
                     echo "<h2 class='text-xl font-semibold'>" . htmlspecialchars($author_name) . "</h2>";
@@ -182,7 +182,6 @@ if (!$programs) {
             }
         </script>
 
-        <!-- Load image script -->
         <script>
             // Function to update image src from API
             const updateImageSrc = async (imgElement) => {
