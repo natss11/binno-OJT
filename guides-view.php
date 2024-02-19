@@ -130,6 +130,7 @@ if (!$programs) {
                 <?php
                 // Display initial content
                 if ($programs) {
+                    echo "<h1 class='element_h1'>" . (isset($programs['program_heading']) ? htmlspecialchars($programs['program_heading']) : '') . "</h1>";
                     echo "<img src='{$programs['program_img']}' alt='{$programs['program_img']}' id='guide_pic' class='w-full h-64 object-cover shadow-lg'>";
 
                     echo "<div class='flex items-center mt-4'>";
@@ -139,9 +140,6 @@ if (!$programs) {
                     echo "<p class='text-gray-600 text-sm'>" . (isset($programs['program_dateadded']) ? date('F j, Y', strtotime($programs['program_dateadded'])) : '') . "</p>";
                     echo "</div>";
                     echo "</div>";
-
-                    echo "<h1 class='element_h1 mt-4 lg:mt-6'>" . (isset($programs['program_heading']) ? htmlspecialchars($programs['program_heading']) : '') . "</h1>";
-                    echo "<p class='element_p'>" . (isset($programs['program_description']) ? htmlspecialchars($programs['program_description']) : '') . "</p>";
                 } else {
                     echo "Failed to fetch data.";
                 }

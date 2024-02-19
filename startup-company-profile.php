@@ -306,29 +306,29 @@
                             }
                         }
                     </script>
-                </div>
 
-                <!-- JavaScript to handle tab switching -->
-                <script>
-                    function showContent(tabName, tabBtn) {
-                        // Hide all content
-                        document.getElementById('eventsContent').style.display = 'none';
-                        document.getElementById('postsContent').style.display = 'none';
+                    <!-- JavaScript to handle tab switching -->
+                    <script>
+                        function showContent(tabName, tabBtn) {
+                            // Hide all content
+                            document.getElementById('eventsContent').style.display = 'none';
+                            document.getElementById('postsContent').style.display = 'none';
+                            document.getElementById('aboutContent').style.display = 'none';
 
-                        // Deactivate all tabs
-                        document.querySelectorAll('.tab-btn').forEach(function(tabBtn) {
-                            tabBtn.classList.remove('active');
-                        });
+                            // Deactivate all tabs
+                            document.querySelectorAll('.tab-btn').forEach(function(tabBtn) {
+                                tabBtn.classList.remove('active');
+                            });
 
-                        // Show the selected content
-                        document.getElementById(tabName + 'Content').style.display = 'block';
+                            // Show the selected content
+                            document.getElementById(tabName + 'Content').style.display = 'block';
 
-                        // Activate the selected tab
-                        tabBtn.classList.add('active');
-                    }
-                </script>
+                            // Activate the selected tab
+                            tabBtn.classList.add('active');
+                        }
+                    </script>
 
-            <?php
+                <?php
                 // Call the function to load cover and profile images
                 loadImage('cover_pic_' . $selected_company['member_id'], 'profile-cover-img');
                 loadImage('profile_pic_' . $selected_company['member_id'], 'profile-img');
@@ -336,30 +336,30 @@
                 // Handle the case where the selected company or its institution is not found
                 echo "Company not found.";
             }
+                ?>
+
+                </div>
+
+                <script>
+                    const loadImage = async () => {
+                        const currentSrc = document.getElementById('profile_img').alt
+                        const res = await fetch(
+                            `http://217.196.51.115/m/api/images?filePath=profile-img/${encodeURIComponent(currentSrc)}`
+                        )
+
+                        const blob = await res.blob();
+                        const imageUrl = URL.createObjectURL(blob);
+
+                        document.getElementById('profile_img').src = imageUrl;
+
+                    }
+
+                    loadImage()
+                </script>
+
+            <?php
+        }
             ?>
-
-        </div>
-
-        <script>
-            const loadImage = async () => {
-                const currentSrc = document.getElementById('profile_img').alt
-                const res = await fetch(
-                    `http://217.196.51.115/m/api/images?filePath=profile-img/${encodeURIComponent(currentSrc)}`
-                )
-
-                const blob = await res.blob();
-                const imageUrl = URL.createObjectURL(blob);
-
-                document.getElementById('profile_img').src = imageUrl;
-
-            }
-
-            loadImage()
-        </script>
-
-    <?php
-    }
-    ?>
 
 </body>
 
