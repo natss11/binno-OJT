@@ -103,7 +103,7 @@ if (!$enablers) {
                     <div class="flex -mt-20 ml-20">
                         <!-- Use loadProfileImage for profile pic -->
                         <img id="profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_profilepic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg" style="background-color: #ffffff;">
-                        <div class="px-4 py-2 mt-16 ml-2">
+                        <div class="px-4 py-2 mt-16 ml-2">                                                                                                                                                                                                                      
                             <h4 class="text-3xl font-bold mb-2"><?php echo $selected_enabler['setting_institution']; ?></h4>
                             <p class="text-sm text-gray-600 mb-1">Startup Enabler</p>
                         </div>
