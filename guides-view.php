@@ -144,43 +144,43 @@ if (!$programs) {
                     echo "Failed to fetch data.";
                 }
                 ?>
+
+                <!-- JavaScript to handle tab switching and highlight the selected tab -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Add click event listeners to all chapter links
+                        document.querySelectorAll('#chapter-list a').forEach(function(chapterLink) {
+                            chapterLink.addEventListener('click', function(event) {
+                                event.preventDefault();
+                                // Remove 'active' class from all chapter links
+                                document.querySelectorAll('#chapter-list a').forEach(function(link) {
+                                    link.classList.remove('active');
+                                });
+                                // Add 'active' class to the clicked chapter link
+                                this.classList.add('active');
+                                // Load chapter content
+                                loadChapter(this.getAttribute('data-index'));
+                            });
+                        });
+                    });
+
+                    // JavaScript function to load chapter content
+                    function loadChapter(index) {
+                        var chapterData = <?php echo json_encode(isset($programs['program_pages']) ? $programs['program_pages'] : array()); ?>;
+                        var contentContainer = document.getElementById('content-container');
+
+                        let contents = '';
+                        if (Array.isArray(chapterData) && chapterData.length > 0 && index < chapterData.length) {
+                            chapterData[index]['elements'].forEach(element => {
+                                contents += `<${element['type']} ${element['attributes']}>${element['content']}</${element['type']}>`;
+                            });
+                        }
+
+                        contentContainer.innerHTML = contents;
+                    }
+                </script>
             </div>
         </div>
-
-        <!-- JavaScript to handle tab switching and highlight the selected tab -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Add click event listeners to all chapter links
-                document.querySelectorAll('#chapter-list a').forEach(function(chapterLink) {
-                    chapterLink.addEventListener('click', function(event) {
-                        event.preventDefault();
-                        // Remove 'active' class from all chapter links
-                        document.querySelectorAll('#chapter-list a').forEach(function(link) {
-                            link.classList.remove('active');
-                        });
-                        // Add 'active' class to the clicked chapter link
-                        this.classList.add('active');
-                        // Load chapter content
-                        loadChapter(this.getAttribute('data-index'));
-                    });
-                });
-            });
-
-            // JavaScript function to load chapter content
-            function loadChapter(index) {
-                var chapterData = <?php echo json_encode(isset($programs['program_pages']) ? $programs['program_pages'] : array()); ?>;
-                var contentContainer = document.getElementById('content-container');
-
-                let contents = '';
-                if (Array.isArray(chapterData) && chapterData.length > 0 && index < chapterData.length) {
-                    chapterData[index]['elements'].forEach(element => {
-                        contents += `<${element['type']} ${element['attributes']}>${element['content']}</${element['type']}>`;
-                    });
-                }
-
-                contentContainer.innerHTML = contents;
-            }
-        </script>
 
         <script>
             // Function to update image src from API
