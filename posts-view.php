@@ -112,7 +112,12 @@
                         <img src="<?php echo $author_profilepic; ?>" alt="<?php echo $author_profilepic; ?>" id="author_profile_pic" class="w-16 h-16 object-cover rounded-full border-2 border-white shadow-lg">
                         <div class="ml-4">
                             <h2 class="text-xl font-semibold"><?php echo htmlspecialchars($author_name); ?></h2>
-                            <p class="text-gray-600"><?php echo date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
+                            <p class="text-gray-600 text-sm">
+                                <?php
+                                $datetime = strtotime($post['post_dateadded']);
+                                echo date('F j, Y | h:i A', $datetime);
+                                ?>
+                            </p>
                         </div>
                     </div>
                 </div>

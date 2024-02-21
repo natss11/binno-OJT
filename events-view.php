@@ -110,7 +110,12 @@
                             <img src="" alt="<?php echo htmlspecialchars($authorProfilePicUrl); ?>" id="author_profile_pic" class="w-16 h-16 object-cover rounded-full border-2 border-white shadow-lg mb-2">
                             <div class="ml-4">
                                 <?php echo '<h2 class="text-xl font-semibold">' . htmlspecialchars($authorName) . '</h2>'; ?>
-                                <p class="text-gray-600">Created: <?php echo date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
+                                <p class="text-sm text-gray-600">
+                                    <?php
+                                    $event_datetime = strtotime($event['event_datecreated']);
+                                    echo date('F j, Y | h:i A', $event_datetime);
+                                    ?>
+                                </p>
                             </div>
                         </div>
                     </div>

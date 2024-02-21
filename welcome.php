@@ -57,7 +57,7 @@ if (!$posts || !$events || !$blogs) {
                 <div class="text-center">
                     <h3 class="font-bold text-3xl md:text-4xl">Latest Posts</h3>
                 </div>
-                
+
                 <div class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cardContainer">
                         <?php
@@ -77,7 +77,10 @@ if (!$posts || !$events || !$blogs) {
                                         <div class="flex items-center mb-2">
                                             <div>
                                                 <h2 class="text-2xl font-semibold"><?php echo strlen($post['post_heading']) > 20 ? htmlspecialchars(substr($post['post_heading'], 0, 20)) . '...' : htmlspecialchars($post['post_heading']); ?></h2>
-                                                <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
+                                                <p class="text-gray-600 text-sm"><?php
+                                                                                    $datetime = strtotime($post['post_dateadded']);
+                                                                                    echo date('F j, Y | h:i A', $datetime);
+                                                                                    ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -129,7 +132,8 @@ if (!$posts || !$events || !$blogs) {
                                         <div class="flex items-center mb-2">
                                             <div>
                                                 <h2 class="text-2xl font-semibold"><?php echo strlen($event['event_title']) > 20 ? htmlspecialchars(substr($event['event_title'], 0, 20)) . '...' : htmlspecialchars($event['event_title']); ?></h2>
-                                                <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
+                                                <p class="font-semibold text-sm mt-2 mb-2">When: <?php echo date('F j, Y', strtotime($event['event_date'])); ?> | <?php echo date('h:i A', strtotime($event['event_time'])); ?></p>
+                                                <p class="font-semibold text-sm mt-2 mb-2">Where: <?php echo ($event['event_address']); ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -179,7 +183,12 @@ if (!$posts || !$events || !$blogs) {
                                         <div class="flex items-center mb-2">
                                             <div>
                                                 <h2 class="text-2xl font-semibold"><?php echo strlen($blog['blog_title']) > 20 ? htmlspecialchars(substr($blog['blog_title'], 0, 20)) . '...' : htmlspecialchars($blog['blog_title']); ?></h2>
-                                                <p class="text-gray-600 text-sm"><?= date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
+                                                <p class="text-gray-600 text-sm">
+                                                    <?php
+                                                    $formatted_date = date('F j, Y | h:i A', strtotime($blog['blog_dateadded']));
+                                                    echo $formatted_date;
+                                                    ?>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>

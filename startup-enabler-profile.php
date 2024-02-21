@@ -103,7 +103,7 @@ if (!$enablers) {
                     <div class="flex flex-col sm:flex-row items-center sm:items-start -mt-20 ml-0 sm:ml-20">
                         <!-- Use loadProfileImage for profile pic -->
                         <img id="profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_profilepic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg" style="background-color: #ffffff;">
-                        <div class="px-4 py-2 sm:mt-16 flex flex-col items-center sm:text-center">
+                        <div class="px-4 py-2 sm:mt-16">
                             <h4 class="text-3xl font-bold mb-2"><?php echo $selected_enabler['setting_institution']; ?></h4>
                             <p class="text-sm text-gray-600 mb-1">Startup Enabler</p>
                         </div>
@@ -151,7 +151,12 @@ if (!$enablers) {
                                             <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                             <div class="ml-4">
                                                 <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
-                                                <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
+                                                <p class="text-sm text-gray-600">
+                                                    <?php
+                                                    $event_datetime = strtotime($event['event_datecreated']);
+                                                    echo date('F j, Y | h:i A', $event_datetime);
+                                                    ?>
+                                                </p>
                                             </div>
                                         </div>
 
@@ -236,7 +241,7 @@ if (!$enablers) {
                                                 <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                                 <div class="ml-4">
                                                     <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
-                                                    <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
+                                                    <p class="text-sm text-gray-600"><?php echo date('F j, Y | g:i A', strtotime($blog['blog_dateadded'])); ?></p>
                                                 </div>
                                             </div>
                                             <h2 class="text-sm font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>

@@ -100,9 +100,9 @@
                     </div>
                     <div class="flex flex-col sm:flex-row items-center sm:items-start -mt-20 ml-0 sm:ml-20">
                         <img id="profile_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg" style="background-color: #ffffff;">
-                        <div class="px-4 py-2 sm:mt-16 flex flex-col items-center sm:text-center">
+                        <div class="px-4 py-2 sm:mt-16">
                             <h4 class="text-3xl font-bold mb-2"><?php echo $selected_company['setting_institution']; ?></h4>
-                            <p class="text-sm text-gray-600 mb-2">Startup Company</p>
+                            <p class="text-sm text-gray-600 mb-1">Startup Company</p>
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,12 @@
                                             <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                             <div class="ml-4">
                                                 <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
-                                                <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
+                                                <p class="text-sm text-gray-600">
+                                                    <?php
+                                                    $event_datetime = strtotime($event['event_datecreated']);
+                                                    echo date('F j, Y | h:i A', $event_datetime);
+                                                    ?>
+                                                </p>
                                             </div>
                                         </div>
                                         <p class="text-sm font-semibold text-black-600 mb-2 mt-5">When: <?php echo date('F j, Y', strtotime($event['event_date'])); ?> | <?php echo date('h:i A', strtotime($event['event_time'])); ?></p>
@@ -241,7 +246,7 @@
                                                 <img id="post_profile_pic_<?php echo $post['post_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                                 <div class="ml-4">
                                                     <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
-                                                    <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
+                                                    <p class="text-sm text-gray-600"><?php echo date('F j, Y | g:i A', strtotime($post['post_dateadded'])); ?></p>
                                                 </div>
                                             </div>
                                             <h2 class="text-sm font-bold mt-3"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>

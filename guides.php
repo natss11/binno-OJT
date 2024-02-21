@@ -76,7 +76,13 @@ if (!$programs) {
                                     <img src=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> alt=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                     <div class="p-4 object-cover ml-5">
                                         <h2 class="text-2xl font-semibold"><?php echo strlen($program['program_heading']) > 20 ? htmlspecialchars(substr($program['program_heading'], 0, 20)) . '...' : htmlspecialchars($program['program_heading']); ?></h2>
-                                        <p class="text-gray-600 text-sm mb-2"><?php echo date('F j, Y', strtotime(isset($program['program_dateadded']) ? $program['program_dateadded'] : '')); ?></p>
+                                        <p class="text-gray-600 text-sm mb-2">
+                                            <?php
+                                            $program_date = isset($program['program_dateadded']) ? $program['program_dateadded'] : '';
+                                            $formatted_date = date('F j, Y | h:i A', strtotime($program_date));
+                                            echo $formatted_date;
+                                            ?>
+                                        </p>
                                     </div>
                                 </a>
                             </div>
