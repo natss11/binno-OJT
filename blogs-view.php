@@ -92,7 +92,7 @@ if (!$blogs || !$authors) {
             </a>
         </div>
 
-        <main class="container mx-auto p-8 max-w-5xl mx-auto bg-gray-100 mb-10">
+        <main class="container mx-auto p-8 max-w-5xl mx-auto mb-10">
 
             <div class="flex flex-col">
                 <div class="flex items-center mb-3">
