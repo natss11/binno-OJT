@@ -95,7 +95,7 @@ if (!$enablers) {
             if ($selected_enabler) {
             ?>
 
-                <div class="container mx-auto p-15 sm:px-36">
+                <div class="container mx-auto px-4 sm:px-8 md:px-16 lg:px-20 xl:px-32">
                     <div class="bg-white rounded-lg overflow-hidden shadow-md mb-5">
                         <!-- Use loadCoverImage for cover pic -->
                         <img id="cover_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_coverpic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-cover-img/', '', $selected_enabler['setting_coverpic'])); ?>" class="w-full h-64 object-cover shadow-lg" style="background-color: #ffffff;">
@@ -155,9 +155,10 @@ if (!$enablers) {
                                             </div>
                                         </div>
 
-                                        <h2 class="text-sm font-bold mt-3"><?php echo $event['event_title']; ?></h2>
+                                        <p class="text-m font-semibold text-black-600 mb-2 mt-5">When: <?php echo date('F j, Y', strtotime($event['event_date'])); ?> | <?php echo date('h:i A', strtotime($event['event_time'])); ?></p>
+                                        <p class="font-semibold text-m mt-2 mb-2">Where: <?php echo ($event['event_address']); ?></p>
+                                        <h2 class="text-m font-bold mt-3"><?php echo $event['event_title']; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                        <p class="text-sm font-semibold text-black-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
                                         <p class="text-sm text-black-800 mt-3">
                                             <?php echo $short_description; ?>
                                             <?php if (count($description_words) > 50) : ?>
@@ -238,7 +239,7 @@ if (!$enablers) {
                                                     <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
                                                 </div>
                                             </div>
-                                            <h2 class="text-sm font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>
+                                            <h2 class="text-m font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>
                                             <img id="blog_pic_<?php echo $blog['blog_id']; ?>" alt="<?php echo $blog['blog_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                             <p class="text-sm text-black-800 mt-3">
                                                 <?php echo $display_content; ?>

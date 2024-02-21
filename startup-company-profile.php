@@ -157,9 +157,10 @@
                                                 <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
                                             </div>
                                         </div>
-                                        <h2 class="text-sm font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
+                                        <p class="text-m font-semibold text-black-600 mb-2 mt-5">When: <?php echo date('F j, Y', strtotime($event['event_date'])); ?> | <?php echo date('h:i A', strtotime($event['event_time'])); ?></p>
+                                        <p class="font-semibold text-m mt-2 mb-2">Where: <?php echo ($event['event_address']); ?></p>
+                                        <h2 class="text-m font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                        <p class="text-sm font-semibold text-black-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
                                         <p class="text-sm text-black-800 mb-2 mt-2">
                                             <?php
                                             // Display short description and toggle with JavaScript
@@ -243,7 +244,7 @@
                                                     <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
                                                 </div>
                                             </div>
-                                            <h2 class="text-sm font-bold mt-3"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
+                                            <h2 class="text-m font-bold mt-3"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
                                             <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                             <p class="text-sm text-black-800 mb-2 mt-2">
                                                 <?php echo $short_bodytext; ?>
