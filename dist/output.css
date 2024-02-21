@@ -139,6 +139,10 @@ h2 {
   /* Add any other styles you want for h2 */
 }
 
+iframe {
+  height: 500px;
+}
+
 /* Style for h3 */
 h3 {
   font-size: 1.2em;
@@ -780,11 +784,12 @@ button,
   color: #FF7A00;
   border-radius: 10px;
   transition-duration: 0.4s;
-  position: relative; 
+  position: relative;
   text-decoration: underline;
-  text-decoration-color: #FF7A00; /* add this line */
+  text-decoration-color: #FF7A00;
+  /* add this line */
   text-decoration-thickness: 2px;
-  text-underline-offset: 3px; 
+  text-underline-offset: 3px;
 }
 
 /*
