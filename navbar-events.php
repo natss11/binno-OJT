@@ -38,6 +38,7 @@
                 border: 1px solid #ccc;
                 padding: 10px;
                 border-radius: 5px;
+                z-index: 1000;
             }
 
             .nav-menu.show {
