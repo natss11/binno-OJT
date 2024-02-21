@@ -100,10 +100,10 @@ if (!$enablers) {
                         <!-- Use loadCoverImage for cover pic -->
                         <img id="cover_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_coverpic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-cover-img/', '', $selected_enabler['setting_coverpic'])); ?>" class="w-full h-64 object-cover shadow-lg" style="background-color: #ffffff;">
                     </div>
-                    <div class="flex -mt-20 ml-20">
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start -mt-20 ml-0 sm:ml-20">
                         <!-- Use loadProfileImage for profile pic -->
                         <img id="profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_profilepic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg" style="background-color: #ffffff;">
-                        <div class="px-4 py-2 mt-16 ml-2">
+                        <div class="px-4 py-2 sm:mt-16">
                             <h4 class="text-3xl font-bold mb-2"><?php echo $selected_enabler['setting_institution']; ?></h4>
                             <p class="text-sm text-gray-600 mb-1">Startup Enabler</p>
                         </div>
@@ -114,7 +114,7 @@ if (!$enablers) {
 
                     <div class="p-4 flex flex-col gap-4">
                         <!-- Tab buttons -->
-                        <div class="flex justify-end gap-10 text-xl">
+                        <div class="flex justify-center sm:justify-end gap-10 text-xl">
                             <button class="tab-btn active" onclick="showContent('events', this)">Events</button>
                             <button class="tab-btn" onclick="showContent('blogs', this)">Blogs</button>
                             <button class="tab-btn" onclick="showContent('about', this)">About</button>
@@ -155,9 +155,9 @@ if (!$enablers) {
                                             </div>
                                         </div>
 
-                                        <p class="text-m font-semibold text-black-600 mb-2 mt-5">When: <?php echo date('F j, Y', strtotime($event['event_date'])); ?> | <?php echo date('h:i A', strtotime($event['event_time'])); ?></p>
-                                        <p class="font-semibold text-m mt-2 mb-2">Where: <?php echo ($event['event_address']); ?></p>
-                                        <h2 class="text-m font-bold mt-3"><?php echo $event['event_title']; ?></h2>
+                                        <p class="text-sm font-semibold text-black-600 mb-2 mt-5">When: <?php echo date('F j, Y', strtotime($event['event_date'])); ?> | <?php echo date('h:i A', strtotime($event['event_time'])); ?></p>
+                                        <p class="font-semibold text-sm mt-2 mb-2">Where: <?php echo ($event['event_address']); ?></p>
+                                        <h2 class="text-sm font-bold mt-3"><?php echo $event['event_title']; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                         <p class="text-sm text-black-800 mt-3">
                                             <?php echo $short_description; ?>
@@ -239,7 +239,7 @@ if (!$enablers) {
                                                     <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($blog['blog_dateadded'])); ?></p>
                                                 </div>
                                             </div>
-                                            <h2 class="text-m font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>
+                                            <h2 class="text-sm font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>
                                             <img id="blog_pic_<?php echo $blog['blog_id']; ?>" alt="<?php echo $blog['blog_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
                                             <p class="text-sm text-black-800 mt-3">
                                                 <?php echo $display_content; ?>
