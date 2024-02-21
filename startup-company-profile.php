@@ -109,226 +109,231 @@
 
                 <div class="container mx-auto sm:px-36">
 
-                    <!-- Tab buttons -->
-                    <div class="flex justify-end gap-10 text-xl">
-                        <button class="tab-btn active" onclick="showContent('events', this)">Events</button>
-                        <button class="tab-btn" onclick="showContent('posts', this)">Posts</button>
-                        <button class="tab-btn" onclick="showContent('about', this)">About</button>
-                    </div>
-
-                    <!-- Events content -->
-                    <div id="eventsContent" class="ml-5">
-                        <h10>Events</h10>
-                        <?php
-                        // Fetch events for the specific member
-                        $events_url = "http://217.196.51.115/m/api/events/";
-                        $member_id = $selected_company['member_id'];
-
-                        // Initialize $events before checking its existence
-                        $events = fetch_api_data($events_url);
-
-                        if ($events) {
-                            // Filter and display events for the specific member
-                            $filtered_events = array_filter($events, function ($event) use ($member_id) {
-                                return $event['event_author'] === $member_id;
-                            });
-
-                            // Sort events by date in descending order (newest to oldest)
-                            usort($filtered_events, function ($a, $b) {
-                                return strtotime($b['event_date']) - strtotime($a['event_date']);
-                            });
-
-                            foreach ($filtered_events as $event) {
-                                // Limit description to 50 words
-                                $description_words = explode(' ', $event['event_description']);
-                                $short_description = implode(' ', array_slice($description_words, 0, 50));
-                                $long_description = implode(' ', array_slice($description_words, 50));
-
-                                // Check if the description has 50 or fewer words
-                                $display_see_more = count($description_words) > 50;
-
-                        ?>
-                                <div class="border p-4 mb-4 mt-5 bg-gray-100">
-                                    <div class="flex items-center">
-                                        <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
-                                        <div class="ml-4">
-                                            <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
-                                            <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
-                                        </div>
-                                    </div>
-                                    <h2 class="text-sm font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
-                                    <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
-                                    <p class="text-sm font-semibold text-black-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
-                                    <p class="text-sm text-black-800 mb-2 mt-2">
-                                        <?php
-                                        // Display short description and toggle with JavaScript
-                                        echo $short_description;
-                                        ?>
-                                        <?php if ($display_see_more) : ?>
-                                            <span id="toggle_<?php echo $event['event_id']; ?>" class="see-more" style="display: inline;">
-                                                ... <a href="javascript:void(0);" onclick="toggleDescription('<?php echo $event['event_id']; ?>')">See more</a>
-                                            </span>
-                                        <?php endif; ?>
-                                        <span id="expanded_<?php echo $event['event_id']; ?>" style="display: none;">
-                                            <?php echo $long_description; ?>
-                                            <a href="javascript:void(0);" onclick="toggleDescription('<?php echo $event['event_id']; ?>')" class="see-less">See less</a>
-                                        </span>
-                                    </p>
-                                </div>
-                        <?php
-                                // Call the function to load the image
-                                loadImage('event_pic_' . $event['event_id'], 'event-pics');
-
-                                // Call the function to load the profile pic with a unique ID for each event
-                                loadImage('event_profile_pic_' . $event['event_id'], 'profile-img');
-                            }
-                        } else {
-                            // Handle the case where the API request for events failed or returned invalid data
-                            echo "Failed to fetch events.";
-                        }
-                        ?>
-                    </div>
-                    <script>
-                        function toggleDescription(eventId) {
-                            var toggleSpan = document.getElementById('toggle_' + eventId);
-                            var expandedSpan = document.getElementById('expanded_' + eventId);
-
-                            if (toggleSpan.style.display === "inline") {
-                                toggleSpan.style.display = "none";
-                                expandedSpan.style.display = "inline";
-                            } else {
-                                toggleSpan.style.display = "inline";
-                                expandedSpan.style.display = "none";
-                            }
-                        }
-                    </script>
-
-                    <div id="postsContent" class="ml-5">
-                        <div class="flex justify-between mb-3">
-                            <h10>Posts</h10>
-                            <div>
-                                <select id="categorySelect" class="mt-3 block w-full py-2 px-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onchange="filterPosts()">
-                                    <option value="">All Posts</option>
-                                    <option value="Milestone">Milestone</option>
-                                    <option value="Promotion">Promotion</option>
-                                </select>
-                            </div>
+                    <div class="p-4 flex flex-col gap-4">
+                        <!-- Tab buttons -->
+                        <div class="flex justify-end gap-10 text-xl">
+                            <button class="tab-btn active" onclick="showContent('events', this)">Events</button>
+                            <button class="tab-btn" onclick="showContent('posts', this)">Posts</button>
+                            <button class="tab-btn" onclick="showContent('about', this)">About</button>
                         </div>
 
-                        <?php
-                        // Fetch posts for the specific member
-                        $posts_url = "http://217.196.51.115/m/api/posts/";
-                        $member_id = $selected_company['member_id'];
+                        <!-- Events content -->
+                        <div id="eventsContent" class="ml-5">
+                            <h10>Events</h10>
+                            <?php
+                            // Fetch events for the specific member
+                            $events_url = "http://217.196.51.115/m/api/events/";
+                            $member_id = $selected_company['member_id'];
 
-                        // Initialize $posts before checking its existence
-                        $posts = fetch_api_data($posts_url);
+                            // Initialize $events before checking its existence
+                            $events = fetch_api_data($events_url);
 
-                        if ($posts) {
-                            // Filter and display posts for the specific member
-                            foreach ($posts as $post) {
-                                if ($post['post_author'] === $member_id) {
-                                    // Limit post body text to 50 words
-                                    $bodytext_words = explode(' ', $post['post_bodytext']);
-                                    $short_bodytext = implode(' ', array_slice($bodytext_words, 0, 50));
-                                    $long_bodytext = implode(' ', array_slice($bodytext_words, 50));
-                                    $display_see_more = count($bodytext_words) > 50;
-                        ?>
-                                    <div class="bg-gray-100 border p-4 mb-4 mt-5 post-item <?php echo $post['post_category']; ?>">
+                            if ($events) {
+                                // Filter and display events for the specific member
+                                $filtered_events = array_filter($events, function ($event) use ($member_id) {
+                                    return $event['event_author'] === $member_id;
+                                });
+
+                                // Sort events by date in descending order (newest to oldest)
+                                usort($filtered_events, function ($a, $b) {
+                                    return strtotime($b['event_date']) - strtotime($a['event_date']);
+                                });
+
+                                foreach ($filtered_events as $event) {
+                                    // Limit description to 50 words
+                                    $description_words = explode(' ', $event['event_description']);
+                                    $short_description = implode(' ', array_slice($description_words, 0, 50));
+                                    $long_description = implode(' ', array_slice($description_words, 50));
+
+                                    // Check if the description has 50 or fewer words
+                                    $display_see_more = count($description_words) > 50;
+
+                            ?>
+                                    <div class="border p-4 mb-4 mt-5 bg-gray-100">
                                         <div class="flex items-center">
-                                            <img id="post_profile_pic_<?php echo $post['post_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
+                                            <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                             <div class="ml-4">
                                                 <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
-                                                <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
+                                                <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($event['event_datecreated'])); ?></p>
                                             </div>
                                         </div>
-                                        <h2 class="text-sm font-bold mt-3"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
-                                        <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
+                                        <h2 class="text-sm font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
+                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
+                                        <p class="text-sm font-semibold text-black-600 mb-2 mt-2">Event Date: <?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
                                         <p class="text-sm text-black-800 mb-2 mt-2">
-                                            <?php echo $short_bodytext; ?>
+                                            <?php
+                                            // Display short description and toggle with JavaScript
+                                            echo $short_description;
+                                            ?>
                                             <?php if ($display_see_more) : ?>
-                                                <span id="toggle_<?php echo $post['post_id']; ?>" class="see-more" style="display: inline;">
-                                                    ... <a href="javascript:void(0);" onclick="toggleDescription('<?php echo $post['post_id']; ?>')">See more</a>
+                                                <span id="toggle_<?php echo $event['event_id']; ?>" class="see-more" style="display: inline;">
+                                                    ... <a href="javascript:void(0);" onclick="toggleDescription('<?php echo $event['event_id']; ?>')">See more</a>
                                                 </span>
                                             <?php endif; ?>
-                                            <span id="expanded_<?php echo $post['post_id']; ?>" style="display: none;">
-                                                <?php echo $long_bodytext; ?>
-                                                <a href="javascript:void(0);" onclick="toggleDescription('<?php echo $post['post_id']; ?>')" class="see-less">See less</a>
+                                            <span id="expanded_<?php echo $event['event_id']; ?>" style="display: none;">
+                                                <?php echo $long_description; ?>
+                                                <a href="javascript:void(0);" onclick="toggleDescription('<?php echo $event['event_id']; ?>')" class="see-less">See less</a>
                                             </span>
                                         </p>
                                     </div>
-                        <?php
+                            <?php
                                     // Call the function to load the image
-                                    loadImage('post_pic_' . $post['post_id'], 'post-pics');
+                                    loadImage('event_pic_' . $event['event_id'], 'event-pics');
 
-                                    // Call the function to load the profile pic with a unique ID for each post
-                                    loadImage('post_profile_pic_' . $post['post_id'], 'profile-img');
-                                }
-                            }
-                        } else {
-                            // Handle the case where the API request for posts failed or returned invalid data
-                            echo "Failed to fetch posts.";
-                        }
-                        ?>
-                    </div>
-
-                    <div id="aboutContent" class="ml-5" style="display: none;">
-                        <h10>About Us</h10>
-                        <div id="aboutContent" class="mt-5">
-                            <div class="p-4 bg-gray-200">
-                                <h7>About Us</h7>
-                                <p class="text-sm text-gray-600 mb-10 mt-3"><?php echo $selected_company['setting_bio']; ?></p>
-
-                                <h7>Address</h7>
-                                <p class="text-sm text-gray-600 mb-2 mt-3"><?php echo $selected_company['setting_address']; ?></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <script>
-                        function filterPosts() {
-                            var category = document.getElementById("categorySelect").value;
-                            var posts = document.getElementsByClassName("post-item");
-
-                            if (category === "") {
-                                // Show all posts if no category is selected
-                                for (var i = 0; i < posts.length; i++) {
-                                    posts[i].style.display = "block";
+                                    // Call the function to load the profile pic with a unique ID for each event
+                                    loadImage('event_profile_pic_' . $event['event_id'], 'profile-img');
                                 }
                             } else {
-                                // Hide posts that do not match the selected category
-                                for (var i = 0; i < posts.length; i++) {
-                                    if (!posts[i].classList.contains(category)) {
-                                        posts[i].style.display = "none";
+                                // Handle the case where the API request for events failed or returned invalid data
+                                echo "Failed to fetch events.";
+                            }
+                            ?>
+
+                            <script>
+                                function toggleDescription(eventId) {
+                                    var toggleSpan = document.getElementById('toggle_' + eventId);
+                                    var expandedSpan = document.getElementById('expanded_' + eventId);
+
+                                    if (toggleSpan.style.display === "inline") {
+                                        toggleSpan.style.display = "none";
+                                        expandedSpan.style.display = "inline";
                                     } else {
-                                        posts[i].style.display = "block";
+                                        toggleSpan.style.display = "inline";
+                                        expandedSpan.style.display = "none";
                                     }
                                 }
+                            </script>
+                        </div>
+
+                        <div id="postsContent" class="ml-5" style="display: none;">
+                            <div class="flex justify-between mb-3">
+                                <h10>Posts</h10>
+                                <div>
+                                    <select id="categorySelect" class="mt-3 block w-full py-2 px-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onchange="filterPosts()">
+                                        <option value="">All Posts</option>
+                                        <option value="Milestone">Milestone</option>
+                                        <option value="Promotion">Promotion</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <?php
+                            // Fetch posts for the specific member
+                            $posts_url = "http://217.196.51.115/m/api/posts/";
+                            $member_id = $selected_company['member_id'];
+
+                            // Initialize $posts before checking its existence
+                            $posts = fetch_api_data($posts_url);
+
+                            if ($posts) {
+                                // Filter and display posts for the specific member
+                                foreach ($posts as $post) {
+                                    if ($post['post_author'] === $member_id) {
+                                        // Limit post body text to 50 words
+                                        $bodytext_words = explode(' ', $post['post_bodytext']);
+                                        $short_bodytext = implode(' ', array_slice($bodytext_words, 0, 50));
+                                        $long_bodytext = implode(' ', array_slice($bodytext_words, 50));
+                                        $display_see_more = count($bodytext_words) > 50;
+                            ?>
+                                        <div class="bg-gray-100 border p-4 mb-4 mt-5 post-item <?php echo $post['post_category']; ?>">
+                                            <div class="flex items-center">
+                                                <img id="post_profile_pic_<?php echo $post['post_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
+                                                <div class="ml-4">
+                                                    <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
+                                                    <p class="text-sm text-gray-600"><?php echo date('F j, Y', strtotime($post['post_dateadded'])); ?></p>
+                                                </div>
+                                            </div>
+                                            <h2 class="text-sm font-bold mt-3"><?php echo isset($post['post_heading']) ? $post['post_heading'] : ''; ?></h2>
+                                            <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
+                                            <p class="text-sm text-black-800 mb-2 mt-2">
+                                                <?php echo $short_bodytext; ?>
+                                                <?php if ($display_see_more) : ?>
+                                                    <span id="toggle_<?php echo $post['post_id']; ?>" class="see-more" style="display: inline;">
+                                                        ... <a href="javascript:void(0);" onclick="toggleDescription('<?php echo $post['post_id']; ?>')">See more</a>
+                                                    </span>
+                                                <?php endif; ?>
+                                                <span id="expanded_<?php echo $post['post_id']; ?>" style="display: none;">
+                                                    <?php echo $long_bodytext; ?>
+                                                    <a href="javascript:void(0);" onclick="toggleDescription('<?php echo $post['post_id']; ?>')" class="see-less">See less</a>
+                                                </span>
+                                            </p>
+                                        </div>
+                            <?php
+                                        // Call the function to load the image
+                                        loadImage('post_pic_' . $post['post_id'], 'post-pics');
+
+                                        // Call the function to load the profile pic with a unique ID for each post
+                                        loadImage('post_profile_pic_' . $post['post_id'], 'profile-img');
+                                    }
+                                }
+                            } else {
+                                // Handle the case where the API request for posts failed or returned invalid data
+                                echo "Failed to fetch posts.";
                             }
-                        }
-                    </script>
+                            ?>
 
-                    <!-- JavaScript to handle tab switching -->
-                    <script>
-                        function showContent(tabName, tabBtn) {
-                            // Hide all content
-                            document.getElementById('eventsContent').style.display = 'none';
-                            document.getElementById('postsContent').style.display = 'none';
-                            document.getElementById('aboutContent').style.display = 'none';
+                            <script>
+                                function filterPosts() {
+                                    var category = document.getElementById("categorySelect").value;
+                                    var posts = document.getElementsByClassName("post-item");
 
-                            // Deactivate all tabs
-                            document.querySelectorAll('.tab-btn').forEach(function(tabBtn) {
-                                tabBtn.classList.remove('active');
-                            });
+                                    if (category === "") {
+                                        // Show all posts if no category is selected
+                                        for (var i = 0; i < posts.length; i++) {
+                                            posts[i].style.display = "block";
+                                        }
+                                    } else {
+                                        // Hide posts that do not match the selected category
+                                        for (var i = 0; i < posts.length; i++) {
+                                            if (!posts[i].classList.contains(category)) {
+                                                posts[i].style.display = "none";
+                                            } else {
+                                                posts[i].style.display = "block";
+                                            }
+                                        }
+                                    }
+                                }
+                            </script>
+                        </div>
 
-                            // Show the selected content
-                            document.getElementById(tabName + 'Content').style.display = 'block';
+                        <div id="aboutContent" class="ml-5" style="display: none;">
+                            <h10>About Us</h10>
+                            <div id="aboutContent" class="mt-5">
+                                <div class="p-4 bg-gray-200">
+                                    <h7>About Us</h7>
+                                    <p class="text-sm text-gray-600 mb-10 mt-3"><?php echo $selected_company['setting_bio']; ?></p>
 
-                            // Activate the selected tab
-                            tabBtn.classList.add('active');
-                        }
-                    </script>
+                                    <h7>Address</h7>
+                                    <p class="text-sm text-gray-600 mb-2 mt-3"><?php echo $selected_company['setting_address']; ?></p>
+                                </div>
+                            </div>
+                        </div>
 
-                <?php
+                    </div>
+                </div>
+
+                <!-- JavaScript to handle tab switching -->
+                <script>
+                    function showContent(tabName, tabBtn) {
+                        // Hide all content
+                        document.getElementById('eventsContent').style.display = 'none';
+                        document.getElementById('postsContent').style.display = 'none';
+                        document.getElementById('aboutContent').style.display = 'none';
+
+                        // Deactivate all tabs
+                        document.querySelectorAll('.tab-btn').forEach(function(tabBtn) {
+                            tabBtn.classList.remove('active');
+                        });
+
+                        // Show the selected content
+                        document.getElementById(tabName + 'Content').style.display = 'block';
+
+                        // Activate the selected tab
+                        tabBtn.classList.add('active');
+                    }
+                </script>
+
+            <?php
                 // Call the function to load cover and profile images
                 loadImage('cover_pic_' . $selected_company['member_id'], 'profile-cover-img');
                 loadImage('profile_pic_' . $selected_company['member_id'], 'profile-img');
@@ -336,30 +341,28 @@
                 // Handle the case where the selected company or its institution is not found
                 echo "Company not found.";
             }
-                ?>
-
-                </div>
-
-                <script>
-                    const loadImage = async () => {
-                        const currentSrc = document.getElementById('profile_img').alt
-                        const res = await fetch(
-                            `http://217.196.51.115/m/api/images?filePath=profile-img/${encodeURIComponent(currentSrc)}`
-                        )
-
-                        const blob = await res.blob();
-                        const imageUrl = URL.createObjectURL(blob);
-
-                        document.getElementById('profile_img').src = imageUrl;
-
-                    }
-
-                    loadImage()
-                </script>
-
-            <?php
-        }
             ?>
+
+            <script>
+                const loadImage = async () => {
+                    const currentSrc = document.getElementById('profile_img').alt
+                    const res = await fetch(
+                        `http://217.196.51.115/m/api/images?filePath=profile-img/${encodeURIComponent(currentSrc)}`
+                    )
+
+                    const blob = await res.blob();
+                    const imageUrl = URL.createObjectURL(blob);
+
+                    document.getElementById('profile_img').src = imageUrl;
+
+                }
+
+                loadImage()
+            </script>
+
+        <?php
+    }
+        ?>
 
 </body>
 
