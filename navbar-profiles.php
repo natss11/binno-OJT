@@ -53,13 +53,11 @@
             .nav-menu li a {
                 display: block;
                 padding: 10px;
-                color: #333;
                 text-decoration: none;
             }
 
             /* Blue hover for menu icon */
             .menu-icon:hover .nav-menu li a {
-                color: #5c9fef;
                 text-decoration: none;
             }
         }
