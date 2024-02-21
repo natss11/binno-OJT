@@ -48,12 +48,13 @@
                             <h4 class="text-black text-l">Newsletter</h4>
                             <p class="text-black text-sm">Become a part of the revolution by being up-to-date with our latest offering by startups and startup enablers!</p>
                             <form id="newsletterForm" class="flex items-center">
-                                <div class="relative mt-3 md:mt-0">
-                                    <input id="emailInput" type="email" placeholder="Enter your email here..." class="px-6 py-2 rounded-full border shadow-md focus:outline-none focus:ring focus:border-blue-300 md:w-full" />
+                                <div class="relative md:mt-0 flex">
+                                    <input id="emailInput" type="email" placeholder="Enter your email here..." class="mt-3 px-6 py-2 rounded-l-full border shadow-md focus:outline-none focus:ring focus:border-blue-300 md:w-full" />
+
+                                    <button type="submit" class="mt-3 btn-subscribe px-6 py-2 rounded-r-full ml-2">
+                                        <span>Subscribe</span>
+                                    </button>
                                 </div>
-                                <button type="submit" class="btn-subscribe ml-2">
-                                    <span>Subscribe</span>
-                                </button>
                             </form>
                         </div>
 
@@ -89,6 +90,8 @@
                             console.log(response);
                             // Optionally, display a success message to the user
                             alert(response.result);
+                            // Clear email input after successful subscription
+                            $('#emailInput').val('');
                         },
                         error: function(xhr, status, error) {
                             // Handle error response
