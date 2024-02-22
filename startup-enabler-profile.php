@@ -163,7 +163,7 @@ if (!$enablers) {
                                         <p class="text-sm font-semibold text-black-600 mb-2 mt-5">When: <?php echo date('F j, Y', strtotime($event['event_date'])); ?> | <?php echo date('h:i A', strtotime($event['event_time'])); ?></p>
                                         <p class="font-semibold text-sm mt-2 mb-2">Where: <?php echo ($event['event_address']); ?></p>
                                         <h2 class="text-sm font-bold mt-3"><?php echo $event['event_title']; ?></h2>
-                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
+                                        <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-full object-cover mb-2 mt-3 border" style="background-color: #ffffff;">
                                         <p class="text-sm text-black-800 mt-3">
                                             <?php echo $short_description; ?>
                                             <?php if (count($description_words) > 50) : ?>
@@ -245,7 +245,7 @@ if (!$enablers) {
                                                 </div>
                                             </div>
                                             <h2 class="text-sm font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>
-                                            <img id="blog_pic_<?php echo $blog['blog_id']; ?>" alt="<?php echo $blog['blog_img']; ?>" class="w-full h-full object-cover mb-2 mt-3" style="background-color: #ffffff;">
+                                            <img id="blog_pic_<?php echo $blog['blog_id']; ?>" alt="<?php echo $blog['blog_img']; ?>" class="w-full h-full object-cover mb-2 mt-3 border" style="background-color: #ffffff;">
                                             <p class="text-sm text-black-800 mt-3">
                                                 <?php echo $display_content; ?>
                                                 <?php if ($display_see_more) { ?>
