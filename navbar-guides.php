@@ -140,7 +140,7 @@
                     </li>
 
                     <li class="mr-4">
-                        <a href="membership" class="btn-blue">
+                        <a href="https://member.binnostartup.site" class="btn-blue">
                             <span>Become a member</span>
                         </a>
                     </li>

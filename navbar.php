@@ -107,26 +107,31 @@
                             <span class="btn-navmenu2">Discover</span>
                         </a>
                     </li>
+
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="posts.php" class="blue-underline">
                             <span class="btn-navmenu">Posts</span>
                         </a>
                     </li>
+
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="events.php" class="blue-underline">
                             <span class="btn-navmenu">Events</span>
                         </a>
                     </li>
+
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="blogs.php" class="blue-underline">
                             <span class="btn-navmenu">Blogs</span>
                         </a>
                     </li>
+
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="guides.php" class="blue-underline">
                             <span class="btn-navmenu">Guides</span>
                         </a>
                     </li>
+
                     <li style="margin-right: 65px;" class="mr-4 relative group">
                         <a href="#" class="btn-navmenu blue-underline dropdown-toggle">
                             <span class="btn-text">Profiles</span>
