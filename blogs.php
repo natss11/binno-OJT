@@ -71,7 +71,7 @@ if (!$blogs) {
                                     <img src="<?php echo htmlspecialchars($blog['blog_img']); ?>" alt="<?php echo htmlspecialchars($blog['blog_img']); ?>" id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                     <div class="p-4">
                                         <div class="flex items-center mb-2">
-                                            <div class="p-4 object-cover">
+                                            <div>
                                                 <h2 class="text-2xl font-semibold"><?php echo strlen($blog['blog_title']) > 20 ? htmlspecialchars(substr($blog['blog_title'], 0, 20)) . '...' : htmlspecialchars($blog['blog_title']); ?></h2>
                                                 <p class="text-gray-600 text-sm mb-2">
                                                     <?php
