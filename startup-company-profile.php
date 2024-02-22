@@ -48,7 +48,7 @@
             const loadImage<?php echo $id; ?> = async () => {
                 const currentSrc = document.getElementById('<?php echo $id; ?>').alt;
                 const res = await fetch(
-                    `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
+                    `http://binnostartup.site/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent(currentSrc)}`
                 );
 
                 const blob = await res.blob();
@@ -62,7 +62,7 @@
     <?php
     }
 
-    $companies = fetch_api_data("http://217.196.51.115/m/api/members/companies");
+    $companies = fetch_api_data("http://binnostartup.site/m/api/members/companies");
 
     if (!$companies) {
         // Handle the case where the API request failed or returned invalid data
@@ -122,7 +122,7 @@
                             <h10>Events</h10>
                             <?php
                             // Fetch events for the specific member
-                            $events_url = "http://217.196.51.115/m/api/events/";
+                            $events_url = "http://binnostartup.site/m/api/events/";
                             $member_id = $selected_company['member_id'];
 
                             // Initialize $events before checking its existence
@@ -225,7 +225,7 @@
 
                             <?php
                             // Fetch posts for the specific member
-                            $posts_url = "http://217.196.51.115/m/api/posts/";
+                            $posts_url = "http://binnostartup.site/m/api/posts/";
                             $member_id = $selected_company['member_id'];
 
                             // Initialize $posts before checking its existence
@@ -353,7 +353,7 @@
                 const loadImage = async () => {
                     const currentSrc = document.getElementById('profile_img').alt
                     const res = await fetch(
-                        `http://217.196.51.115/m/api/images?filePath=profile-img/${encodeURIComponent(currentSrc)}`
+                        `http://binnostartup.site/m/api/images?filePath=profile-img/${encodeURIComponent(currentSrc)}`
                     )
 
                     const blob = await res.blob();
