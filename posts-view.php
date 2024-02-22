@@ -109,7 +109,7 @@
                 <div class="flex flex-row mb-4">
                     <div class="flex items-center">
                         <!-- Display the author's profile picture -->
-                        <img src="<?php echo $author_profilepic; ?>" alt="<?php echo $author_profilepic; ?>" id="author_profile_pic" class="w-16 h-16 object-cover rounded-full border-2 border-white shadow-lg">
+                        <img src="<?php echo $author_profilepic; ?>" alt="<?php echo $author_profilepic; ?>" id="author_profile_pic" class="w-16 h-16 object-cover rounded-full border-2">
                         <div class="ml-4">
                             <h2 class="text-xl font-semibold"><?php echo htmlspecialchars($author_name); ?></h2>
                             <p class="text-gray-600 text-sm">

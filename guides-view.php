@@ -111,15 +111,15 @@ if (!$programs) {
         </div>
 
         <!-- Initial content section -->
-        <div class="container mx-auto p-4 lg:px-20">
+        <div class="container mx-auto p-4 lg:px-56">
             <?php
             // Display initial content
             if ($programs) {
-                echo "<h1 class='element_h1'>" . (isset($programs['program_heading']) ? htmlspecialchars($programs['program_heading']) : '') . "</h1>";
+                echo "<h1 class='element_h1 mb-2'>" . (isset($programs['program_heading']) ? htmlspecialchars($programs['program_heading']) : '') . "</h1>";
                 echo "<img src='{$programs['program_img']}' alt='{$programs['program_img']}' id='guide_pic' class='w-full h-64 object-cover shadow-lg'>";
 
                 echo "<div class='flex items-center mt-4 mb-2'>";
-                echo "<img src='$author_profile_pic' alt='$author_profile_pic' id='author_profile_pic' class='w-16 h-16 object-cover rounded-full border-2 border-white shadow-lg'>";
+                echo "<img src='$author_profile_pic' alt='$author_profile_pic' id='author_profile_pic' class='w-16 h-16 object-cover rounded-full border-2'>";
                 echo "<div class='ml-4'>";
                 echo "<h2 class='text-xl font-semibold'>" . htmlspecialchars($author_name) . "</h2>";
                 echo "<p class='text-gray-600 text-sm'>" . (isset($programs['program_dateadded']) ? date('F j, Y | g:i A', strtotime($programs['program_dateadded'])) : '') . "</p>";
@@ -131,7 +131,7 @@ if (!$programs) {
             ?>
         </div>
 
-        <div class="flex flex-col lg:flex-row container mx-auto p-8 lg:px-20">
+        <div class="flex flex-col lg:flex-row container mx-auto p-8 lg:px-56">
             <!-- Left column for chapters -->
             <div class="w-full lg:w-1/4 p-4">
                 <h1 class="element_h1">Chapters</h1>

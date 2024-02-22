@@ -148,7 +148,7 @@ if (!$enablers) {
                             ?>
                                     <div class="bg-white border p-4 mb-4 mt-5" style="border-radius: 10px;">
                                         <div class="flex items-center">
-                                            <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
+                                            <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border">
                                             <div class="ml-4">
                                                 <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
                                                 <p class="text-sm text-gray-600">
@@ -238,7 +238,7 @@ if (!$enablers) {
                                 ?>
                                         <div class="bg-white border p-4 mb-4 mt-5 position-relative" style="border-radius: 10px;">
                                             <div class="flex items-center">
-                                                <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
+                                                <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border">
                                                 <div class="ml-4">
                                                     <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
                                                     <p class="text-sm text-gray-600"><?php echo date('F j, Y | g:i A', strtotime($blog['blog_dateadded'])); ?></p>

@@ -98,7 +98,7 @@ if (!$blogs || !$authors) {
                 <div class="flex items-center mb-3">
                     <?php if ($author_profilepic) : ?>
                         <!-- Display the author's profile picture -->
-                        <img src="<?php echo $author_profilepic; ?>" alt="<?php echo $author_profilepic; ?>" id="author_profile_pic" class="w-16 h-16 object-cover rounded-full border-2 border-white shadow-lg">
+                        <img src="<?php echo $author_profilepic; ?>" alt="<?php echo $author_profilepic; ?>" id="author_profile_pic" class="w-16 h-16 object-cover rounded-full border-2">
                     <?php endif; ?>
                     <div class="ml-4">
                         <?php if ($author_name) : ?>
