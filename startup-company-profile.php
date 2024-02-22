@@ -11,7 +11,7 @@
     <title>BINNO | Startup Company</title>
 </head>
 
-<body>
+<body class="bg-gray-100">
 
     <?php include 'navbar-profiles.php'; ?>
 
@@ -94,7 +94,7 @@
             // Display company details if found
             if (isset($selected_company['setting_institution'])) {
             ?>
-                <div class="container mx-auto px-4 sm:px-8 md:px-16 lg:px-20 xl:px-32">
+                <div class="container mx-auto px-4 sm:px-8 md:px-16 lg:px-20 xl:px-64">
                     <div class="bg-white rounded-lg overflow-hidden shadow-md mb-5">
                         <img id="cover_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_coverpic']; ?>" alt="<?php echo str_replace('profile-cover-img/', '', $selected_company['setting_coverpic']); ?>" class="w-full h-64 object-cover shadow-lg" style="background-color: #ffffff;">
                     </div>
@@ -107,7 +107,7 @@
                     </div>
                 </div>
 
-                <div class="container mx-auto sm:px-36">
+                <div class="container mx-auto sm:px-64">
 
                     <div class="p-4 flex flex-col gap-4">
                         <!-- Tab buttons -->
@@ -149,7 +149,7 @@
                                     $display_see_more = count($description_words) > 50;
 
                             ?>
-                                    <div class="border p-4 mb-4 mt-5 bg-gray-100">
+                                    <div class="bg-white border p-4 mb-4 mt-5" style="border-radius: 10px;">
                                         <div class="flex items-center">
                                             <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                             <div class="ml-4">
@@ -241,7 +241,7 @@
                                         $long_bodytext = implode(' ', array_slice($bodytext_words, 50));
                                         $display_see_more = count($bodytext_words) > 50;
                             ?>
-                                        <div class="bg-gray-100 border p-4 mb-4 mt-5 post-item <?php echo $post['post_category']; ?>">
+                                        <div class="bg-white border p-4 mb-4 mt-5 post-item <?php echo $post['post_category']; ?>" style="border-radius: 10px;">
                                             <div class="flex items-center">
                                                 <img id="post_profile_pic_<?php echo $post['post_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                                 <div class="ml-4">
@@ -305,7 +305,7 @@
                         <div id="aboutContent" class="ml-5" style="display: none;">
                             <h10>About Us</h10>
                             <div id="aboutContent" class="mt-5">
-                                <div class="p-4 bg-gray-200">
+                                <div class="border p-4 bg-white" style="border-radius: 10px;">
                                     <h7>About Us</h7>
                                     <p class="text-sm text-gray-600 mb-10 mt-3"><?php echo $selected_company['setting_bio']; ?></p>
 

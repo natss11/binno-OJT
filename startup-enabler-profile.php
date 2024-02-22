@@ -66,7 +66,7 @@ if (!$enablers) {
         <title>BINNO | Startup Enabler</title>
     </head>
 
-    <body>
+    <body class="bg-gray-100">
 
         <?php include 'navbar-profiles.php'; ?>
 
@@ -95,7 +95,7 @@ if (!$enablers) {
             if ($selected_enabler) {
             ?>
 
-                <div class="container mx-auto px-4 sm:px-8 md:px-16 lg:px-20 xl:px-32">
+                <div class="container mx-auto px-4 sm:px-8 md:px-16 lg:px-20 xl:px-64">
                     <div class="bg-white rounded-lg overflow-hidden shadow-md mb-5">
                         <!-- Use loadCoverImage for cover pic -->
                         <img id="cover_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_coverpic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-cover-img/', '', $selected_enabler['setting_coverpic'])); ?>" class="w-full h-64 object-cover shadow-lg" style="background-color: #ffffff;">
@@ -110,7 +110,7 @@ if (!$enablers) {
                     </div>
                 </div>
 
-                <div class="container mx-auto sm:px-36">
+                <div class="container mx-auto sm:px-64">
 
                     <div class="p-4 flex flex-col gap-4">
                         <!-- Tab buttons -->
@@ -146,7 +146,7 @@ if (!$enablers) {
                                     $short_description = implode(" ", array_slice($description_words, 0, 50));
                                     $remaining_description = implode(" ", array_slice($description_words, 50));
                             ?>
-                                    <div class="border p-4 mb-4 mt-5 bg-gray-100">
+                                    <div class="bg-white border p-4 mb-4 mt-5" style="border-radius: 10px;">
                                         <div class="flex items-center">
                                             <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                             <div class="ml-4">
@@ -236,7 +236,7 @@ if (!$enablers) {
 
                                         // Output blog content with "See more" link if applicable
                                 ?>
-                                        <div class="border p-4 mb-4 mt-5 position-relative bg-gray-100">
+                                        <div class="bg-white border p-4 mb-4 mt-5 position-relative" style="border-radius: 10px;">
                                             <div class="flex items-center">
                                                 <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full shadow-lg">
                                                 <div class="ml-4">
@@ -283,7 +283,7 @@ if (!$enablers) {
                         <div id="aboutContent" class="ml-5" style="display: none;">
                             <h10>About Us</h10>
                             <div id="aboutContent" class="mt-5">
-                                <div class="p-4 bg-gray-200">
+                                <div class="p-4 bg-white" style="border-radius: 10px;">
                                     <h7 class="text-lg font-semibold">Company Description</h7>
                                     <p class="text-sm mb-10 mt-3"><?php echo $selected_enabler['setting_bio']; ?></p>
 
