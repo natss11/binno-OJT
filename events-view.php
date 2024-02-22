@@ -15,6 +15,7 @@
 
     <?php
 
+    // Function to fetch data from API
     function fetch_api_data($api_url)
     {
         // Make the request
@@ -28,7 +29,7 @@
         // Decode JSON response
         $data = json_decode($response, true);
 
-        set_time_limit(60);
+        set_time_limit(60); // Set to a value greater than 30 seconds
 
         // Check if the decoding was successful
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -59,11 +60,9 @@
                     console.error('Error fetching profile picture:', error);
                 });
         </script>
-    <?php
+        <?php
     }
-    ?>
-    
-    <?php
+
 
     // Get the event ID from the query parameter
     $event_id = isset($_GET['event_id']) ? ($_GET['event_id']) : 0;
@@ -100,7 +99,8 @@
                     }
                 }
 
-    ?>
+        ?>
+
                 <?php include 'navbar-events.php'; ?>
 
                 <div class="container mx-auto p-8 max-w-5xl mx-auto">
