@@ -72,7 +72,7 @@ if (!$posts) {
                                 <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
                                     <a href="posts-view.php?post_id=<?php echo $post['post_id']; ?>" class="link">
                                         <img src="<?php echo htmlspecialchars($post['post_img']); ?>" alt="<?php echo htmlspecialchars(($post['post_img'])); ?>" id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
-                                        <div class="p-4 object-cover ml-5">
+                                        <div class="p-4 object-cover">
                                             <h2 class="text-2xl font-semibold"><?php echo strlen($post['post_heading']) > 20 ? htmlspecialchars(substr($post['post_heading'], 0, 20)) . '...' : htmlspecialchars($post['post_heading']); ?></h2>
                                             <p class="text-gray-600 text-sm mb-2"><?php
                                                 $datetime = strtotime($post['post_dateadded']);
