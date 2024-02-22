@@ -48,8 +48,9 @@ $enablers = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
 
 if (!$enablers) {
     // Handle the case where the API request failed or returned invalid data
-    echo "Failed to fetch enablers.";
+    echo "<script>alert('There are no startup enablers registered yet.'); window.location.href = 'welcome.php';</script>";
 } else {
+
 ?>
 
     <!DOCTYPE html>
