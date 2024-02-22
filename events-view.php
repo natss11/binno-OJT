@@ -15,25 +15,18 @@
 
     <?php
 
-    // Function to fetch data from API
+    // Function to fetch API data
     function fetch_api_data($api_url)
     {
-        // Make the request
         $response = file_get_contents($api_url);
 
-        // Check for errors
         if ($response === false) {
             return false;
         }
 
-        // Decode JSON response
         $data = json_decode($response, true);
 
-        set_time_limit(60); // Set to a value greater than 30 seconds
-
-        // Check if the decoding was successful
         if (json_last_error() !== JSON_ERROR_NONE) {
-            // Handle JSON decoding error
             return false;
         }
 
