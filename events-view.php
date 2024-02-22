@@ -15,18 +15,24 @@
 
     <?php
 
-    // Function to fetch API data
     function fetch_api_data($api_url)
     {
+        // Make the request
         $response = file_get_contents($api_url);
 
+        // Check for errors
         if ($response === false) {
             return false;
         }
 
+        // Decode JSON response
         $data = json_decode($response, true);
 
+        set_time_limit(60);
+
+        // Check if the decoding was successful
         if (json_last_error() !== JSON_ERROR_NONE) {
+            // Handle JSON decoding error
             return false;
         }
 
@@ -53,23 +59,25 @@
                     console.error('Error fetching profile picture:', error);
                 });
         </script>
-        <?php
+    <?php
     }
-
+    ?>
+    
+    <?php
 
     // Get the event ID from the query parameter
     $event_id = isset($_GET['event_id']) ? ($_GET['event_id']) : 0;
 
     // Check if a valid event ID is provided
     if ($event_id > 0) {
-        $events = fetch_api_data("http://binnostartup.site/m/api/events/$event_id");
+        $events = fetch_api_data("http://217.196.51.115/m/api/events/$event_id");
 
         if ($events) {
             $event = $events[0];
 
             // Fetch data from both member APIs
-            $enablers = fetch_api_data("http://binnostartup.site/m/api/members/enablers");
-            $companies = fetch_api_data("http://binnostartup.site/m/api/members/companies");
+            $enablers = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
+            $companies = fetch_api_data("http://217.196.51.115/m/api/members/companies");
 
             if ($enablers && $companies) {
                 // Search for the author's name based on member_id
@@ -92,8 +100,7 @@
                     }
                 }
 
-        ?>
-
+    ?>
                 <?php include 'navbar-events.php'; ?>
 
                 <div class="container mx-auto p-8 max-w-5xl mx-auto">
@@ -148,7 +155,7 @@
                 var currentSrc = imgElement.alt;
 
                 // Fetch image data from API
-                const res = await fetch('http://binnostartup.site/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
+                const res = await fetch('http://217.196.51.115/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
                     .then(response => response.blob())
                     .then(data => {
                         // Create a blob from the response data
@@ -174,7 +181,7 @@
                 const loadImage = async () => {
                     const currentSrc = document.getElementById('event_pic').alt;
                     const res = await fetch(
-                        `http://binnostartup.site/m/api/images?filePath=event-pics/${encodeURIComponent(currentSrc)}`
+                        `http://217.196.51.115/m/api/images?filePath=event-pics/${encodeURIComponent(currentSrc)}`
                     );
 
                     const blob = await res.blob();

@@ -24,7 +24,7 @@ function fetch_api_data($api_url)
     return $data;
 }
 
-$posts = fetch_api_data("http://binnostartup.site/m/api/posts/");
+$posts = fetch_api_data("http://217.196.51.115/m/api/posts/");
 
 if (!$posts) {
     // Handle the case where the API request failed or returned invalid data
@@ -96,7 +96,7 @@ if (!$posts) {
                 var currentSrc = imgElement.alt;
 
                 // Fetch image data from API
-                const res = await fetch('http://binnostartup.site/m/api/images?filePath=post-pics/' + encodeURIComponent(currentSrc))
+                const res = await fetch('http://217.196.51.115/m/api/images?filePath=post-pics/' + encodeURIComponent(currentSrc))
                     .then(response => response.blob())
                     .then(data => {
                         // Create a blob from the response data
