@@ -73,14 +73,14 @@
 
     // Check if a valid post ID is provided
     if ($post_id > 0) {
-        $posts = fetch_api_data("http://binnostartup.site/m/api/posts/$post_id");
+        $posts = fetch_api_data("http://217.196.51.115/m/api/posts/$post_id");
 
         if ($posts) {
             $post = $posts[0];
 
             // Fetch author name and profile picture from members/companies endpoint
             $author_id = $post['post_author'];
-            $members = fetch_api_data("http://binnostartup.site/m/api/members/companies");
+            $members = fetch_api_data("http://217.196.51.115/m/api/members/companies");
 
             if ($members) {
                 // Find the author's name and profile picture based on member_id
@@ -143,7 +143,7 @@
             var currentSrc = imgElement.alt;
 
             // Fetch image data from API
-            const res = await fetch('http://binnostartup.site/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
+            const res = await fetch('http://217.196.51.115/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
                 .then(response => response.blob())
                 .then(data => {
                     // Create a blob from the response data
@@ -169,7 +169,7 @@
             const loadImage = async () => {
                 const currentSrc = document.getElementById('post_pic').alt;
                 const res = await fetch(
-                    `http://binnostartup.site/m/api/images?filePath=post-pics/${encodeURIComponent(currentSrc)}`
+                    `http://217.196.51.115/m/api/images?filePath=post-pics/${encodeURIComponent(currentSrc)}`
                 );
 
                 const blob = await res.blob();
