@@ -122,7 +122,7 @@ if (!$enablers) {
 
 
                         <!-- Events content -->
-                        <div id="eventsContent" class="ml-5">
+                        <div id="eventsContent">
                             <h10>Events</h10>
                             <?php
                             // Fetch events for the specific member
@@ -206,7 +206,7 @@ if (!$enablers) {
                         </div>
 
                         <!-- Blogs content (hidden by default) -->
-                        <div id="blogsContent" class="ml-5" style="display: none;">
+                        <div id="blogsContent" style="display: none;">
                             <h10>Blogs</h10>
                             <div id="blogsContent" class="mt-5">
                                 <?php
@@ -280,7 +280,7 @@ if (!$enablers) {
                             </script>
                         </div>
 
-                        <div id="aboutContent" class="ml-5" style="display: none;">
+                        <div id="aboutContent" style="display: none;">
                             <h10>About Us</h10>
                             <div id="aboutContent" class="mt-5">
                                 <div class="p-4 bg-white" style="border-radius: 10px;">

@@ -92,7 +92,7 @@ if (!$companies) {
                     $setting_profilepic = isset($company['setting_profilepic']) ? htmlspecialchars(str_replace('profile-img/', '', $company['setting_profilepic'])) : '';
                 ?>
                     <div class="card-container bg-white rounded-lg overflow-hidden shadow-md relative">
-                        <a onclick="redirectToProfile('<?php echo htmlspecialchars('startup-company-profile.php?setting_institution=' . urlencode($setting_institution) . '&member_id=' . urlencode($company['member_id'])); ?>')" class="link">
+                        <a onclick="redirectToProfile('<?php echo htmlspecialchars('startup-company-profile-view.php?setting_institution=' . urlencode($setting_institution) . '&member_id=' . urlencode($company['member_id'])); ?>')" class="link">
                             <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-64 h-32 object-cover" style="background-color: #ffffff;">
                             <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2 z-10" style="background-color: #ffffff;">
 
