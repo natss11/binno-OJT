@@ -288,7 +288,15 @@ if (!$enablers) {
                                     <p class="text-sm mb-10 mt-3"><?php echo $selected_enabler['setting_bio']; ?></p>
 
                                     <h7 class="text-lg font-semibold">Company Address</h7>
-                                    <p class="text-sm mb-2 mt-3"><?php echo $selected_enabler['setting_address']; ?></p>
+                                    <p class="text-sm mb-10 mt-3"><?php echo $selected_enabler['setting_address']; ?></p>
+
+                                    <h7 class="text-lg font-semibold">Contact Details</h7>
+                                    <p class="text-sm mb-2 mt-3">
+                                        <i class="fas fa-phone-alt mr-2"></i><?php echo $selected_enabler['contact_number']; ?>
+                                    </p>
+                                    <p class="text-sm mb-2 mt-3">
+                                        <i class="far fa-envelope mr-2"></i><?php echo $selected_enabler['email_address']; ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>

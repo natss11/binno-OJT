@@ -257,7 +257,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex justify-center md:justify-start grid grid-cols-4 md:grid-cols-4">
+                            <div class="flex justify-center md:justify-start grid grid-cols-2 md:grid-cols-4">
                                 <?php
                                 // Fetch posts for the specific member
                                 $posts_url = "https://binnostartup.site/m/api/posts/";
@@ -281,6 +281,11 @@
                                             }
                                         }
                                     }
+
+                                    // Sort other_posts by post_dateadded in descending order
+                                    usort($other_posts, function ($a, $b) {
+                                        return strtotime($b['post_dateadded']) - strtotime($a['post_dateadded']);
+                                    });
 
                                     // Display pinned posts first
                                     foreach ($pinned_posts as $post) {
@@ -354,10 +359,18 @@
                             <div id="aboutContent" class="mt-5">
                                 <div class="border p-4 bg-white" style="border-radius: 10px;">
                                     <h7>About Us</h7>
-                                    <p class="text-sm text-gray-600 mb-10 mt-3"><?php echo $selected_company['setting_bio']; ?></p>
+                                    <p class="text-sm mb-10 mt-3"><?php echo $selected_company['setting_bio']; ?></p>
 
                                     <h7>Address</h7>
-                                    <p class="text-sm text-gray-600 mb-2 mt-3"><?php echo $selected_company['setting_address']; ?></p>
+                                    <p class="text-sm mb-10 mt-3"><?php echo $selected_company['setting_address']; ?></p>
+
+                                    <h7>Contact Details</h7>
+                                    <p class="text-sm mb-2 mt-3">
+                                        <i class="fas fa-phone-alt mr-2"></i><?php echo $selected_company['contact_number']; ?>
+                                    </p>
+                                    <p class="text-sm mb-2 mt-3">
+                                        <i class="far fa-envelope mr-2"></i><?php echo $selected_company['email_address']; ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
