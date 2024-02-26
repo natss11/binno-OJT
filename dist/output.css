@@ -7,11 +7,6 @@
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
 */
 
-/**
-Theme Name: BINNO
-Author: Marriane Natad
-**/
-
 *,
 ::before,
 ::after {
@@ -507,6 +502,21 @@ button,
 }
 
 .card-container:hover {
+  /* Styles for the card container when hovered */
+  transform: scale(1.05);
+  /* Scale up a bit when hovered */
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+  /* Add shadow when hovered */
+  /* Add any other styles you want for hover effect */
+}
+
+.image-container {
+  /* Normal styles for the card container */
+  transition: transform 0.3s ease;
+  /* Add transition for smooth effect */
+}
+
+.image-container:hover {
   /* Styles for the card container when hovered */
   transform: scale(1.05);
   /* Scale up a bit when hovered */

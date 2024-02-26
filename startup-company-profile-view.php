@@ -11,24 +11,35 @@
     <title>BINNO | Startup Company</title>
 
     <style>
-        .card-container {
-            flex: 0 0 calc(33.33% - 20px);
-            /* Each card takes up 33.33% of the container width with some margin */
-            margin: 5px;
-            /* Margin between cards */
+        /* Default style for card-container */
+        .image-container {
+            width: 230px;
+            height: 230px;
+            position: relative;
         }
 
+        /* Media query for smaller screens */
         @media (max-width: 768px) {
-            .card-container {
-                flex: 0 0 calc(50% - 20px);
-                /* Each card takes up 50% of the container width on smaller screens */
+            .image-container {
+                width: 130px;
+                /* Adjust the width as needed for smaller screens */
+                height: 130px;
+                /* Let the height adjust based on content */
             }
         }
 
-        @media (max-width: 480px) {
-            .card-container {
-                flex: 1 0 100%;
-            }
+        .pin-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+            color: white;
+            padding: 5px;
+            border-radius: 50%;
+        }
+
+        .pin-icon i {
+            font-size: 20px;
         }
     </style>
 
@@ -246,7 +257,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex justify-center grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div class="flex justify-center md:justify-start grid grid-cols-4 md:grid-cols-4">
                                 <?php
                                 // Fetch posts for the specific member
                                 $posts_url = "http://217.196.51.115/m/api/posts/";
@@ -256,52 +267,86 @@
                                 $posts = fetch_api_data($posts_url);
 
                                 if ($posts) {
-                                    // Filter and display posts for the specific member
+                                    // Initialize arrays to store pinned posts and other posts
+                                    $pinned_posts = array();
+                                    $other_posts = array();
+
+                                    // Separate pinned posts and other posts
                                     foreach ($posts as $post) {
                                         if ($post['post_author'] === $member_id) {
-                                ?>
-                                            <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg post-item <?php echo $post['post_category']; ?>" style="border-radius: 10px; width: 300px; height: 300px;">
-                                                <a href="posts-view.php?post_id=<?= $post['post_id']; ?>" class="link">
-                                                    <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-full object-cover border" style="background-color: #ffffff;">
-                                                </a>
-                                            </div>
-                                <?php
-                                            // Call the function to load the image
-                                            loadImage('post_pic_' . $post['post_id'], 'post-pics');
-
-                                            // Call the function to load the profile pic with a unique ID for each post
-                                            loadImage('post_profile_pic_' . $post['post_id'], 'profile-img');
+                                            if ($post['post_pin'] == 1) {
+                                                $pinned_posts[] = $post;
+                                            } else {
+                                                $other_posts[] = $post;
+                                            }
                                         }
+                                    }
+
+                                    // Display pinned posts first
+                                    foreach ($pinned_posts as $post) {
+                                ?>
+                                        <div class="image-container bg-white rounded-lg overflow-hidden shadow-lg post-item <?php echo $post['post_category']; ?>">
+                                            <!-- Pin icon -->
+                                            <div class="pin-icon">
+                                                <i class="fas fa-thumbtack"></i>
+                                            </div>
+                                            <a href="posts-view.php?post_id=<?= $post['post_id']; ?>" class="link">
+                                                <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-full object-cover border" style="background-color: #ffffff;">
+                                            </a>
+                                        </div>
+                                    <?php
+                                        // Call the function to load the image
+                                        loadImage('post_pic_' . $post['post_id'], 'post-pics');
+
+                                        // Call the function to load the profile pic with a unique ID for each post
+                                        loadImage('post_profile_pic_' . $post['post_id'], 'profile-img');
+                                    }
+
+                                    // Display other posts after pinned posts
+                                    foreach ($other_posts as $post) {
+                                    ?>
+                                        <!-- display the post -->
+                                        <div class="image-container bg-white rounded-lg overflow-hidden shadow-lg post-item <?php echo $post['post_category']; ?>">
+                                            <a href="posts-view.php?post_id=<?= $post['post_id']; ?>" class="link">
+                                                <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-full object-cover border" style="background-color: #ffffff;">
+                                            </a>
+                                        </div>
+                                <?php
+                                        // Call the function to load the image
+                                        loadImage('post_pic_' . $post['post_id'], 'post-pics');
+
+                                        // Call the function to load the profile pic with a unique ID for each post
+                                        loadImage('post_profile_pic_' . $post['post_id'], 'profile-img');
                                     }
                                 } else {
                                     // Handle the case where the API request for posts failed or returned invalid data
                                     echo "Failed to fetch posts.";
                                 }
                                 ?>
-                            </div>
 
-                            <script>
-                                function filterPosts() {
-                                    var category = document.getElementById("categorySelect").value;
-                                    var posts = document.getElementsByClassName("post-item");
+                                <script>
+                                    function filterPosts() {
+                                        var category = document.getElementById("categorySelect").value;
+                                        var posts = document.getElementsByClassName("post-item");
 
-                                    if (category === "") {
-                                        // Show all posts if no category is selected
-                                        for (var i = 0; i < posts.length; i++) {
-                                            posts[i].style.display = "block";
-                                        }
-                                    } else {
-                                        // Hide posts that do not match the selected category
-                                        for (var i = 0; i < posts.length; i++) {
-                                            if (!posts[i].classList.contains(category)) {
-                                                posts[i].style.display = "none";
-                                            } else {
+                                        if (category === "") {
+                                            // Show all posts if no category is selected
+                                            for (var i = 0; i < posts.length; i++) {
                                                 posts[i].style.display = "block";
+                                            }
+                                        } else {
+                                            // Hide posts that do not match the selected category
+                                            for (var i = 0; i < posts.length; i++) {
+                                                if (!posts[i].classList.contains(category)) {
+                                                    posts[i].style.display = "none";
+                                                } else {
+                                                    posts[i].style.display = "block";
+                                                }
                                             }
                                         }
                                     }
-                                }
-                            </script>
+                                </script>
+                            </div>
                         </div>
 
                         <div id="aboutContent" style="display: none;">
