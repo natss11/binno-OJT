@@ -257,7 +257,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex justify-center md:justify-start grid grid-cols-2 md:grid-cols-4">
+                            <div class="flex justify-center md:justify-start grid grid-cols-3 md:grid-cols-4">
                                 <?php
                                 // Fetch posts for the specific member
                                 $posts_url = "https://binnostartup.site/m/api/posts/";
