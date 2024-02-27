@@ -110,7 +110,7 @@ if (!$enablers) {
                     </div>
                 </div>
 
-                <div class="container mx-auto sm:px-64">
+                <div class="container mx-auto px-4 sm:px-8 md:px-8 lg:px-20 xl:px-64">
 
                     <div class="p-4 flex flex-col gap-4">
                         <!-- Tab buttons -->
