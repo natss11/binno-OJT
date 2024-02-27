@@ -63,9 +63,51 @@
             }
         }
 
-        @media (max-width: 1024px) {
-            .menu-icon .menu {
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .menu-icon {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                cursor: pointer;
+            }
+
+            .menu-icon i {
+                font-size: 24px;
+            }
+
+            .nav-menu {
                 display: none;
+                position: absolute;
+                top: 80px;
+                /* Adjust as per your design */
+                right: 0;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                padding: 10px;
+                border-radius: 5px;
+                z-index: 1000;
+            }
+
+            .nav-menu.show {
+                display: block;
+            }
+
+            .nav-menu li {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .nav-menu li a {
+                display: block;
+                padding: 10px;
+                text-decoration: none;
+            }
+
+            /* Blue hover for menu icon */
+            .menu-icon:hover .nav-menu li a {
+                text-decoration: none;
             }
         }
     </style>
@@ -101,7 +143,7 @@
                 </div>
 
                 <!-- Menu Icon for smaller screens -->
-                <div class="menu-icon md:hidden">
+                <div class="menu-icon md:hidden sm:hidden">
                     <i class="fas fa-bars" id="menuToggle"></i>
                 </div>
 
