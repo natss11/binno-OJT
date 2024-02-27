@@ -64,36 +64,16 @@
         }
 
         @media (min-width: 768px) and (max-width: 1024px) {
-
-            /* Display the menu icon */
-            #menuIcon {
+            .menu-icon {
                 display: block;
-                position: fixed;
+                position: absolute;
                 top: 20px;
                 right: 20px;
-                z-index: 999;
-                /* Ensure the icon stays above other content */
                 cursor: pointer;
             }
 
-            /* Move the menu items inside the menu icon */
-            .nav-menu {
-                display: none;
-                position: fixed;
-                top: 70px;
-                /* Adjust as per your design */
-                right: 20px;
-                background-color: #fff;
-                border: 1px solid #ccc;
-                padding: 10px;
-                border-radius: 5px;
-                z-index: 998;
-                /* Ensure the menu stays below the icon */
-            }
-
-            /* Display the menu items when the icon is clicked */
-            .nav-menu.show {
-                display: block;
+            .menu-icon i {
+                font-size: 24px;
             }
         }
     </style>
