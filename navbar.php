@@ -62,14 +62,6 @@
                 text-decoration: none;
             }
         }
-
-        @media (max-width: 768px){
-
-            /* Show menu icon for medium-sized screens and smaller */
-            .menu-icon {
-                display: block;
-            }
-        }
     </style>
 
     <script>
@@ -84,6 +76,18 @@
             $(document).on('click', function(e) {
                 if (!$(e.target).closest('.dropdown-toggle').length) {
                     $('.dropdown-toggle').next('ul').addClass('hidden');
+                }
+            });
+
+            $('#menuToggle').click(function() {
+                $('#navMenu').toggleClass('show');
+            });
+
+            // Hide dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.dropdown-toggle').length && !$(e.target).closest('#menuToggle').length) {
+                    $('.dropdown-toggle').next('ul').addClass('hidden');
+                    $('#navMenu').removeClass('show');
                 }
             });
         });
@@ -165,22 +169,6 @@
             </nav>
         </div>
     </header>
-
-    <script>
-        $(document).ready(function() {
-            $('#menuToggle').click(function() {
-                $('#navMenu').toggleClass('show');
-            });
-
-            // Hide dropdown when clicking outside
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('.dropdown-toggle').length && !$(e.target).closest('#menuToggle').length) {
-                    $('.dropdown-toggle').next('ul').addClass('hidden');
-                    $('#navMenu').removeClass('show');
-                }
-            });
-        });
-    </script>
 
 </body>
 
