@@ -62,6 +62,14 @@
                 text-decoration: none;
             }
         }
+
+        @media only screen and (max-width: 768px) {
+
+            /* Show menu icon for medium-sized screens and smaller */
+            .menu-icon {
+                display: block;
+            }
+        }
     </style>
 
     <script>
@@ -95,7 +103,7 @@
                 </div>
 
                 <!-- Menu Icon for smaller screens -->
-                <div class="menu-icon hidden md:block">
+                <div class="menu-icon md:hidden">
                     <i class="fas fa-bars" id="menuToggle"></i>
                 </div>
 
