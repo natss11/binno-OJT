@@ -45,14 +45,26 @@
                 display: block;
             }
 
-            .nav-menu li {
-                list-style: none;
-                margin: 0;
+            .nav-menu.md\:flex {
+                display: none;
+                /* Hide the menu for medium-sized screens */
+            }
+
+            .nav-menu.md\:flex.show {
+                display: flex;
+                /* Show the menu when toggled on medium-sized screens */
+                position: static;
+                background-color: transparent;
+                border: none;
                 padding: 0;
             }
 
-            .nav-menu li a {
-                display: block;
+            .nav-menu.md\:flex li {
+                margin-right: 0 !important;
+                /* Adjust margin for menu items */
+            }
+
+            .nav-menu.md\:flex li a {
                 padding: 10px;
                 text-decoration: none;
             }
@@ -72,10 +84,16 @@
                 $(this).next('ul').toggleClass('hidden');
             });
 
+            // Toggle menu for medium-sized screens
+            $('#menuToggle').click(function() {
+                $('.nav-menu').toggleClass('show');
+            });
+
             // Hide dropdown when clicking outside
             $(document).on('click', function(e) {
-                if (!$(e.target).closest('.dropdown-toggle').length) {
+                if (!$(e.target).closest('.dropdown-toggle').length && !$(e.target).closest('#menuToggle').length) {
                     $('.dropdown-toggle').next('ul').addClass('hidden');
+                    $('.nav-menu').removeClass('show');
                 }
             });
         });
@@ -94,7 +112,7 @@
                     </a>
                 </div>
 
-                <!-- Menu Icon for smaller screens -->
+                <!-- Menu Icon for smaller and medium screens -->
                 <div class="menu-icon md:hidden">
                     <i class="fas fa-bars" id="menuToggle"></i>
                 </div>
@@ -157,22 +175,6 @@
             </nav>
         </div>
     </header>
-
-    <script>
-        $(document).ready(function() {
-            $('#menuToggle').click(function() {
-                $('#navMenu').toggleClass('show');
-            });
-
-            // Hide dropdown when clicking outside
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('.dropdown-toggle').length && !$(e.target).closest('#menuToggle').length) {
-                    $('.dropdown-toggle').next('ul').addClass('hidden');
-                    $('#navMenu').removeClass('show');
-                }
-            });
-        });
-    </script>
 
 </body>
 
