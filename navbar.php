@@ -62,40 +62,6 @@
                 text-decoration: none;
             }
         }
-
-        @media (max-width: 768px) {
-
-            /* Display the menu icon */
-            #menuIcon {
-                display: block;
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 999;
-                /* Ensure the icon stays above other content */
-                cursor: pointer;
-            }
-
-            /* Move the menu items inside the menu icon */
-            .nav-menu {
-                display: none;
-                position: fixed;
-                top: 70px;
-                /* Adjust as per your design */
-                right: 20px;
-                background-color: #fff;
-                border: 1px solid #ccc;
-                padding: 10px;
-                border-radius: 5px;
-                z-index: 998;
-                /* Ensure the menu stays below the icon */
-            }
-
-            /* Display the menu items when the icon is clicked */
-            .nav-menu.show {
-                display: block;
-            }
-        }
     </style>
 
     <script>
@@ -129,7 +95,7 @@
                 </div>
 
                 <!-- Menu Icon for smaller screens -->
-                <div class="menu-icon hidden md:hidden">
+                <div class="menu-icon hidden md:flex md:justify-end md:items-center md:mr-4">
                     <i class="fas fa-bars" id="menuToggle"></i>
                 </div>
 
