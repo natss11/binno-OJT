@@ -63,7 +63,7 @@
             }
         }
 
-        @media (min-width: 768px) and (max-width: 1024px) {
+        @media (max-width: 768px){
 
             /* Show menu icon for medium-sized screens and smaller */
             .menu-icon {
