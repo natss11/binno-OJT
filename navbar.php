@@ -78,18 +78,6 @@
                     $('.dropdown-toggle').next('ul').addClass('hidden');
                 }
             });
-
-            $('#menuToggle').click(function() {
-                $('#navMenu').toggleClass('show');
-            });
-
-            // Hide dropdown when clicking outside
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('.dropdown-toggle').length && !$(e.target).closest('#menuToggle').length) {
-                    $('.dropdown-toggle').next('ul').addClass('hidden');
-                    $('#navMenu').removeClass('show');
-                }
-            });
         });
     </script>
 
@@ -169,6 +157,22 @@
             </nav>
         </div>
     </header>
+
+    <script>
+        $(document).ready(function() {
+            $('#menuToggle').click(function() {
+                $('#navMenu').toggleClass('show');
+            });
+
+            // Hide dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.dropdown-toggle').length && !$(e.target).closest('#menuToggle').length) {
+                    $('.dropdown-toggle').next('ul').addClass('hidden');
+                    $('#navMenu').removeClass('show');
+                }
+            });
+        });
+    </script>
 
 </body>
 
