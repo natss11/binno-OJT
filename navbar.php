@@ -63,7 +63,7 @@
             }
         }
 
-        @media only screen and (max-width: 768px) {
+        @media (min-width: 768px) and (max-width: 1024px) {
 
             /* Show menu icon for medium-sized screens and smaller */
             .menu-icon {
@@ -103,7 +103,7 @@
                 </div>
 
                 <!-- Menu Icon for smaller screens -->
-                <div class="menu-icon md:hidden">
+                <div class="menu-icon">
                     <i class="fas fa-bars" id="menuToggle"></i>
                 </div>
 
