@@ -32,7 +32,6 @@
                 display: none;
                 position: absolute;
                 top: 80px;
-                /* Adjust as per your design */
                 right: 0;
                 background-color: #fff;
                 border: 1px solid #ccc;
@@ -54,11 +53,6 @@
             .nav-menu li a {
                 display: block;
                 padding: 10px;
-                text-decoration: none;
-            }
-
-            /* Blue hover for menu icon */
-            .menu-icon:hover .nav-menu li a {
                 text-decoration: none;
             }
         }
@@ -93,6 +87,19 @@
                 }
             });
         });
+
+        $(document).ready(function() {
+            $('#menuToggle').click(function() {
+                $('#navMenu').toggleClass('show');
+            });
+
+            // Hide dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.menu-icon').length && !$(e.target).closest('.nav-menu').length) {
+                    $('#navMenu').removeClass('show');
+                }
+            });
+        });
     </script>
 
 </head>
@@ -109,8 +116,8 @@
                 </div>
 
                 <!-- Menu Icon for smaller screens -->
-                <div class="menu-icon hidden md:flex md:justify-end md:items-center md:mr-4">
-                    <i class="fas fa-bars" id="menuToggle"></i>
+                <div class="menu-icon md:hidden" id="menuToggle">
+                    <i class="fas fa-bars"></i>
                 </div>
 
                 <!-- Navigation menu -->
@@ -171,22 +178,6 @@
             </nav>
         </div>
     </header>
-
-    <script>
-        $(document).ready(function() {
-            $('#menuToggle').click(function() {
-                $('#navMenu').toggleClass('show');
-            });
-
-            // Hide dropdown when clicking outside
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('.dropdown-toggle').length && !$(e.target).closest('#menuToggle').length) {
-                    $('.dropdown-toggle').next('ul').addClass('hidden');
-                    $('#navMenu').removeClass('show');
-                }
-            });
-        });
-    </script>
 
 </body>
 
