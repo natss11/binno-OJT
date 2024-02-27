@@ -143,7 +143,7 @@
                 </div>
 
                 <!-- Menu Icon for smaller screens -->
-                <div class="menu-icon md:hidden sm:hidden">
+                <div class="menu-icon hidden md:hidden">
                     <i class="fas fa-bars" id="menuToggle"></i>
                 </div>
 
