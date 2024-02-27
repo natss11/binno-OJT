@@ -64,18 +64,6 @@
         }
 
         @media (min-width: 768px) and (max-width: 1024px) {
-            .menu-icon {
-                display: block;
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                cursor: pointer;
-            }
-
-            .menu-icon i {
-                font-size: 24px;
-            }
-
             .nav-menu {
                 display: none;
                 position: absolute;
