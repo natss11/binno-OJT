@@ -95,7 +95,7 @@
                 </div>
 
                 <!-- Menu Icon for smaller screens -->
-                <div class="menu-icon md:hidden">
+                <div class="menu-icon">
                     <i class="fas fa-bars" id="menuToggle"></i>
                 </div>
 
