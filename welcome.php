@@ -118,7 +118,7 @@ if (!$posts || !$events || !$blogs) {
                         <?php
                         // Sort events array by date in descending order
                         usort($events, function ($a, $b) {
-                            return strtotime($b['event_datecreated']) - strtotime($a['event_datecreated']);
+                            return strtotime($b['event_date']) - strtotime($a['event_date']);
                         });
 
                         $i = 0;
