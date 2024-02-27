@@ -28,6 +28,16 @@
             }
         }
 
+        /* Media query for smaller screens */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .image-container {
+                width: 150px;
+                /* Adjust the width as needed for smaller screens */
+                height: 150px;
+                /* Let the height adjust based on content */
+            }
+        }
+
         .pin-icon {
             position: absolute;
             top: 10px;
@@ -141,7 +151,7 @@
                     </div>
                 </div>
 
-                <div class="container mx-auto sm:px-64">
+                <div class="container mx-auto px-4 sm:px-8 md:px-8 lg:px-20 xl:px-64">
 
                     <div class="p-4 flex flex-col gap-4">
                         <!-- Tab buttons -->
@@ -257,7 +267,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex justify-center md:justify-start grid grid-cols-3 md:grid-cols-4">
+                            <div class="flex justify-center md:justify-start grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
                                 <?php
                                 // Fetch posts for the specific member
                                 $posts_url = "http://217.196.51.115/m/api/posts/";
