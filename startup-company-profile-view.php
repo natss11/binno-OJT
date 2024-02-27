@@ -21,9 +21,9 @@
         /* Media query for smaller screens */
         @media (max-width: 768px) {
             .image-container {
-                width: 110px;
+                width: 105px;
                 /* Adjust the width as needed for smaller screens */
-                height: 110px;
+                height: 105px;
                 /* Let the height adjust based on content */
             }
         }
