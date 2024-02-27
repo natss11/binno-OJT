@@ -64,38 +64,36 @@
         }
 
         @media (min-width: 768px) and (max-width: 1024px) {
+
+            /* Display the menu icon */
+            #menuIcon {
+                display: block;
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 999;
+                /* Ensure the icon stays above other content */
+                cursor: pointer;
+            }
+
+            /* Move the menu items inside the menu icon */
             .nav-menu {
                 display: none;
-                position: absolute;
-                top: 80px;
+                position: fixed;
+                top: 70px;
                 /* Adjust as per your design */
-                right: 0;
+                right: 20px;
                 background-color: #fff;
                 border: 1px solid #ccc;
                 padding: 10px;
                 border-radius: 5px;
-                z-index: 1000;
+                z-index: 998;
+                /* Ensure the menu stays below the icon */
             }
 
+            /* Display the menu items when the icon is clicked */
             .nav-menu.show {
                 display: block;
-            }
-
-            .nav-menu li {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-            }
-
-            .nav-menu li a {
-                display: block;
-                padding: 10px;
-                text-decoration: none;
-            }
-
-            /* Blue hover for menu icon */
-            .menu-icon:hover .nav-menu li a {
-                text-decoration: none;
             }
         }
     </style>
