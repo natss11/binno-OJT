@@ -45,26 +45,62 @@
                 display: block;
             }
 
-            .nav-menu.md\:flex {
-                display: none;
-                /* Hide the menu for medium-sized screens */
-            }
-
-            .nav-menu.md\:flex.show {
-                display: flex;
-                /* Show the menu when toggled on medium-sized screens */
-                position: static;
-                background-color: transparent;
-                border: none;
+            .nav-menu li {
+                list-style: none;
+                margin: 0;
                 padding: 0;
             }
 
-            .nav-menu.md\:flex li {
-                margin-right: 0 !important;
-                /* Adjust margin for menu items */
+            .nav-menu li a {
+                display: block;
+                padding: 10px;
+                text-decoration: none;
             }
 
-            .nav-menu.md\:flex li a {
+            /* Blue hover for menu icon */
+            .menu-icon:hover .nav-menu li a {
+                text-decoration: none;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .menu-icon {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                cursor: pointer;
+            }
+
+            .menu-icon i {
+                font-size: 24px;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 80px;
+                /* Adjust as per your design */
+                right: 0;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                padding: 10px;
+                border-radius: 5px;
+                z-index: 1000;
+            }
+
+            .nav-menu.show {
+                display: block;
+            }
+
+            .nav-menu li {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .nav-menu li a {
+                display: block;
                 padding: 10px;
                 text-decoration: none;
             }
@@ -84,16 +120,10 @@
                 $(this).next('ul').toggleClass('hidden');
             });
 
-            // Toggle menu for medium-sized screens
-            $('#menuToggle').click(function() {
-                $('.nav-menu').toggleClass('show');
-            });
-
             // Hide dropdown when clicking outside
             $(document).on('click', function(e) {
-                if (!$(e.target).closest('.dropdown-toggle').length && !$(e.target).closest('#menuToggle').length) {
+                if (!$(e.target).closest('.dropdown-toggle').length) {
                     $('.dropdown-toggle').next('ul').addClass('hidden');
-                    $('.nav-menu').removeClass('show');
                 }
             });
         });
@@ -112,7 +142,7 @@
                     </a>
                 </div>
 
-                <!-- Menu Icon for smaller and medium screens -->
+                <!-- Menu Icon for smaller screens -->
                 <div class="menu-icon md:hidden">
                     <i class="fas fa-bars" id="menuToggle"></i>
                 </div>
@@ -175,6 +205,22 @@
             </nav>
         </div>
     </header>
+
+    <script>
+        $(document).ready(function() {
+            $('#menuToggle').click(function() {
+                $('#navMenu').toggleClass('show');
+            });
+
+            // Hide dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.dropdown-toggle').length && !$(e.target).closest('#menuToggle').length) {
+                    $('.dropdown-toggle').next('ul').addClass('hidden');
+                    $('#navMenu').removeClass('show');
+                }
+            });
+        });
+    </script>
 
 </body>
 
