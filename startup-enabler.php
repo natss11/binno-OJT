@@ -67,19 +67,11 @@ if (!$enablers) {
 
         <style>
             .card-container {
-                width: 100%;
-                /* Set the width of the card container */
-                height: auto;
-                /* Automatically adjust the height */
                 position: relative;
                 /* Position relative for absolute positioning */
             }
 
             .card-container img {
-                width: 100%;
-                /* Ensure the image takes up the entire width of its container */
-                height: 100%;
-                /* Ensure the image takes up the entire height of its container */
                 object-fit: cover;
                 /* Maintain aspect ratio and cover container */
             }
