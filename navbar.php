@@ -32,6 +32,7 @@
                 display: none;
                 position: absolute;
                 top: 80px;
+                /* Adjust as per your design */
                 right: 0;
                 background-color: #fff;
                 border: 1px solid #ccc;
@@ -60,13 +61,6 @@
             .menu-icon:hover .nav-menu li a {
                 text-decoration: none;
             }
-
-            /* Adjust logo size for smaller screens */
-            .logo img {
-                width: 100px;
-                /* Adjust as needed */
-                height: auto;
-            }
         }
     </style>
 
@@ -82,18 +76,6 @@
             $(document).on('click', function(e) {
                 if (!$(e.target).closest('.dropdown-toggle').length) {
                     $('.dropdown-toggle').next('ul').addClass('hidden');
-                }
-            });
-
-            $('#menuToggle').click(function() {
-                $('#navMenu').toggleClass('show');
-            });
-
-            // Hide dropdown when clicking outside
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('.dropdown-toggle').length && !$(e.target).closest('#menuToggle').length) {
-                    $('.dropdown-toggle').next('ul').addClass('hidden');
-                    $('#navMenu').removeClass('show');
                 }
             });
         });
@@ -120,37 +102,37 @@
                 <!-- Navigation menu -->
                 <ul class="md:flex md:justify-end nav-menu" id="navMenu">
 
-                    <li class="md:mr-4">
+                    <li style="margin-right: 65px;" class="md:mr-8">
                         <a href="welcome.php" class="blue-underline">
                             <span class="btn-navmenu2">Discover</span>
                         </a>
                     </li>
 
-                    <li class="md:mr-4">
+                    <li style="margin-right: 65px;" class="md:mr-8">
                         <a href="posts.php" class="blue-underline">
                             <span class="btn-navmenu">Posts</span>
                         </a>
                     </li>
 
-                    <li class="md:mr-4">
+                    <li style="margin-right: 65px;" class="md:mr-8">
                         <a href="events.php" class="blue-underline">
                             <span class="btn-navmenu">Events</span>
                         </a>
                     </li>
 
-                    <li class="md:mr-4">
+                    <li style="margin-right: 65px;" class="md:mr-8">
                         <a href="blogs.php" class="blue-underline">
                             <span class="btn-navmenu">Blogs</span>
                         </a>
                     </li>
 
-                    <li class="md:mr-4">
+                    <li style="margin-right: 65px;" class="md:mr-8">
                         <a href="guides.php" class="blue-underline">
                             <span class="btn-navmenu">Guides</span>
                         </a>
                     </li>
 
-                    <li class="md:mr-4 relative group">
+                    <li style="margin-right: 65px;" class="md:mr-8 relative group">
                         <a href="#" class="btn-navmenu blue-underline dropdown-toggle">
                             <span class="btn-text">Profiles</span>
                             <!-- dropdown icon -->
@@ -162,18 +144,35 @@
                         </ul>
                     </li>
 
-                    <li>
+                    <li class="md:mr-8">
                         <a href="https://member.binnostartup.site" class="btn-blue">
                             <span>Become a member</span>
                         </a>
                     </li>
 
                 </ul>
+
                 <!-- End of navigation menu -->
 
             </nav>
         </div>
     </header>
+
+    <script>
+        $(document).ready(function() {
+            $('#menuToggle').click(function() {
+                $('#navMenu').toggleClass('show');
+            });
+
+            // Hide dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.dropdown-toggle').length && !$(e.target).closest('#menuToggle').length) {
+                    $('.dropdown-toggle').next('ul').addClass('hidden');
+                    $('#navMenu').removeClass('show');
+                }
+            });
+        });
+    </script>
 
 </body>
 
