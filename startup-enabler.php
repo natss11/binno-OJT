@@ -44,7 +44,8 @@ function loadImage($id, $filePath, $imgType, $src)
 <?php
 }
 
-$enablers = fetch_api_data("https://binnostartup.site/m/api/members/enablers");
+$api_url = "https://binnostartup.site/m/api/members/enablers";
+$companies = fetch_api_data($api_url);
 
 if (!$enablers) {
     // Handle the case where the API request failed or returned invalid data
