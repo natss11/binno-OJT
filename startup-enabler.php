@@ -66,13 +66,24 @@ if (!$enablers) {
         <title>BINNO | Startup Enablers</title>
 
         <style>
-            /* Add this CSS to ensure images maintain aspect ratio */
-            .cover img {
+            .card-container {
                 width: 100%;
+                /* Set the width of the card container */
                 height: auto;
+                /* Automatically adjust the height */
+                position: relative;
+                /* Position relative for absolute positioning */
+            }
+
+            .card-container img {
+                width: 100%;
+                /* Ensure the image takes up the entire width of its container */
+                height: 100%;
+                /* Ensure the image takes up the entire height of its container */
+                object-fit: cover;
+                /* Maintain aspect ratio and cover container */
             }
         </style>
-
 
     </head>
 
@@ -104,7 +115,7 @@ if (!$enablers) {
                     <div class="card-container bg-white rounded-lg overflow-hidden shadow-md relative">
                         <a onclick="redirectToProfile('<?php echo htmlspecialchars('startup-enabler-profile.php?setting_institution=' . urlencode($setting_institution) . '&member_id=' . urlencode($enabler['member_id'])); ?>')" class="link">
                             <!-- Load cover picture -->
-                            <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-64 h-32 object-cover cover" style="background-color: #ffffff;">
+                            <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-64 h-32 object-cover" style="background-color: #ffffff;">
                             <!-- Load profile picture -->
                             <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #ffffff;">
 
