@@ -63,7 +63,7 @@
             }
         }
 
-        @media only screen and (max-width: 1024px) {
+        @media only screen and (max-width: 1060px) {
 
             /* Medium screens */
             .nav-menu {
