@@ -67,7 +67,7 @@
 
             /* Medium screens */
             .nav-menu {
-                visibility: visible;
+                display: flex;
             }
         }
     </style>
