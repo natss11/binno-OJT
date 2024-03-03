@@ -102,13 +102,13 @@
                 <!-- Navigation menu -->
                 <ul class="md:flex md:justify-end nav-menu" id="navMenu">
 
-                    <li style="margin-right: 65px;" class="md:mr-8">
+                    <li style="margin-right: 65px;" class="md:mr-4">
                         <a href="welcome.php" class="blue-underline">
                             <span class="btn-navmenu2">Discover</span>
                         </a>
                     </li>
 
-                    <li style="margin-right: 65px;" class="md:mr-8">
+                    <li style="margin-right: 65px;" class="md:mr-4">
                         <a href="posts.php" class="blue-underline">
                             <span class="btn-navmenu">Posts</span>
                         </a>
@@ -120,19 +120,19 @@
                         </a>
                     </li>
 
-                    <li style="margin-right: 65px;" class="md:mr-8">
+                    <li style="margin-right: 65px;" class="md:mr-4">
                         <a href="blogs.php" class="blue-underline">
                             <span class="btn-navmenu">Blogs</span>
                         </a>
                     </li>
 
-                    <li style="margin-right: 65px;" class="md:mr-8">
+                    <li style="margin-right: 65px;" class="md:mr-4">
                         <a href="guides.php" class="blue-underline">
                             <span class="btn-navmenu">Guides</span>
                         </a>
                     </li>
 
-                    <li style="margin-right: 65px;" class="md:mr-8 relative group">
+                    <li style="margin-right: 65px;" class="md:mr-4 relative group">
                         <a href="#" class="btn-navmenu blue-underline dropdown-toggle">
                             <span class="btn-text">Profiles</span>
                             <!-- dropdown icon -->
@@ -144,7 +144,7 @@
                         </ul>
                     </li>
 
-                    <li class="md:mr-8">
+                    <li class="md:mr-4">
                         <a href="https://member.binnostartup.site" class="btn-blue">
                             <span>Become a member</span>
                         </a>
