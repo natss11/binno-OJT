@@ -91,8 +91,8 @@ if (!$enablers) {
                 ?>
                     <div class="card-container bg-white rounded-lg overflow-hidden shadow-md relative">
                         <a onclick="redirectToProfile('<?php echo htmlspecialchars('startup-enabler-profile.php?setting_institution=' . urlencode($setting_institution) . '&member_id=' . urlencode($enabler['member_id'])); ?>')" class="link">
-                            <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-64 h-32 object-cover" style="background-color: #ffffff;" onclick="loadImage<?php echo $i; ?>('profile-cover-img', 'Cover', '<?php echo $setting_coverpic; ?>')">
-                            <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #ffffff;" onclick="loadImage<?php echo $i; ?>('profile-img', 'Profile', '<?php echo $setting_profilepic; ?>')">
+                            <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-64 h-32 object-cover" style="background-color: #ffffff;">
+                            <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2" style="background-color: #ffffff;">
 
                             <div class="flex flex-col items-center px-4 py-2">
                                 <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $setting_institution; ?></h2>
