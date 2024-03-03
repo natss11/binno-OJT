@@ -93,7 +93,9 @@ if (!$companies) {
                 ?>
                     <div class="card-container bg-white rounded-lg overflow-hidden shadow-md relative">
                         <a onclick="redirectToProfile('<?php echo htmlspecialchars('startup-company-profile-view.php?setting_institution=' . urlencode($setting_institution) . '&member_id=' . urlencode($company['member_id'])); ?>')" class="link">
+                            <!-- Load cover picture -->
                             <img src="<?php echo $setting_coverpic; ?>" alt="<?php echo $setting_coverpic; ?>" id="dynamicImgCover-<?php echo $i; ?>" class="w-64 h-32 object-cover" style="background-color: #ffffff;">
+                            <!-- Load profile picture -->
                             <img src="<?php echo $setting_profilepic; ?>" alt="<?php echo $setting_profilepic; ?>" id="dynamicImgProfile-<?php echo $i; ?>" class="w-32 h-32 object-cover rounded-full -mt-20 square-profile object-cover absolute left-1/2 transform -translate-x-1/2 z-10" style="background-color: #ffffff;">
 
                             <div class="flex flex-col items-center px-4 py-2"> <!-- flex container and center alignment -->
@@ -143,17 +145,15 @@ if (!$companies) {
                             type: 'image/png'
                         }); // Adjust type if needed
 
-                        console.log(blob)
                         // Set the new src value using a blob URL
                         imgElement.src = URL.createObjectURL(blob);
                     })
                     .catch(error => console.error('Error fetching image data:', error));
             }
 
-            // Loop through images with IDs containing "dynamicImgCover-" and "dynamicImgProfile-"
+            // Loop through images with IDs containing "dynamicImgProfile-"
             for (var i = 0; i <= <?php echo count($companies); ?>; i++) {
                 // Update each image's src from the API
-                updateImageSrc(document.getElementById("dynamicImgCover-" + i));
                 updateImageSrc(document.getElementById("dynamicImgProfile-" + i));
             }
         </script>
