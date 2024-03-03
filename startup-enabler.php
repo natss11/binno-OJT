@@ -152,7 +152,7 @@ if (!$enablers) {
             }
 
             // Loop through images with IDs containing "dynamicImgCover-" and "dynamicImgProfile-"
-            for (var i = 1; i <= <?php echo count($enablers); ?>; i++) {
+            for (var i = 0; i <= <?php echo count($enablers); ?>; i++) {
                 // Update each image's src from the API
                 updateImageSrc(document.getElementById("dynamicImgCover-" + i));
                 updateImageSrc(document.getElementById("dynamicImgProfile-" + i));
