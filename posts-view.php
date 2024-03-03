@@ -114,7 +114,7 @@
             padding: 10px;
         }
 
-        .h11 {
+        #h11 {
             font-size: 1.25rem;
             color: #FF7A00;
             font-weight: bold;
