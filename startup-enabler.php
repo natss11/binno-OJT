@@ -24,7 +24,7 @@ function fetch_api_data($api_url)
     return $data;
 }
 
-function loadImage($id, $filePath, $imgType, $src)
+function loadImage($id, $filePath, $imgType, $src, $isCover = false)
 {
 ?>
     <script>
@@ -39,7 +39,9 @@ function loadImage($id, $filePath, $imgType, $src)
             document.getElementById('dynamicImg<?php echo ucfirst($imgType); ?>-<?php echo $id; ?>').src = imageUrl;
         }
 
-        loadImage<?php echo $id . ucfirst($imgType); ?>();
+        <?php if ($isCover) { ?>
+            loadImage<?php echo $id . ucfirst($imgType); ?>();
+        <?php } ?>
     </script>
 <?php
 }
@@ -115,7 +117,7 @@ if (!$enablers) {
 
                     <?php
                     // Call the loadImage function for each profile and cover image
-                    loadImage($i, 'profile-cover-img', 'Cover', $setting_coverpic);
+                    loadImage($i, 'profile-cover-img', 'Cover', $setting_coverpic, true);
                     loadImage($i, 'profile-img', 'Profile', $setting_profilepic);
                     ?>
                 <?php
