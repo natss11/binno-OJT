@@ -113,8 +113,8 @@ if (!$enablers) {
 
                     <?php
                     // Call the loadImage function for each profile and cover image
-                    loadImage($i, 'profile-img', 'Profile', $setting_profilepic);
                     loadImage($i, 'profile-cover-img', 'Cover', $setting_coverpic);
+                    loadImage($i, 'profile-img', 'Profile', $setting_profilepic);
                     ?>
                 <?php
                 }
