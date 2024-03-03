@@ -421,7 +421,7 @@
                 latestEventsContainer.innerHTML = ''; // Clear previous content
 
                 // Add "Upcoming Events" text at the top
-                const upcomingEventsText = document.createElement('h11');
+                const upcomingEventsText = document.createElement('h3');
                 upcomingEventsText.textContent = 'Upcoming Events';
                 latestEventsContainer.appendChild(upcomingEventsText);
 

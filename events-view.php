@@ -220,10 +220,10 @@
                     <!-- Left column -->
                     <div class="w-full lg:w-1/4 p-4 mt-40 mr-10 mb-5 text-center">
                         <div id="latestPosts" class="border shadow-lg">
-                            <h11>Latest Posts</h11>
+                            <h3>Latest Posts</h3>
                         </div>
                         <div id="latestBlogs" class="mt-10 border shadow-lg">
-                            <h11>Latest Blogs</h11>
+                            <h3>Latest Blogs</h3>
                         </div>
                     </div>
 
@@ -254,7 +254,7 @@
                     <!-- right column -->
                     <div class="w-full lg:w-1/4 p-4 mt-40 ml-10 mb-5 text-center">
                         <div id="latestEvents" class="border shadow-lg">
-                            <h11>Upcoming Events</h11>
+                            <h3>Upcoming Events</h3>
                         </div>
                     </div>
 
