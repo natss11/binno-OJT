@@ -84,7 +84,7 @@ if (!$enablers) {
             <!-- Cards Section -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 mx-20">
                 <?php
-                $i = 0;
+                $i = 1;
                 foreach ($enablers as $enabler) {
                     $i++;
                     $setting_institution = isset($enabler['setting_institution']) ? htmlspecialchars($enabler['setting_institution']) : '';
