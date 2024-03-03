@@ -24,7 +24,7 @@ function fetch_api_data($api_url)
     return $data;
 }
 
-function loadImage($id, $filePath, $imgType, $src, $isCover = false)
+function loadImage($id, $filePath, $imgType, $src)
 {
 ?>
     <script>
@@ -39,9 +39,7 @@ function loadImage($id, $filePath, $imgType, $src, $isCover = false)
             document.getElementById('dynamicImg<?php echo ucfirst($imgType); ?>-<?php echo $id; ?>').src = imageUrl;
         }
 
-        <?php if ($isCover) { ?>
-            loadImage<?php echo $id . ucfirst($imgType); ?>();
-        <?php } ?>
+        loadImage<?php echo $id . ucfirst($imgType); ?>();
     </script>
 <?php
 }
@@ -117,7 +115,7 @@ if (!$enablers) {
 
                     <?php
                     // Call the loadImage function for each profile and cover image
-                    loadImage($i, 'profile-cover-img', 'Cover', $setting_coverpic, true);
+                    loadImage($i, 'profile-cover-img', 'Cover', $setting_coverpic);
                     loadImage($i, 'profile-img', 'Profile', $setting_profilepic);
                     ?>
                 <?php
@@ -134,13 +132,13 @@ if (!$enablers) {
         </div>
 
         <script>
-            // Function to update image src from API
-            const updateImageSrc = async (imgElement) => {
+            // Function to update cover image src from API
+            const updateCoverImageSrc = async (imgElement) => {
                 // Get the current src value
                 var currentSrc = imgElement.alt;
 
-                // Fetch image data from API
-                const res = await fetch('https://binnostartup.site/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
+                // Fetch cover image data from API
+                const res = await fetch('https://binnostartup.site/m/api/images?filePath=profile-cover-img/' + encodeURIComponent(currentSrc))
                     .then(response => response.blob())
                     .then(data => {
                         // Create a blob from the response data
@@ -148,18 +146,16 @@ if (!$enablers) {
                             type: 'image/png'
                         }); // Adjust type if needed
 
-                        console.log(blob)
                         // Set the new src value using a blob URL
                         imgElement.src = URL.createObjectURL(blob);
                     })
-                    .catch(error => console.error('Error fetching image data:', error));
+                    .catch(error => console.error('Error fetching cover image data:', error));
             }
 
-            // Loop through images with IDs containing "dynamicImgCover-" and "dynamicImgProfile-"
+            // Loop through cover images with IDs containing "dynamicImgCover-"
             for (var i = 0; i <= <?php echo count($enablers); ?>; i++) {
-                // Update each image's src from the API
-                updateImageSrc(document.getElementById("dynamicImgCover-" + i));
-                updateImageSrc(document.getElementById("dynamicImgProfile-" + i));
+                // Update each cover image's src from the API
+                updateCoverImageSrc(document.getElementById("dynamicImgCover-" + i));
             }
         </script>
 
