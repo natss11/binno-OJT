@@ -62,6 +62,14 @@
                 text-decoration: none;
             }
         }
+
+        @media only screen and (max-width: 1024px) {
+
+            /* Medium screens */
+            .nav-menu {
+                visibility: visible;
+            }
+        }
     </style>
 
     <script>
