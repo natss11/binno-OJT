@@ -196,6 +196,13 @@ h10 {
   /* Add any other styles you want for h2 */
 }
 
+h11 {
+  font-size: 1.25rem;
+  color: #FF7A00;
+  font-weight: bold;
+  /* Add any other styles you want for h2 */
+}
+
 /* h1,
 h2,
 h3,
