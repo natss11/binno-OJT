@@ -64,6 +64,16 @@ if (!$enablers) {
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
         <title>BINNO | Startup Enablers</title>
+
+        <style>
+            /* Add this CSS to ensure images maintain aspect ratio */
+            .card-container img {
+                width: 100%;
+                height: auto;
+            }
+        </style>
+
+
     </head>
 
     <body>
