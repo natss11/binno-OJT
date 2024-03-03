@@ -30,7 +30,7 @@ function loadImage($id, $filePath, $imgType, $src)
     <script>
         const loadImage<?php echo $id . ucfirst($imgType); ?> = async () => {
             const res = await fetch(
-                `https://binnostartup.site/m/api/images?filePath=<?php echo urlencode($filePath . '/' . $src); ?>`
+                `https://binnostartup.site/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent('<?php echo $src; ?>')}`
             );
 
             const blob = await res.blob();
