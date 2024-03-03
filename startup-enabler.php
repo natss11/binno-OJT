@@ -30,7 +30,7 @@ function loadImage($id, $filePath, $imgType, $src)
     <script>
         const loadImage<?php echo $id . ucfirst($imgType); ?> = async () => {
             const res = await fetch(
-                `https://binnostartup.site/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent('<?php echo $src; ?>')}`
+                `https://binnostartup.site/m/api/images?filePath=<?php echo $filePath; ?>/<?php echo urlencode($src); ?>`
             );
 
             const blob = await res.blob();
@@ -84,7 +84,7 @@ if (!$enablers) {
             <!-- Cards Section -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 mx-20">
                 <?php
-                $i = 1;
+                $i = 0;
                 foreach ($enablers as $enabler) {
                     $i++;
                     $setting_institution = isset($enabler['setting_institution']) ? htmlspecialchars($enabler['setting_institution']) : '';
