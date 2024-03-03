@@ -38,6 +38,8 @@ function loadImage($id, $filePath, $imgType, $src)
 
             document.getElementById('dynamicImg<?php echo ucfirst($imgType); ?>-<?php echo $id; ?>').src = imageUrl;
         }
+
+        loadImage<?php echo $id . ucfirst($imgType); ?>();
     </script>
 <?php
 }
