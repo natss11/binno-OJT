@@ -113,6 +113,13 @@
         .border {
             padding: 10px;
         }
+
+        .h11 {
+            font-size: 1.25rem;
+            color: #FF7A00;
+            font-weight: bold;
+            /* Add any other styles you want for h2 */
+        }
     </style>
 
 </head>
