@@ -62,14 +62,6 @@
                 text-decoration: none;
             }
         }
-
-        @media only screen and (max-width: 1060px) {
-
-            /* Medium screens */
-            .nav-menu {
-                display: contents;
-            }
-        }
     </style>
 
     <script>
