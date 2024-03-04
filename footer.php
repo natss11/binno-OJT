@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <footer class="bg-gray-100 py-8 md:py-12 sm:py-6 lg:py-16 container-full">
+    <footer class="bg-gray-100 py-8 md:py-12 lg:py-16 container-full">
         <div class="px-16 flex flex-col md:flex-column">
             <div class="flex flex-wrap items-center justify-center">
                 <div class="logo">
@@ -47,11 +47,11 @@
                         <div class="newsletter mb-4">
                             <h4 class="text-black text-l">Newsletter</h4>
                             <p class="text-black text-sm">Become a part of the revolution by being up-to-date with our latest offering by startups and startup enablers!</p>
-                            <form id="newsletterForm" class="flex items-center">
-                                <div class="relative md:mt-0 sm:mt-0 flex">
-                                    <input id="emailInput" type="email" placeholder="Enter your email here..." class="mt-3 px-6 py-2 rounded-l-full border shadow-md focus:outline-none focus:ring focus:border-blue-300 md:w-full" />
+                            <form id="newsletterForm" class="flex flex-col sm:flex-row items-center">
+                                <div class="relative sm:mt-0 flex flex-col sm:flex-row">
+                                    <input id="emailInput" type="email" placeholder="Enter your email here..." class="mt-3 sm:mt-0 px-6 py-2 rounded-l-full border shadow-md focus:outline-none focus:ring focus:border-blue-300 sm:w-auto w-full" />
 
-                                    <button type="submit" class="mt-3 btn-subscribe px-6 py-2 rounded-r-full ml-2">
+                                    <button type="submit" class="mt-3 sm:ml-2 btn-subscribe px-6 py-2 rounded-r-full">
                                         <span>Subscribe</span>
                                     </button>
                                 </div>
