@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <footer class="bg-gray-100 py-8 md:py-12 lg:py-16 container-full">
+    <footer class="bg-gray-100 py-8 md:py-12 sm:py-6 lg:py-16 container-full">
         <div class="px-16 flex flex-col md:flex-column">
             <div class="flex flex-wrap items-center justify-center">
                 <div class="logo">
