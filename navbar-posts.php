@@ -103,18 +103,13 @@
                 <ul class="md:flex md:justify-end nav-menu" id="navMenu">
 
                     <li style="margin-right: 65px;" class="mr-4">
-                        <a href="welcome.php" class="blue-underline">
-                            <span class="btn-navmenu">Discover</span>
+                        <a href="blogs.php" class="blue-underline">
+                            <span class="btn-navmenu">Blog Articles</span>
                         </a>
                     </li>
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="events.php" class="blue-underline">
                             <span class="btn-navmenu">Events</span>
-                        </a>
-                    </li>
-                    <li style="margin-right: 65px;" class="mr-4">
-                        <a href="blogs.php" class="blue-underline">
-                            <span class="btn-navmenu">Blog Articles</span>
                         </a>
                     </li>
                     <li style="margin-right: 65px;" class="mr-4">
@@ -139,7 +134,7 @@
                             <span class="btn-navmenu">Sign In</span>
                         </a>
                     </li>
-                    
+
                 </ul>
 
                 <!-- End of navigation menu -->

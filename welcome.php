@@ -50,7 +50,7 @@ if (!$posts || !$events || !$blogs) {
 
         <?php include 'navbar.php'; ?>
 
-        <main class="flex justify-center">
+        <main class="flex justify-center bg-gray-100">
             <div class="container mx-16">
 
                 <!-- Display Startup Posts -->
@@ -215,8 +215,6 @@ if (!$posts || !$events || !$blogs) {
                 </div>
             </div>
         </main>
-
-        <?php include 'footer.php'; ?>
 
     </body>
 
