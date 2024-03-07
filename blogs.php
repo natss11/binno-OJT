@@ -48,10 +48,10 @@ if (!$blogs) {
 
         <?php include 'navbar-blogs.php'; ?>
 
-        <main class="flex justify-center">
+        <main class="flex justify-center bg-gray-100">
             <div class="container mx-16">
-                <div class="text-center">
-                    <h3 class="font-bold text-3xl md:text-4xl">Blogs</h3>
+                <div>
+                    <h3 class="font-bold text-3xl md:text-4xl">Blog Articles</h3>
                 </div>
 
                 <div class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
@@ -125,8 +125,6 @@ if (!$blogs) {
                 }
             }
         </script>
-
-        <?php include 'footer.php'; ?>
 
     </body>
 

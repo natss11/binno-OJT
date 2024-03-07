@@ -134,12 +134,12 @@
                         </ul>
                     </li>
 
-                    <li class="mr-4">
-                        <a href="https://member.binnostartup.site" class="btn-blue">
-                            <span>Become a member</span>
+                    <li style="margin-right: 65px;" class="mr-4">
+                        <a href="https://member.binnostartup.site" class="blue-underline">
+                            <span class="btn-navmenu">Sign In</span>
                         </a>
                     </li>
-
+                    
                 </ul>
 
                 <!-- End of navigation menu -->
