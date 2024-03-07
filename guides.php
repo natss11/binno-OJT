@@ -44,13 +44,15 @@ if (!$programs) {
         <title>BINNO | GUIDES</title>
     </head>
 
-    <body>
+    <body class="bg-gray-100">
 
-        <?php include 'navbar-guides.php'; ?>
+        <div class="bg-white">
+            <?php include 'navbar-guides.php'; ?>
+        </div>
 
         <main class="flex justify-center">
             <div class="container mx-16">
-                <div class="text-center">
+                <div>
                     <h3 class="font-bold text-3xl md:text-4xl">Guides</h3>
                 </div>
 
@@ -120,8 +122,6 @@ if (!$programs) {
                 updateImageSrc(imgElement);
             });
         </script>
-
-        <?php include 'footer.php'; ?>
 
     </body>
 

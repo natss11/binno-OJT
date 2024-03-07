@@ -44,11 +44,13 @@ if (!$blogs) {
         <title>BINNO | BLOGS</title>
     </head>
 
-    <body>
+    <body class="bg-gray-100">
 
-        <?php include 'navbar-blogs.php'; ?>
+        <div class="bg-white">
+            <?php include 'navbar-blogs.php'; ?>
+        </div>
 
-        <main class="flex justify-center bg-gray-100">
+        <main class="flex justify-center">
             <div class="container mx-16">
                 <div>
                     <h3 class="font-bold text-3xl md:text-4xl">Blog Articles</h3>

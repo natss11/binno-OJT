@@ -45,13 +45,15 @@ if (!$events) {
         <title>BINNO | EVENTS</title>
     </head>
 
-    <body>
+    <body class="bg-gray-100">
 
-        <?php include 'navbar-events.php'; ?>
+        <div class="bg-white">
+            <?php include 'navbar-events.php'; ?>
+        </div>
 
         <main class="flex justify-center">
             <div class="container mx-16">
-                <div class="text-center">
+                <div>
                     <h3 class="font-bold text-3xl md:text-4xl">Events</h3>
                 </div>
 
@@ -116,8 +118,6 @@ if (!$events) {
                 updateImageSrc(imgElement);
             });
         </script>
-
-        <?php include 'footer.php'; ?>
 
     </body>
 
