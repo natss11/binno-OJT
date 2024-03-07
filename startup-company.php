@@ -30,7 +30,7 @@ function loadImage($id, $filePath, $imgType, $src)
     <script>
         const loadImage<?php echo $id . ucfirst($imgType); ?> = async () => {
             const res = await fetch(
-                `https://binnostartup.site/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent('<?php echo $src; ?>')}`
+                `http://217.196.51.115/m/api/images?filePath=<?php echo $filePath; ?>/${encodeURIComponent('<?php echo $src; ?>')}`
             );
 
             const blob = await res.blob();
@@ -44,7 +44,7 @@ function loadImage($id, $filePath, $imgType, $src)
 <?php
 }
 
-$api_url = "https://binnostartup.site/m/api/members/companies";
+$api_url = "http://217.196.51.115/m/api/members/companies";
 $companies = fetch_api_data($api_url);
 
 if (!$companies) {
@@ -137,7 +137,7 @@ if (!$companies) {
                 var currentSrc = imgElement.alt;
 
                 // Fetch image data from API
-                const res = await fetch('https://binnostartup.site/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
+                const res = await fetch('http://217.196.51.115/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
                     .then(response => response.blob())
                     .then(data => {
                         // Create a blob from the response data

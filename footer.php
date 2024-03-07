@@ -80,7 +80,7 @@
 
                     // Make AJAX POST request to your API
                     $.ajax({
-                        url: 'https://binnostartup.site/m/api/newsletter/subscribe', // Your API endpoint
+                        url: 'http://217.196.51.115/m/api/newsletter/subscribe', // Your API endpoint
                         method: 'POST',
                         data: {
                             email: email

@@ -174,14 +174,14 @@
 
     // Check if a valid event ID is provided
     if ($event_id > 0) {
-        $events = fetch_api_data("https://binnostartup.site/m/api/events/$event_id");
+        $events = fetch_api_data("http://217.196.51.115/m/api/events/$event_id");
 
         if ($events) {
             $event = $events[0];
 
             // Fetch data from both member APIs
-            $enablers = fetch_api_data("https://binnostartup.site/m/api/members/enablers");
-            $companies = fetch_api_data("https://binnostartup.site/m/api/members/companies");
+            $enablers = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
+            $companies = fetch_api_data("http://217.196.51.115/m/api/members/companies");
 
             if ($enablers && $companies) {
                 // Search for the author's name based on member_id
@@ -279,7 +279,7 @@
             // Fetch and display latest posts
             async function fetchAndDisplayPosts() {
                 try {
-                    const response = await fetch('https://binnostartup.site/m/api/posts');
+                    const response = await fetch('http://217.196.51.115/m/api/posts');
                     const data = await response.json();
 
                     // Sort the data array by post_dateadded
@@ -300,7 +300,7 @@
 
                         // Create image element and set its attributes
                         const img = document.createElement('img');
-                        img.src = `https://binnostartup.site/m/api/images?filePath=post-pics/${encodeURIComponent(post.post_img)}`;
+                        img.src = `http://217.196.51.115/m/api/images?filePath=post-pics/${encodeURIComponent(post.post_img)}`;
                         img.alt = post.post_heading;
                         postDiv.appendChild(img);
 
@@ -351,7 +351,7 @@
             // Function to fetch data from the API and display the first 5 blogs
             async function fetchAndDisplayBlogs() {
                 try {
-                    const response = await fetch('https://binnostartup.site/m/api/blogs');
+                    const response = await fetch('http://217.196.51.115/m/api/blogs');
                     const data = await response.json();
                     data.sort((a, b) => new Date(b.blog_dateadded) - new Date(a.blog_dateadded));
 
@@ -370,7 +370,7 @@
 
                         // Create image element and set its attributes
                         const img = document.createElement('img');
-                        img.src = `https://binnostartup.site/m/api/images?filePath=blog-pics/${encodeURIComponent(blog.blog_img)}`;
+                        img.src = `http://217.196.51.115/m/api/images?filePath=blog-pics/${encodeURIComponent(blog.blog_img)}`;
                         img.alt = blog.blog_title;
                         blogDiv.appendChild(img);
 
@@ -422,7 +422,7 @@
             // Fetch and display upcoming events
             async function fetchAndDisplayEvents() {
                 try {
-                    const response = await fetch('https://binnostartup.site/m/api/events');
+                    const response = await fetch('http://217.196.51.115/m/api/events');
                     const data = await response.json();
 
                     // Sort events by event_date in descending order
@@ -449,7 +449,7 @@
 
                         // Create image element and set its attributes
                         const img = document.createElement('img');
-                        img.src = `https://binnostartup.site/m/api/images?filePath=event-pics/${encodeURIComponent(event.event_img)}`;
+                        img.src = `http://217.196.51.115/m/api/images?filePath=event-pics/${encodeURIComponent(event.event_img)}`;
                         img.alt = event.event_title;
                         eventDiv.appendChild(img);
 
@@ -505,7 +505,7 @@
                 var currentSrc = imgElement.alt;
 
                 // Fetch image data from API
-                const res = await fetch('https://binnostartup.site/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
+                const res = await fetch('http://217.196.51.115/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
                     .then(response => response.blob())
                     .then(data => {
                         // Create a blob from the response data
@@ -531,7 +531,7 @@
                 const loadImage = async () => {
                     const currentSrc = document.getElementById('event_pic').alt;
                     const res = await fetch(
-                        `https://binnostartup.site/m/api/images?filePath=event-pics/${encodeURIComponent(currentSrc)}`
+                        `http://217.196.51.115/m/api/images?filePath=event-pics/${encodeURIComponent(currentSrc)}`
                     );
 
                     const blob = await res.blob();
