@@ -108,18 +108,13 @@
                         </a>
                     </li>
                     <li style="margin-right: 65px;" class="mr-4">
-                        <a href="posts.php" class="blue-underline">
-                            <span class="btn-navmenu">Posts</span>
-                        </a>
-                    </li>
-                    <li style="margin-right: 65px;" class="mr-4">
                         <a href="events.php" class="blue-underline">
                             <span class="btn-navmenu">Events</span>
                         </a>
                     </li>
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="blogs.php" class="blue-underline">
-                            <span class="btn-navmenu">Blogs</span>
+                            <span class="btn-navmenu">Blog Articles</span>
                         </a>
                     </li>
                     <li style="margin-right: 65px;" class="mr-4">
