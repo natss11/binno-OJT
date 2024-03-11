@@ -131,10 +131,11 @@
 
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="https://member.binnostartup.site" class="blue-underline">
+                            <span class="fas fa-user-circle"></span> 
                             <span class="btn-navmenu">Sign In</span>
                         </a>
                     </li>
-
+                    
                 </ul>
 
                 <!-- End of navigation menu -->
