@@ -1,4 +1,5 @@
 <?php
+
 function fetch_api_data($api_url)
 {
     // Make the request
