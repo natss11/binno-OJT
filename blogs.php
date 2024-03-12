@@ -1,5 +1,4 @@
 <?php
-
 function fetch_api_data($api_url)
 {
     // Make the request
@@ -24,12 +23,17 @@ function fetch_api_data($api_url)
     return $data;
 }
 
+// Fetch data from blogs API
 $company = fetch_api_data("http://217.196.51.115/m/api/blogs/class/company/");
 $enabler = fetch_api_data("http://217.196.51.115/m/api/blogs/class/enabler/");
 
-if (!$company || !$enabler) {
+// Fetch data from member APIs
+$enablers = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
+$companies = fetch_api_data("http://217.196.51.115/m/api/members/companies");
+
+if (!$company || !$enabler || !$enablers || !$companies) {
     // Handle the case where the API request failed or returned invalid data
-    echo "Failed to fetch blogs.";
+    echo "Failed to fetch data.";
 } else {
 ?>
     <!DOCTYPE html>
@@ -65,8 +69,8 @@ if (!$company || !$enabler) {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m4-6a8 8 0 11-16 0 8 8 0 0116 0z"></path>
                             </svg>
                         </span>
-                        <input type="text" placeholder="Search for a topic or organizer" class="pl-10 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" style="width: calc(100% - 60px);"> <!-- Subtracting 40px for the icon -->
-                        <button type="submit" id="searchButton">Search</button>
+                        <input type="text" placeholder="Search for a topic or organizer" class="pl-10 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" style="width: calc(100% - 60px); border-radius: 15px;"> <!-- Subtracting 40px for the icon -->
+                        <button type="submit" id="searchButton" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md" style="border-top-right-radius: 15px; border-bottom-right-radius: 15px;">Search</button>
                     </div>
                 </div>
 
@@ -86,27 +90,33 @@ if (!$company || !$enabler) {
                             return strtotime($b['blog_dateadded']) - strtotime($a['blog_dateadded']);
                         });
 
-                        $i = 0;
-                        foreach ($company as $companies) :
-                            $i++;
+                        foreach ($company as $companyBlog) :
+                            $authorName = '';
+                            foreach ($companies as $companyMember) {
+                                if ($companyMember['member_id'] == $companyBlog['blog_author']) {
+                                    $authorName = $companyMember['setting_institution'];
+                                    break;
+                                }
+                            }
                         ?>
 
                             <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
-                                <a href="blogs-view.php?blog_id=<?php echo $companies['blog_id']; ?>" class="link">
-                                    <img src="<?php echo htmlspecialchars($companies['blog_img']); ?>" alt="<?php echo htmlspecialchars($companies['blog_img']); ?>" id="dynamicCompanyImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                <a href="blogs-view.php?blog_id=<?php echo $companyBlog['blog_id']; ?>" class="link">
+                                    <img src="<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" id="dynamicCompanyImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                     <div class="p-4">
                                         <div class="flex items-center mb-2">
                                             <div>
-                                                <h2 class="text-2xl font-semibold"><?php echo strlen($companies['blog_title']) > 20 ? htmlspecialchars(substr($companies['blog_title'], 0, 20)) . '...' : htmlspecialchars($companies['blog_title']); ?></h2>
-                                                <p class="text-gray-600 text-sm mb-2">
+                                                <h2 class="text-2xl font-semibold"><?php echo strlen($companyBlog['blog_title']) > 20 ? htmlspecialchars(substr($companyBlog['blog_title'], 0, 20)) . '...' : htmlspecialchars($companyBlog['blog_title']); ?></h2>
+                                                <p class="text-gray-600 text-sm">
                                                     <?php
-                                                    $formatted_date = date('F j, Y | h:i A', strtotime($companies['blog_dateadded']));
+                                                    $formatted_date = date('F j, Y | h:i A', strtotime($companyBlog['blog_dateadded']));
                                                     echo $formatted_date;
                                                     ?>
                                                 </p>
+                                                <p class="text-m text-gray-600 mb-3"><?php echo $authorName; ?></p>
                                                 <p class="mb-2 mt-2">
                                                     <?php
-                                                    $words = str_word_count($companies['blog_content'], 1);
+                                                    $words = str_word_count($companyBlog['blog_content'], 1);
                                                     echo htmlspecialchars(implode(' ', array_slice($words, 0, 30)));
                                                     if (count($words) > 30) {
                                                         echo '...';
@@ -121,18 +131,18 @@ if (!$company || !$enabler) {
                         <?php endforeach; ?>
                     </div>
                     <script>
-                        const companyCards = <?php echo json_encode($companies); ?>;
+                        const companyCards = <?php echo json_encode($company); ?>;
 
                         // Function to fetch image data from API
-                        async function updateImageSrc(imgSrc) {
+                        async function updateCompanyImageSrc(imgSrc) {
                             imgSrc.src = `http://217.196.51.115/m/api/images?filePath=blog-pics/${imgSrc.alt}`
                             console.log(imgSrc)
                         }
 
-                        // Loop through images with IDs containing "dynamicEventImg"
+                        // Loop through images with IDs containing "dynamicCompanyImg"
                         document.querySelectorAll('[id^="dynamicCompanyImg-"]').forEach((imgElement, index) => {
                             // Update each image's src from the API
-                            updateImageSrc(imgElement);
+                            updateCompanyImageSrc(imgElement);
                         });
                     </script>
                 </div>
@@ -153,27 +163,33 @@ if (!$company || !$enabler) {
                             return strtotime($b['blog_dateadded']) - strtotime($a['blog_dateadded']);
                         });
 
-                        $i = 0;
-                        foreach ($enabler as $enablers) :
-                            $i++;
+                        foreach ($enabler as $enablerBlog) :
+                            $authorName = '';
+                            foreach ($enablers as $enablerMember) {
+                                if ($enablerMember['member_id'] == $enablerBlog['blog_author']) {
+                                    $authorName = $enablerMember['setting_institution'];
+                                    break;
+                                }
+                            }
                         ?>
 
                             <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
-                                <a href="blogs-view.php?blog_id=<?php echo $enablers['blog_id']; ?>" class="link">
-                                    <img src="<?php echo htmlspecialchars($enablers['blog_img']); ?>" alt="<?php echo htmlspecialchars($enablers['blog_img']); ?>" id="dynamicEnablerImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                <a href="blogs-view.php?blog_id=<?php echo $enablerBlog['blog_id']; ?>" class="link">
+                                    <img src="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" id="dynamicEnablerImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                     <div class="p-4">
                                         <div class="flex items-center mb-2">
                                             <div>
-                                                <h2 class="text-2xl font-semibold"><?php echo strlen($enablers['blog_title']) > 20 ? htmlspecialchars(substr($enablers['blog_title'], 0, 20)) . '...' : htmlspecialchars($enablers['blog_title']); ?></h2>
-                                                <p class="text-gray-600 text-sm mb-2">
+                                                <h2 class="text-2xl font-semibold"><?php echo strlen($enablerBlog['blog_title']) > 20 ? htmlspecialchars(substr($enablerBlog['blog_title'], 0, 20)) . '...' : htmlspecialchars($enablerBlog['blog_title']); ?></h2>
+                                                <p class="text-gray-600 text-sm">
                                                     <?php
-                                                    $formatted_date = date('F j, Y | h:i A', strtotime($enablers['blog_dateadded']));
+                                                    $formatted_date = date('F j, Y | h:i A', strtotime($enablerBlog['blog_dateadded']));
                                                     echo $formatted_date;
                                                     ?>
                                                 </p>
+                                                <p class="text-m text-gray-600 mb-3"><?php echo $authorName; ?></p>
                                                 <p class="mb-2 mt-2">
                                                     <?php
-                                                    $words = str_word_count($enablers['blog_content'], 1);
+                                                    $words = str_word_count($enablerBlog['blog_content'], 1);
                                                     echo htmlspecialchars(implode(' ', array_slice($words, 0, 30)));
                                                     if (count($words) > 30) {
                                                         echo '...';
@@ -188,18 +204,18 @@ if (!$company || !$enabler) {
                         <?php endforeach; ?>
                     </div>
                     <script>
-                        const enablerCards = <?php echo json_encode($enablers); ?>;
+                        const enablerCards = <?php echo json_encode($enabler); ?>;
 
                         // Function to fetch image data from API
-                        async function updateImageSrc(imgSrc) {
+                        async function updateEnablerImageSrc(imgSrc) {
                             imgSrc.src = `http://217.196.51.115/m/api/images?filePath=blog-pics/${imgSrc.alt}`
                             console.log(imgSrc)
                         }
 
-                        // Loop through images with IDs containing "dynamicEventImg"
+                        // Loop through images with IDs containing "dynamicEnablerImg"
                         document.querySelectorAll('[id^="dynamicEnablerImg-"]').forEach((imgElement, index) => {
                             // Update each image's src from the API
-                            updateImageSrc(imgElement);
+                            updateEnablerImageSrc(imgElement);
                         });
                     </script>
                 </div>

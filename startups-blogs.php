@@ -1,5 +1,4 @@
 <?php
-
 function fetch_api_data($api_url)
 {
     // Make the request
@@ -24,11 +23,17 @@ function fetch_api_data($api_url)
     return $data;
 }
 
-$blogs = fetch_api_data("http://217.196.51.115/m/api/blogs/class/company");
+// Fetch data from blogs API
+$company = fetch_api_data("http://217.196.51.115/m/api/blogs/class/company/");
+$enabler = fetch_api_data("http://217.196.51.115/m/api/blogs/class/enabler/");
 
-if (!$blogs) {
+// Fetch data from member APIs
+$enablers = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
+$companies = fetch_api_data("http://217.196.51.115/m/api/members/companies");
+
+if (!$company || !$enabler || !$enablers || !$companies) {
     // Handle the case where the API request failed or returned invalid data
-    echo "Failed to fetch blogs.";
+    echo "Failed to fetch data.";
 } else {
 ?>
     <!DOCTYPE html>
@@ -41,7 +46,7 @@ if (!$blogs) {
         <link rel="stylesheet" href="./dist/output.css">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
-        <title>BINNO | STARTUP BLOGS</title>
+        <title>BINNO | BLOGS</title>
     </head>
 
     <body class="bg-gray-100">
@@ -52,7 +57,6 @@ if (!$blogs) {
 
         <main class="flex justify-center">
             <div class="container mx-16">
-
                 <div>
                     <div class="mt-5 mb-5">
                         <!-- Back icon with link to 'blogs' page -->
@@ -60,7 +64,7 @@ if (!$blogs) {
                             <i class="fas fa-arrow-left"></i> Back
                         </a>
                     </div>
-                    <h4 class="font-bold text-3xl md:text-5xl">Startup Blog Articles</h4>
+                    <h4 class="mt-5 font-bold text-3xl md:text-5xl mb-10">Startup Blog Articles</h4>
                 </div>
 
                 <!-- Search Bar -->
@@ -71,8 +75,8 @@ if (!$blogs) {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m4-6a8 8 0 11-16 0 8 8 0 0116 0z"></path>
                             </svg>
                         </span>
-                        <input type="text" placeholder="Search for a topic or organizer" class="pl-10 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" style="width: calc(100% - 60px);"> <!-- Subtracting 40px for the icon -->
-                        <button type="submit" id="searchButton">Search</button>
+                        <input type="text" placeholder="Search for a topic or organizer" class="pl-10 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" style="width: calc(100% - 60px); border-radius: 15px;"> <!-- Subtracting 40px for the icon -->
+                        <button type="submit" id="searchButton" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md" style="border-top-right-radius: 15px; border-bottom-right-radius: 15px;">Search</button>
                     </div>
                 </div>
 
@@ -80,31 +84,37 @@ if (!$blogs) {
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <?php
                         // Sort the blogs array by the blog_dateadded field in descending order
-                        usort($blogs, function ($a, $b) {
+                        usort($company, function ($a, $b) {
                             return strtotime($b['blog_dateadded']) - strtotime($a['blog_dateadded']);
                         });
 
-                        $i = 0;
-                        foreach ($blogs as $blog) :
-                            $i++;
+                        foreach ($company as $companyBlog) :
+                            $authorName = '';
+                            foreach ($companies as $companyMember) {
+                                if ($companyMember['member_id'] == $companyBlog['blog_author']) {
+                                    $authorName = $companyMember['setting_institution'];
+                                    break;
+                                }
+                            }
                         ?>
 
                             <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
-                                <a href="blogs-view.php?blog_id=<?php echo $blog['blog_id']; ?>" class="link">
-                                    <img src="<?php echo htmlspecialchars($blog['blog_img']); ?>" alt="<?php echo htmlspecialchars($blog['blog_img']); ?>" id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                <a href="blogs-view.php?blog_id=<?php echo $companyBlog['blog_id']; ?>" class="link">
+                                    <img src="<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" id="dynamicCompanyImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                     <div class="p-4">
                                         <div class="flex items-center mb-2">
                                             <div>
-                                                <h2 class="text-2xl font-semibold"><?php echo strlen($blog['blog_title']) > 20 ? htmlspecialchars(substr($blog['blog_title'], 0, 20)) . '...' : htmlspecialchars($blog['blog_title']); ?></h2>
-                                                <p class="text-gray-600 text-sm mb-2">
+                                                <h2 class="text-2xl font-semibold"><?php echo strlen($companyBlog['blog_title']) > 20 ? htmlspecialchars(substr($companyBlog['blog_title'], 0, 20)) . '...' : htmlspecialchars($companyBlog['blog_title']); ?></h2>
+                                                <p class="text-gray-600 text-sm">
                                                     <?php
-                                                    $formatted_date = date('F j, Y | h:i A', strtotime($blog['blog_dateadded']));
+                                                    $formatted_date = date('F j, Y | h:i A', strtotime($companyBlog['blog_dateadded']));
                                                     echo $formatted_date;
                                                     ?>
                                                 </p>
+                                                <p class="text-m text-gray-600 mb-3"><?php echo $authorName; ?></p>
                                                 <p class="mb-2 mt-2">
                                                     <?php
-                                                    $words = str_word_count($blog['blog_content'], 1);
+                                                    $words = str_word_count($companyBlog['blog_content'], 1);
                                                     echo htmlspecialchars(implode(' ', array_slice($words, 0, 30)));
                                                     if (count($words) > 30) {
                                                         echo '...';
@@ -118,45 +128,24 @@ if (!$blogs) {
                             </div>
                         <?php endforeach; ?>
                     </div>
+                    <script>
+                        const companyCards = <?php echo json_encode($company); ?>;
+
+                        // Function to fetch image data from API
+                        async function updateCompanyImageSrc(imgSrc) {
+                            imgSrc.src = `http://217.196.51.115/m/api/images?filePath=blog-pics/${imgSrc.alt}`
+                            console.log(imgSrc)
+                        }
+
+                        // Loop through images with IDs containing "dynamicCompanyImg"
+                        document.querySelectorAll('[id^="dynamicCompanyImg-"]').forEach((imgElement, index) => {
+                            // Update each image's src from the API
+                            updateCompanyImageSrc(imgElement);
+                        });
+                    </script>
                 </div>
             </div>
         </main>
-
-        <script>
-            // Function to update image src from API
-            const updateImageSrc = async (imgElement) => {
-                // Get the current src value
-                var currentSrc = imgElement.alt;
-
-                // Fetch image data from API
-                const res = await fetch('http://217.196.51.115/m/api/images?filePath=blog-pics/' + encodeURIComponent(currentSrc))
-                    .then(response => response.blob())
-                    .then(data => {
-                        // Create a blob from the response data
-                        var blob = new Blob([data], {
-                            type: 'image/png'
-                        }); // Adjust type if needed
-
-                        console.log(blob)
-                        // Set the new src value using a blob URL
-                        imgElement.src = URL.createObjectURL(blob);
-                    })
-                    .catch(error => console.error('Error fetching image data:', error));
-            }
-
-            // Loop through images with IDs containing "dynamicImg"
-            var i = 1;
-            while (true) {
-                var imgElement = document.getElementById("dynamicImg-" + i);
-                if (imgElement) {
-                    // Update each image's src from the API
-                    updateImageSrc(imgElement);
-                    i++;
-                } else {
-                    break; // Break the loop if no more images are found
-                }
-            }
-        </script>
 
     </body>
 
