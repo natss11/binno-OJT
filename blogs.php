@@ -50,7 +50,7 @@ if (!$company || !$enabler || !$enablers || !$companies) {
         <title>BINNO | BLOGS</title>
     </head>
 
-    <body class="bg-gray-100">
+    <body class="bg-gray-50">
 
         <div class="bg-white">
             <?php include 'navbar-blogs.php'; ?>

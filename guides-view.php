@@ -99,7 +99,7 @@ if (!$programs) {
         <title>BINNO | GUIDES</title>
     </head>
 
-    <body>
+    <body class="bg-gray-50">
 
         <?php include 'navbar-guides.php'; ?>
 
