@@ -206,7 +206,9 @@
 
         ?>
 
-                <?php include 'navbar-events.php'; ?>
+                <div class="bg-white">
+                    <?php include 'navbar-events.php'; ?>
+                </div>
 
                 <div class="container mx-auto p-8 max-w-10xl mx-auto">
                     <!-- Back icon with link to 'events' page -->
@@ -443,9 +445,9 @@
                         eventDiv.classList.add('event');
 
                         // Add margin-top to the first post
-                    if (i === 0) {
-                        eventDiv.style.marginTop = '10px'; // Adjust margin-top value as needed
-                    }
+                        if (i === 0) {
+                            eventDiv.style.marginTop = '10px'; // Adjust margin-top value as needed
+                        }
 
                         // Create image element and set its attributes
                         const img = document.createElement('img');
