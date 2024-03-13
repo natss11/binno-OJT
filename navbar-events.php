@@ -112,25 +112,14 @@
                             <span class="btn-navmenu2">Events</span>
                         </a>
                     </li>
-                    <li style="margin-right: 65px;" class="mr-4">
+                    <li style="margin-right: 150px;" class="mr-4">
                         <a href="guides.php" class="blue-underline">
                             <span class="btn-navmenu">Guides</span>
                         </a>
                     </li>
-                    <li style="margin-right: 150px;" class="mr-4 relative group">
-                        <a href="#" class="btn-navmenu blue-underline dropdown-toggle">
-                            <span class="btn-text">Profiles</span>
-                            <!-- dropdown icon -->
-                            <span class="dropdown-icon">▼</span>
-                        </a>
-                        <ul class="mt-5 absolute hidden space-y-2 bg-white border border-gray-200 rounded-md shadow-lg custom-dropdown">
-                            <li><a href="startup-enabler.php" class="orange-text block py-3 px-4">Startup Enablers</a></li>
-                            <li><a href="startup-company.php" class="orange-text block py-3 px-4">Startup Companies</a></li>
-                        </ul>
-                    </li>
-
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="https://member.binnostartup.site" class="blue-underline">
+                            <span class="fas fa-user-circle"></span> 
                             <span class="btn-navmenu">Sign In</span>
                         </a>
                     </li>
