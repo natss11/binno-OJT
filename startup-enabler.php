@@ -66,9 +66,11 @@ if (!$enablers) {
         <title>BINNO | Startup Enablers</title>
     </head>
 
-    <body>
+    <body class="bg-gray-50">
 
-        <?php include 'navbar-profiles.php'; ?>
+        <div class="bg-white">
+            <?php include 'navbar-profiles.php'; ?>
+        </div>
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
             <h1 class="font-bold text-3xl md:text-6xl text-center mt-5 mb-5" style="color: #ff7a00;">Startup Enablers</h1>

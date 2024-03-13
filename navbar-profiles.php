@@ -87,10 +87,10 @@
 
     <header>
         <div>
-            <nav class="h-40 px-5 py-4 md:py-0 md:px-10 flex flex-col md:flex-row justify-between items-center">
+            <nav class="h-16 px-5 py-4 md:py-0 md:px-10 flex flex-col md:flex-row justify-between items-center">
                 <div class="logo mb-4 md:mb-0">
                     <a href="welcome.php">
-                        <img class="w-52 h-52 md:w-64 md:h-64 mb-4" src="logo/logo.png" alt="Logo">
+                        <img class="w-52 h-52 md:w-52 md:h-52" src="logo/logo.png" alt="Logo">
                     </a>
                 </div>
 
@@ -117,7 +117,7 @@
                             <span class="btn-navmenu">Guides</span>
                         </a>
                     </li>
-                    <li style="margin-right: 65px;" class="mr-4 relative group">
+                    <li style="margin-right: 150px;" class="mr-4 relative group">
                         <a href="#" class="btn-navmenu2 btn-navmenu blue-text dropdown-toggle">
                             <span class="btn-text">Profiles</span>
                             <!-- dropdown icon -->
@@ -131,10 +131,10 @@
 
                     <li style="margin-right: 65px;" class="mr-4">
                         <a href="https://member.binnostartup.site" class="blue-underline">
+                            <span class="fas fa-user-circle"></span>
                             <span class="btn-navmenu">Sign In</span>
                         </a>
                     </li>
-
                 </ul>
 
                 <!-- End of navigation menu -->

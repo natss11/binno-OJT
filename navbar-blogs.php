@@ -117,7 +117,7 @@
                             <span class="btn-navmenu">Guides</span>
                         </a>
                     </li>
-                    <li style="margin-right: 65px;" class="mr-4 relative group">
+                    <li style="margin-right: 150px;" class="mr-4 relative group">
                         <a href="#" class="btn-navmenu blue-underline dropdown-toggle">
                             <span class="btn-text">Profiles</span>
                             <!-- dropdown icon -->
