@@ -75,12 +75,141 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m4-6a8 8 0 11-16 0 8 8 0 0116 0z"></path>
                             </svg>
                         </span>
-                        <input type="text" placeholder="Search for a topic or organizer" class="pl-10 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" style="width: calc(100% - 60px); border-radius: 15px;"> <!-- Subtracting 40px for the icon -->
-                        <button type="submit" id="searchButton" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md" style="border-top-right-radius: 15px; border-bottom-right-radius: 15px;">Search</button>
+                        <input type="text" id="searchInput" placeholder="Search for a topic or organizer" class="pl-10 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" style="width: calc(100% - 60px); border-radius: 15px;"> <!-- Subtracting 40px for the icon -->
+                        <button id="searchButton" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md" style="border-top-right-radius: 16px; border-bottom-right-radius: 16px;">Search</button>
                     </div>
                 </div>
 
-                <div class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
+                <div id="searchResults" class="grid grid-cols-4 gap-4"></div>
+
+                <script>
+                    document.getElementById('searchButton').addEventListener('click', function() {
+                        performSearch();
+                    });
+
+                    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            performSearch();
+                        }
+                    });
+
+                    function performSearch() {
+                        var searchTerm = document.getElementById('searchInput').value.trim();
+                        if (searchTerm !== '') {
+                            fetch('http://217.196.51.115/m/api/search/blog/enabler', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        search_term: searchTerm
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    displaySearchResults(data);
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching search results:', error);
+                                });
+                        }
+                    }
+
+                    function displaySearchResults(results) {
+                        var searchResultsContainer = document.getElementById('searchResults');
+                        var startupEnablerSection = document.getElementById('startupEnablerSection');
+
+                        // Clear previous results
+                        searchResultsContainer.innerHTML = '';
+
+                        startupEnablerSection.style.display = 'none';
+
+                        // Sort results by blog_dateadded in descending order
+                        results.sort(function(a, b) {
+                            return new Date(b.blog_dateadded) - new Date(a.blog_dateadded);
+                        });
+
+                        if (results && results.length > 0) {
+                            results.forEach(function(blog) {
+                                // Display search results
+                                var formattedDate = new Date(blog.blog_dateadded);
+                                formattedDate = formattedDate.toLocaleString('en-US', {
+                                    timeZone: 'UTC',
+                                    hour12: true,
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    year: 'numeric'
+                                });
+                                formattedDate = formattedDate.replace("at", "|");
+
+                                var card = `
+                <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
+                    <a href="blogs-view.php?blog_id=${blog.blog_id}" class="link">
+                        <img src="${blog.blog_img}" alt="${blog.blog_img}" class="w-full h-40 object-cover" style="background-color: #888888;">
+                        <div class="p-4">
+                            <div class="flex items-center mb-2">
+                                <div>
+                                    <h2 class="text-2xl font-semibold">${blog.blog_title.length > 20 ? blog.blog_title.substring(0, 20) + '...' : blog.blog_title}</h2>
+                                    <p class="text-gray-600 text-sm">${formattedDate}</p>
+                                    <p class="text-m text-gray-600 mb-3" id="author-${blog.blog_id}">Loading...</p>
+                                    <p class="mb-2 mt-2">${blog.blog_content.split(' ').slice(0, 30).join(' ')}${blog.blog_content.split(' ').length > 30 ? '...' : ''}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                `;
+                                searchResultsContainer.insertAdjacentHTML('beforeend', card);
+
+                                // Update image source
+                                var imgElement = searchResultsContainer.querySelector(`img[src="${blog.blog_img}"]`);
+                                updateImageSrc(imgElement);
+
+                                // Fetch and display author name
+                                fetchAuthorName(blog.blog_author, function(authorName) {
+                                    var authorElement = searchResultsContainer.querySelector(`#author-${blog.blog_id}`);
+                                    if (authorElement) {
+                                        authorElement.textContent = "" + authorName;
+                                    }
+                                });
+                            });
+                        } else {
+                            // If no search results found, enabler section
+                            startupEnablerSection.style.display = 'block';
+                            searchResultsContainer.innerHTML = '<p>No results found.</p>';
+                        }
+                    }
+
+                    function updateImageSrc(imgElement) {
+                        if (imgElement) {
+                            imgElement.src = `http://217.196.51.115/m/api/images?filePath=blog-pics/${imgElement.alt}`;
+                        }
+                    }
+
+                    function fetchAuthorName(authorId, callback) {
+
+                        fetch('http://217.196.51.115/m/api/members/enablers', {
+                                method: 'GET',
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                const enablers = data;
+                                const enabler =enablers.find(member => member.member_id === authorId);
+                                if (enabler) {
+                                    callback(enabler.setting_institution);
+                                } else {
+                                    callback("Author Not Found");
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error fetching author name:', error);
+                            });
+                    }
+                </script>
+
+                <div id="startupEnablerSection" class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <?php
                         // Sort the blogs array by the blog_dateadded field in descending order
