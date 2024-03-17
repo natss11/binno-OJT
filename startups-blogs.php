@@ -145,7 +145,7 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                                 formattedDate = formattedDate.replace("at", "|");
 
                                 var card = `
-                <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
+                <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg mt-10">
                     <a href="blogs-view.php?blog_id=${blog.blog_id}" class="link">
                         <img src="${blog.blog_img}" alt="${blog.blog_img}" class="w-full h-40 object-cover" style="background-color: #888888;">
                         <div class="p-4">

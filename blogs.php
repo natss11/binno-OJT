@@ -54,7 +54,16 @@ if (!$company || !$enabler || !$enablers || !$companies) {
         <link rel="stylesheet" href="./dist/output.css">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <title>BINNO | BLOGS</title>
+
+        <style>
+            .recent {
+                background-color: lightgray;
+                margin-right: 55px;
+            }
+        </style>
+
     </head>
 
     <body class="bg-gray-50">
@@ -69,8 +78,8 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                     <h4 class="mt-5 font-bold text-3xl md:text-5xl">Blog Articles</h4>
                 </div>
 
-                <!-- Search Bar -->
-                <div class="my-4 flex justify-center">
+                <div class="my-4 flex flex-col items-center">
+                    <!-- Search Bar -->
                     <div class="relative" style="width: 700px;">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -80,9 +89,11 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                         <input type="text" id="searchInput" placeholder="Search for a topic or organizer" class="pl-10 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" style="width: calc(100% - 60px); border-radius: 15px;"> <!-- Subtracting 40px for the icon -->
                         <button id="searchButton" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md" style="border-top-right-radius: 16px; border-bottom-right-radius: 16px;">Search</button>
                     </div>
+                    <!-- Recent Words -->
+                    <div id="recentWords" class="recent" style="width: 700px;"></div>
                 </div>
 
-                <div id="searchResults" class="grid grid-cols-4 gap-4"></div>
+                <div id="searchResults" class="grid grid-cols-4 gap-6"></div>
 
                 <script>
                     document.getElementById('searchButton').addEventListener('click', function() {
@@ -94,6 +105,92 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                             performSearch();
                         }
                     });
+
+                    // Initialize array to store recent words
+                    var recentWords = [];
+
+                    // Maximum number of recent words to display
+                    var maxRecentWords = 5;
+
+                    // Event listener for keystrokes in the search input field
+                    document.getElementById('searchInput').addEventListener('keyup', function() {
+                        updateRecentWords(this.value);
+                    });
+
+                    // Function to update the list of recent words
+                    function updateRecentWords(inputText) {
+                        // Split input text into words
+                        var words = inputText.trim().split(/\s+/);
+
+                        // Update recentWords array with unique words from the input
+                        recentWords = [];
+                        for (var i = words.length - 1; i >= 0 && recentWords.length < maxRecentWords; i--) {
+                            if (words[i] && !recentWords.includes(words[i])) {
+                                recentWords.unshift(words[i]);
+                            }
+                        }
+
+                        // Display recent words
+                        displayRecentWords();
+                    }
+
+                    // Function to display recent words
+                    function displayRecentWords() {
+                        var recentWordsContainer = document.getElementById('recentWords');
+                        recentWordsContainer.innerHTML = '';
+                        recentWordsContainer.style.width = '600px'; // Fixed width set here
+
+                        recentWords.forEach(function(word) {
+                            var wordElement = document.createElement('span');
+                            wordElement.textContent = word;
+                            wordElement.classList.add('recent-word', 'px-4', 'py-1', 'text-black', 'rounded');
+                            wordElement.style.fontSize = '18px';
+                            wordElement.style.textAlign = 'left';
+                            recentWordsContainer.appendChild(wordElement);
+                        });
+                    }
+
+                    // Function to perform live search
+                    function performLiveSearch() {
+                        var searchTerm = document.getElementById('searchInput').value.trim();
+                        if (searchTerm !== '') {
+                            fetch('http://217.196.51.115/m/api/search/blog', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        search_term: searchTerm
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    displaySearchResults(data);
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching search results:', error);
+                                });
+                        } else {
+                            // If search term is empty, restore original display
+                            restoreOriginalDisplay();
+                        }
+                    }
+
+                    // Event listener for input changes in the search input field
+                    document.getElementById('searchInput').addEventListener('input', function() {
+                        performLiveSearch();
+                    });
+
+                    function restoreOriginalDisplay() {
+                        // Clear search results
+                        document.getElementById('searchResults').innerHTML = '';
+
+                        // Restore original display elements
+                        document.getElementById('startupCompanySection').style.display = 'block';
+                        document.getElementById('startupEnablerSection').style.display = 'block';
+                        document.getElementById('startupCompanyCards').style.display = 'block';
+                        document.getElementById('startupEnablerCards').style.display = 'block';
+                    }
 
                     function performSearch() {
                         var searchTerm = document.getElementById('searchInput').value.trim();
@@ -121,6 +218,8 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                         var searchResultsContainer = document.getElementById('searchResults');
                         var startupCompanySection = document.getElementById('startupCompanySection');
                         var startupEnablerSection = document.getElementById('startupEnablerSection');
+                        var startupCompanyCards = document.getElementById('startupCompanyCards');
+                        var startupEnablerCards = document.getElementById('startupEnablerCards');
 
                         // Clear previous results
                         searchResultsContainer.innerHTML = '';
@@ -128,6 +227,8 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                         // Hide startup company and enabler sections
                         startupCompanySection.style.display = 'none';
                         startupEnablerSection.style.display = 'none';
+                        startupCompanyCards.style.display = 'none';
+                        startupEnablerCards.style.display = 'none';
 
                         // Sort results by blog_dateadded in descending order
                         results.sort(function(a, b) {
@@ -150,7 +251,7 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                                 formattedDate = formattedDate.replace("at", "|");
 
                                 var card = `
-                    <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
+                    <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg mt-10">
                         <a href="blogs-view.php?blog_id=${blog.blog_id}" class="link">
                             <img src="${blog.blog_img}" alt="${blog.blog_img}" class="w-full h-40 object-cover" style="background-color: #888888;">
                             <div class="p-4">
@@ -184,6 +285,8 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                             // If no search results found, show startup company and enabler sections
                             startupCompanySection.style.display = 'block';
                             startupEnablerSection.style.display = 'block';
+                            startupCompanyCards.style.display = 'block';
+                            startupEnablerCards.style.display = 'block';
                             searchResultsContainer.innerHTML = '<p>No results found.</p>';
                         }
                     }
@@ -233,7 +336,7 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                 <?php
                 // If search results are not displayed, show Startup Company and Startup Enabler sections
                 if (!$searchResultsDisplayed) {
-                    echo '<div class="text-center">';
+                    echo '<div id="startupCompanySection" class="text-center">';
                     echo '<h3 class="font-bold text-3xl md:text-4xl mb-5">Startup Company</h3>';
                     echo '<div class="flex justify-end">';
                     echo '<a href="startups-blogs.php?type=company" class="view-all">View All</a>';
@@ -242,7 +345,7 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                 }
                 ?>
 
-                <div id="startupCompanySection" class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
+                <div id="startupCompanyCards" class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <?php
                         // Sort the blogs array by the blog_dateadded field in descending order
@@ -310,7 +413,7 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                 <?php
                 // If search results are not displayed, show Startup Enabler section
                 if (!$searchResultsDisplayed) {
-                    echo '<div class="text-center">';
+                    echo '<div id="startupEnablerSection" class="text-center">';
                     echo '<h3 class="font-bold text-3xl md:text-4xl mb-5">Startup Enabler</h3>';
                     echo '<div class="flex justify-end">';
                     echo '<a href="enablers-blogs.php?type=company" class="view-all">View All</a>';
@@ -319,7 +422,7 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                 }
                 ?>
 
-                <div id="startupEnablerSection" class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
+                <div id="startupEnablerCards" class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <?php
                         // Sort the blogs array by the blog_dateadded field in descending order
@@ -327,7 +430,16 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                             return strtotime($b['blog_dateadded']) - strtotime($a['blog_dateadded']);
                         });
 
-                        foreach ($enabler as $enablerBlog) :
+                        $totalBlogs = count($enabler);
+                        $perPage = 4;
+                        $pages = ceil($totalBlogs / $perPage);
+
+                        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+                        $offset = ($currentPage - 1) * $perPage;
+
+                        $displayedBlogs = array_slice($enabler, $offset, $perPage);
+
+                        foreach ($displayedBlogs as $enablerBlog) :
                             $authorName = '';
                             foreach ($enablers as $enablerMember) {
                                 if ($enablerMember['member_id'] == $enablerBlog['blog_author']) {
@@ -336,7 +448,6 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                                 }
                             }
                         ?>
-
                             <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
                                 <a href="blogs-view.php?blog_id=<?php echo $enablerBlog['blog_id']; ?>" class="link">
                                     <img src="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" id="dynamicEnablerImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
@@ -367,22 +478,35 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <script>
-                        const enablerCards = <?php echo json_encode($enabler); ?>;
 
-                        // Function to fetch image data from API
-                        async function updateEnablerImageSrc(imgSrc) {
-                            imgSrc.src = `http://217.196.51.115/m/api/images?filePath=blog-pics/${imgSrc.alt}`
-                            console.log(imgSrc)
-                        }
+                    <?php if ($totalBlogs > $perPage) : ?>
+                        <div class="flex justify-center mt-4">
+                            <?php if ($currentPage > 1) : ?>
+                                <a href="?page=<?php echo $currentPage - 1; ?>" class="mr-4"><i class="fas fa-chevron-left"></i></a>
+                            <?php endif; ?>
 
-                        // Loop through images with IDs containing "dynamicEnablerImg"
-                        document.querySelectorAll('[id^="dynamicEnablerImg-"]').forEach((imgElement, index) => {
-                            // Update each image's src from the API
-                            updateEnablerImageSrc(imgElement);
-                        });
-                    </script>
+                            <?php if ($currentPage < $pages) : ?>
+                                <a href="?page=<?php echo $currentPage + 1; ?>" class="ml-4"><i class="fas fa-chevron-right"></i></a>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
+
+                <script>
+                    const enablerCards = <?php echo json_encode($enabler); ?>;
+
+                    // Function to fetch image data from API
+                    async function updateEnablerImageSrc(imgSrc) {
+                        imgSrc.src = `http://217.196.51.115/m/api/images?filePath=blog-pics/${imgSrc.alt}`
+                        console.log(imgSrc)
+                    }
+
+                    // Loop through images with IDs containing "dynamicEnablerImg"
+                    document.querySelectorAll('[id^="dynamicEnablerImg-"]').forEach((imgElement, index) => {
+                        // Update each image's src from the API
+                        updateEnablerImageSrc(imgElement);
+                    });
+                </script>
             </div>
         </main>
 
