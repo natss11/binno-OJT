@@ -47,6 +47,14 @@ if (!$company || !$enabler || !$enablers || !$companies) {
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
         <title>BINNO | BLOGS</title>
+
+        <style>
+            .recent {
+                background-color: lightgray;
+                margin-right: 55px;
+            }
+        </style>
+
     </head>
 
     <body class="bg-gray-50">
@@ -67,8 +75,8 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                     <h4 class="mt-5 font-bold text-3xl md:text-5xl mb-10">Enabler Blog Articles</h4>
                 </div>
 
-                <!-- Search Bar -->
-                <div class="my-4 flex justify-center">
+                <div class="my-4 flex flex-col items-center">
+                    <!-- Search Bar -->
                     <div class="relative" style="width: 700px;">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -78,20 +86,104 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                         <input type="text" id="searchInput" placeholder="Search for a topic or organizer" class="pl-10 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" style="width: calc(100% - 60px); border-radius: 15px;"> <!-- Subtracting 40px for the icon -->
                         <button id="searchButton" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md" style="border-top-right-radius: 16px; border-bottom-right-radius: 16px;">Search</button>
                     </div>
+                    <!-- Recent Words -->
+                    <div id="recentWords" class="recent" style="width: 700px;"></div>
                 </div>
 
                 <div id="searchResults" class="grid grid-cols-4 gap-4"></div>
 
                 <script>
-                    document.getElementById('searchButton').addEventListener('click', function() {
-                        performSearch();
-                    });
+                    document.getElementById('searchButton').addEventListener('click', performSearch);
 
                     document.getElementById('searchInput').addEventListener('keypress', function(e) {
                         if (e.key === 'Enter') {
                             performSearch();
                         }
                     });
+
+                    // Initialize array to store recent words
+                    var recentWords = [];
+
+                    // Maximum number of recent words to display
+                    var maxRecentWords = 5;
+
+                    // Event listener for keystrokes in the search input field
+                    document.getElementById('searchInput').addEventListener('keyup', function() {
+                        updateRecentWords(this.value);
+                        if (this.value.trim() === '') {
+                            restoreOriginalDisplay();
+                        }
+                    });
+
+                    // Function to update the list of recent words
+                    function updateRecentWords(inputText) {
+                        // Split input text into words
+                        var words = inputText.trim().split(/\s+/);
+
+                        // Update recentWords array with unique words from the input
+                        recentWords = [];
+                        for (var i = words.length - 1; i >= 0 && recentWords.length < maxRecentWords; i--) {
+                            if (words[i] && !recentWords.includes(words[i])) {
+                                recentWords.unshift(words[i]);
+                            }
+                        }
+
+                        // Display recent words
+                        displayRecentWords();
+                    }
+
+                    // Function to display recent words
+                    function displayRecentWords() {
+                        var recentWordsContainer = document.getElementById('recentWords');
+                        recentWordsContainer.innerHTML = '';
+                        recentWordsContainer.style.width = '600px'; // Fixed width set here
+
+                        recentWords.forEach(function(word) {
+                            var wordElement = document.createElement('span');
+                            wordElement.textContent = word;
+                            wordElement.classList.add('recent-word', 'px-4', 'py-1', 'text-black', 'rounded');
+                            wordElement.style.fontSize = '18px';
+                            wordElement.style.textAlign = 'left';
+                            recentWordsContainer.appendChild(wordElement);
+                        });
+                    }
+
+                    // Function to perform live search
+                    function performLiveSearch() {
+                        var searchTerm = document.getElementById('searchInput').value.trim();
+                        if (searchTerm !== '') {
+                            fetch('http://217.196.51.115/m/api/search/blog/enabler', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        search_term: searchTerm
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    displaySearchResults(data);
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching search results:', error);
+                                });
+                        } else {
+                            // If search term is empty, restore original display
+                            restoreOriginalDisplay();
+                        }
+                    }
+
+                    // Event listener for input changes in the search input field
+                    document.getElementById('searchInput').addEventListener('input', performLiveSearch);
+
+                    function restoreOriginalDisplay() {
+                        // Clear search results
+                        document.getElementById('searchResults').innerHTML = '';
+
+                        // Restore original display elements
+                        document.getElementById('startupEnablerSection').style.display = 'block';
+                    }
 
                     function performSearch() {
                         var searchTerm = document.getElementById('searchInput').value.trim();
@@ -196,7 +288,7 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                             .then(response => response.json())
                             .then(data => {
                                 const enablers = data;
-                                const enabler =enablers.find(member => member.member_id === authorId);
+                                const enabler = enablers.find(member => member.member_id === authorId);
                                 if (enabler) {
                                     callback(enabler.setting_institution);
                                 } else {
