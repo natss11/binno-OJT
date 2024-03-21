@@ -50,8 +50,10 @@ if (!$company || !$enabler || !$enablers || !$companies) {
 
         <style>
             .recent {
-                background-color: lightgray;
+                background-color: #599EF3;
                 margin-right: 55px;
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
             }
         </style>
         

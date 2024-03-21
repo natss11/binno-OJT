@@ -59,8 +59,33 @@ if (!$company || !$enabler || !$enablers || !$companies) {
 
         <style>
             .recent {
-                background-color: lightgray;
+                background-color: #599EF3;
                 margin-right: 55px;
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
+            }
+
+            .slideshow-container {
+                transition: transform 0.3s ease-in-out;
+                /* Add transition effect */
+            }
+
+            .fa-chevron-left,
+            .fa-chevron-right {
+                color: black;
+                /* Default color */
+                font-size: 24px;
+                /* Default font size */
+                transition: color 0.3s ease, font-size 0.3s ease;
+                /* Smooth transition */
+            }
+
+            .fa-chevron-left:hover,
+            .fa-chevron-right:hover {
+                color: blue;
+                /* Hover color */
+                font-size: 28px;
+                /* Increased font size on hover */
             }
         </style>
 
@@ -420,79 +445,122 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                     echo '</div>';
                     echo '</div>';
                 }
+
+                $totalBlogs = count($enabler);
+                $perPage = 4;
+                $pages = ceil($totalBlogs / $perPage);
+
+                $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+                $offset = ($currentPage - 1) * $perPage;
                 ?>
 
-                <div id="startupEnablerCards" class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <?php
-                        // Sort the blogs array by the blog_dateadded field in descending order
-                        usort($enabler, function ($a, $b) {
-                            return strtotime($b['blog_dateadded']) - strtotime($a['blog_dateadded']);
-                        });
+                <div class="flex flex-row">
 
-                        $totalBlogs = count($enabler);
-                        $perPage = 4;
-                        $pages = ceil($totalBlogs / $perPage);
-
-                        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                        $offset = ($currentPage - 1) * $perPage;
-
-                        $displayedBlogs = array_slice($enabler, $offset, $perPage);
-
-                        foreach ($displayedBlogs as $enablerBlog) :
-                            $authorName = '';
-                            foreach ($enablers as $enablerMember) {
-                                if ($enablerMember['member_id'] == $enablerBlog['blog_author']) {
-                                    $authorName = $enablerMember['setting_institution'];
-                                    break;
-                                }
-                            }
-                        ?>
-                            <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
-                                <a href="blogs-view.php?blog_id=<?php echo $enablerBlog['blog_id']; ?>" class="link">
-                                    <img src="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" id="dynamicEnablerImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
-                                    <div class="p-4">
-                                        <div class="flex items-center mb-2">
-                                            <div>
-                                                <h2 class="text-2xl font-semibold"><?php echo strlen($enablerBlog['blog_title']) > 20 ? htmlspecialchars(substr($enablerBlog['blog_title'], 0, 20)) . '...' : htmlspecialchars($enablerBlog['blog_title']); ?></h2>
-                                                <p class="text-gray-600 text-sm">
-                                                    <?php
-                                                    $formatted_date = date('F j, Y | h:i A', strtotime($enablerBlog['blog_dateadded']));
-                                                    echo $formatted_date;
-                                                    ?>
-                                                </p>
-                                                <p class="text-m text-gray-600 mb-3"><?php echo $authorName; ?></p>
-                                                <p class="mb-2 mt-2">
-                                                    <?php
-                                                    $words = str_word_count($enablerBlog['blog_content'], 1);
-                                                    echo htmlspecialchars(implode(' ', array_slice($words, 0, 30)));
-                                                    if (count($words) > 30) {
-                                                        echo '...';
-                                                    }
-                                                    ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        <?php endforeach; ?>
+                    <div class="flex justify-center mt-4">
+                        <div class="text-center" style="margin-top: 220px;">
+                            <a href="?page=<?php echo $currentPage - 1; ?>" class="mr-4"><i class="fas fa-chevron-left"></i></a>
+                        </div>
                     </div>
 
-                    <?php if ($totalBlogs > $perPage) : ?>
-                        <div class="flex justify-center mt-4">
-                            <?php if ($currentPage > 1) : ?>
-                                <a href="?page=<?php echo $currentPage - 1; ?>" class="mr-4"><i class="fas fa-chevron-left"></i></a>
-                            <?php endif; ?>
 
-                            <?php if ($currentPage < $pages) : ?>
-                                <a href="?page=<?php echo $currentPage + 1; ?>" class="ml-4"><i class="fas fa-chevron-right"></i></a>
-                            <?php endif; ?>
+                    <div id="startupEnablerCards" class="slideshow-container container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <?php
+                            // Sort the blogs array by the blog_dateadded field in descending order
+                            usort($enabler, function ($a, $b) {
+                                return strtotime($b['blog_dateadded']) - strtotime($a['blog_dateadded']);
+                            });
+
+                            $displayedBlogs = array_slice($enabler, $offset, $perPage);
+
+                            foreach ($displayedBlogs as $enablerBlog) :
+                                $authorName = '';
+                                foreach ($enablers as $enablerMember) {
+                                    if ($enablerMember['member_id'] == $enablerBlog['blog_author']) {
+                                        $authorName = $enablerMember['setting_institution'];
+                                        break;
+                                    }
+                                }
+                            ?>
+
+                                <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
+                                    <a href="blogs-view.php?blog_id=<?php echo $enablerBlog['blog_id']; ?>" class="link">
+                                        <img src="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" id="dynamicEnablerImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                        <div class="p-4">
+                                            <div class="flex items-center mb-2">
+                                                <div>
+                                                    <h2 class="text-2xl font-semibold"><?php echo strlen($enablerBlog['blog_title']) > 20 ? htmlspecialchars(substr($enablerBlog['blog_title'], 0, 20)) . '...' : htmlspecialchars($enablerBlog['blog_title']); ?></h2>
+                                                    <p class="text-gray-600 text-sm">
+                                                        <?php
+                                                        $formatted_date = date('F j, Y | h:i A', strtotime($enablerBlog['blog_dateadded']));
+                                                        echo $formatted_date;
+                                                        ?>
+                                                    </p>
+                                                    <p class="text-m text-gray-600 mb-3"><?php echo $authorName; ?></p>
+                                                    <p class="mb-2 mt-2">
+                                                        <?php
+                                                        $words = str_word_count($enablerBlog['blog_content'], 1);
+                                                        echo htmlspecialchars(implode(' ', array_slice($words, 0, 30)));
+                                                        if (count($words) > 30) {
+                                                            echo '...';
+                                                        }
+                                                        ?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
-                    <?php endif; ?>
+                    </div>
+                    <div style="display: flex; justify-content: center;">
+                        <div class="flex justify-center mt-4">
+                            <div class="text-center" style="margin-top: 220px;">
+                                <a href="?page=<?php echo $currentPage + 1; ?>" class="ml-4"><i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <script>
+                    // JavaScript code for slideshow functionality
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const leftArrow = document.querySelector('.fa-chevron-left');
+                        const rightArrow = document.querySelector('.fa-chevron-right');
+                        const slideshowContainer = document.getElementById('startupEnablerCards');
+                        const totalPages = <?php echo $pages; ?>;
+
+                        leftArrow.style.display = <?php echo $pages <= 1 ? "'none'" : "'block'"; ?>;
+                        rightArrow.style.display = <?php echo $pages <= 1 ? "'none'" : "'block'"; ?>;
+
+                        leftArrow.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            const prevPage = <?php echo $currentPage - 1; ?>;
+                            if (prevPage >= 1) {
+                                slideshowContainer.style.transform = 'translateX(100%)'; // Apply transition
+                                window.location.href = `?page=${prevPage}`;
+                            } else {
+                                // Display last page if current page is the first page
+                                slideshowContainer.style.transform = 'translateX(100%)'; // Apply transition
+                                window.location.href = `?page=${totalPages}`;
+                            }
+                        });
+
+                        rightArrow.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            const nextPage = <?php echo $currentPage + 1; ?>;
+                            if (nextPage <= <?php echo $pages; ?>) {
+                                slideshowContainer.style.transform = 'translateX(-100%)'; // Apply transition
+                                window.location.href = `?page=${nextPage}`;
+                            } else {
+                                // Redirect to the first page if current page is the last page
+                                slideshowContainer.style.transform = 'translateX(-100%)'; // Apply transition
+                                window.location.href = `?page=1`;
+                            }
+                        });
+                    });
+
                     const enablerCards = <?php echo json_encode($enabler); ?>;
 
                     // Function to fetch image data from API
