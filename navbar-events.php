@@ -117,10 +117,10 @@
                             <span class="btn-navmenu">Guides</span>
                         </a>
                     </li>
-                    <li style="margin-right: 65px;" class="mr-4">
-                        <a href="https://member.binnostartup.site" class="blue-underline">
-                            <span class="fas fa-user-circle"></span> 
-                            <span class="btn-navmenu">Sign In</span>
+                    <li style="margin-right: 65px;" class="mr-4 relative group">
+                        <a href="https://member.binnostartup.site" class="btn-navmenu blue-underline">
+                            <span class="fas fa-user-circle"></span>
+                            <span class="btn-text">Sign In</span>
                         </a>
                     </li>
 
