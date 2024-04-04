@@ -45,7 +45,7 @@ if (!$events) {
         <title>BINNO | EVENTS</title>
     </head>
 
-    <body class="bg-gray-50">
+    <body class="bg-gray-100">
 
         <div class="bg-white">
             <?php include 'navbar-events.php'; ?>

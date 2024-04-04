@@ -66,10 +66,10 @@ if (!$companies) {
         <title>BINNO | Startup Companies</title>
     </head>
 
-    <body class="bg-gray-50">
+    <body class="bg-gray-100">
 
         <div class="bg-white">
-            <?php include 'navbar-profiles.php'; ?>
+            <?php include 'navbar-companies.php'; ?>
         </div>
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">

@@ -28,20 +28,25 @@ function fetch_api_data($api_url)
 $company = fetch_api_data("http://217.196.51.115/m/api/blogs/class/company/");
 $enabler = fetch_api_data("http://217.196.51.115/m/api/blogs/class/enabler/");
 
+// Check if there is no available data yet
+if (empty($company) && empty($enabler)) {
+    echo "No blogs yet.";
+    exit;
+}
+
 // Fetch data from member APIs
 $enablers = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
 $companies = fetch_api_data("http://217.196.51.115/m/api/members/companies");
 
-if (!$company || !$enabler || !$enablers || !$companies) {
+if (!$enablers || !$companies) {
     // Handle the case where the API request failed or returned invalid data
     echo "Failed to fetch data.";
 } else {
     // Combine company and enabler arrays
-    $allBlogs = array_merge($company, $enabler);
+    $allBlogs = array_merge($company ?? [], $enabler ?? []);
 
     // Determine if search results are being displayed
     $searchResultsDisplayed = isset($_POST['search_term']) && !empty($_POST['search_term']);
-
 ?>
 
     <!DOCTYPE html>
@@ -64,6 +69,9 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                 border-bottom-left-radius: 5px;
                 border-bottom-right-radius: 5px;
             }
+
+
+
 
             .slideshow-container {
                 transition: transform 0.3s ease-in-out;
@@ -91,7 +99,7 @@ if (!$company || !$enabler || !$enablers || !$companies) {
 
     </head>
 
-    <body class="bg-gray-50">
+    <body class="bg-gray-100">
 
         <div class="bg-white">
             <?php include 'navbar-blogs.php'; ?>
@@ -359,7 +367,7 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                 </script>
 
                 <?php
-                // If search results are not displayed, show Startup Company and Startup Enabler sections
+                // If search results are not displayed, show Startup Enabler section
                 if (!$searchResultsDisplayed) {
                     echo '<div id="startupCompanySection" class="text-center">';
                     echo '<h3 class="font-bold text-3xl md:text-4xl mb-5">Startup Company</h3>';
@@ -368,97 +376,166 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                     echo '</div>';
                     echo '</div>';
                 }
+
+                $totalBlogs = count($company);
+                $perPage = 4;
+                $pages = ceil($totalBlogs / $perPage);
+
+                $currentPage = isset($_GET['company_page']) ? $_GET['company_page'] : 1;
+                $companyOffset = ($currentPage - 1) * $perPage;
+
+                // Sort the blogs array by the blog_dateadded field in descending order
+                usort($company, function ($a, $b) {
+                    return strtotime($b['blog_dateadded']) - strtotime($a['blog_dateadded']);
+                });
+
+                $displayedBlogs = array_slice($company, $companyOffset, $perPage);
                 ?>
 
-                <div id="startupCompanyCards" class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <?php
-                        // Sort the blogs array by the blog_dateadded field in descending order
-                        usort($company, function ($a, $b) {
-                            return strtotime($b['blog_dateadded']) - strtotime($a['blog_dateadded']);
-                        });
+                <div class="flex flex-row bg-white">
 
-                        foreach ($company as $companyBlog) :
-                            $authorName = '';
-                            foreach ($companies as $companyMember) {
-                                if ($companyMember['member_id'] == $companyBlog['blog_author']) {
-                                    $authorName = $companyMember['setting_institution'];
-                                    break;
+                    <div class="flex justify-center mt-4">
+                        <div class="text-center" style="margin-top: 220px;">
+                            <a id="company-left" href="#" class="mr-4"><i class="fas fa-chevron-left"></i></a>
+                        </div>
+                    </div>
+
+                    <div id="startupCompanyCards" class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <?php foreach ($displayedBlogs as $companyBlog) :
+                                $authorName = '';
+                                foreach ($companies as $companyMember) {
+                                    if ($companyMember['member_id'] == $companyBlog['blog_author']) {
+                                        $authorName = $companyMember['setting_institution'];
+                                        break;
+                                    }
                                 }
-                            }
-                        ?>
-
-                            <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
-                                <a href="blogs-view.php?blog_id=<?php echo $companyBlog['blog_id']; ?>" class="link">
-                                    <img src="<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" id="dynamicCompanyImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
-                                    <div class="p-4">
-                                        <div class="flex items-center mb-2">
-                                            <div>
-                                                <h2 class="text-2xl font-semibold"><?php echo strlen($companyBlog['blog_title']) > 20 ? htmlspecialchars(substr($companyBlog['blog_title'], 0, 20)) . '...' : htmlspecialchars($companyBlog['blog_title']); ?></h2>
-                                                <p class="text-gray-600 text-sm">
-                                                    <?php
-                                                    $formatted_date = date('F j, Y | h:i A', strtotime($companyBlog['blog_dateadded']));
-                                                    echo $formatted_date;
-                                                    ?>
-                                                </p>
-                                                <p class="text-m text-gray-600 mb-3"><?php echo $authorName; ?></p>
-                                                <p class="mb-2 mt-2">
-                                                    <?php
-                                                    $words = str_word_count($companyBlog['blog_content'], 1);
-                                                    echo htmlspecialchars(implode(' ', array_slice($words, 0, 30)));
-                                                    if (count($words) > 30) {
-                                                        echo '...';
-                                                    }
-                                                    ?>
-                                                </p>
+                            ?>
+                                <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
+                                    <a href="blogs-view.php?blog_id=<?php echo $companyBlog['blog_id']; ?>" class="link">
+                                        <img src="http://217.196.51.115/m/api/images?filePath=blog-pics/<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                        <div class="p-4">
+                                            <div class="flex items-center mb-2">
+                                                <div>
+                                                    <h2 class="text-2xl font-semibold"><?php echo strlen($companyBlog['blog_title']) > 20 ? htmlspecialchars(substr($companyBlog['blog_title'], 0, 20)) . '...' : htmlspecialchars($companyBlog['blog_title']); ?></h2>
+                                                    <p class="text-gray-600 text-sm">
+                                                        <?php
+                                                        $formatted_date = date('F j, Y | h:i A', strtotime($companyBlog['blog_dateadded']));
+                                                        echo $formatted_date;
+                                                        ?>
+                                                    </p>
+                                                    <p class="text-m text-gray-600 mb-3"><?php echo $authorName; ?></p>
+                                                    <p class="mb-2 mt-2">
+                                                        <?php
+                                                        $words = str_word_count($companyBlog['blog_content'], 1);
+                                                        echo htmlspecialchars(implode(' ', array_slice($words, 0, 30)));
+                                                        if (count($words) > 30) {
+                                                            echo '...';
+                                                        }
+                                                        ?>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </div>
-                        <?php endforeach; ?>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
-                    <script>
-                        const companyCards = <?php echo json_encode($company); ?>;
-
-                        // Function to fetch image data from API
-                        async function updateCompanyImageSrc(imgSrc) {
-                            imgSrc.src = `http://217.196.51.115/m/api/images?filePath=blog-pics/${imgSrc.alt}`
-                            console.log(imgSrc)
-                        }
-
-                        // Loop through images with IDs containing "dynamicCompanyImg"
-                        document.querySelectorAll('[id^="dynamicCompanyImg-"]').forEach((imgElement, index) => {
-                            // Update each image's src from the API
-                            updateCompanyImageSrc(imgElement);
-                        });
-                    </script>
+                    <div style="display: flex; justify-content: center;" class="bg-white">
+                        <div class="flex justify-center mt-4">
+                            <div class="text-center" style="margin-top: 220px;">
+                                <a id="company-right" href="#" class="ml-4"><i class="fas fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <script>
+                    // JavaScript code for slideshow functionality for startup company section
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const company_left = document.getElementById('company-left');
+                        const company_right = document.getElementById('company-right');
+                        const companySlideshowContainer = document.getElementById('startupCompanyCards');
+                        let currentPage = <?php echo $currentPage; ?>;
+                        const totalPages = <?php echo $pages; ?>;
+
+                        company_left.style.display = <?php echo $pages <= 1 ? "'none'" : "'block'"; ?>;
+                        company_right.style.display = <?php echo $pages <= 1 ? "'none'" : "'block'"; ?>;
+
+                        company_left.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            const prevPage = currentPage - 1;
+                            if (prevPage >= 1) {
+                                loadPage(prevPage);
+                                currentPage = prevPage;
+                            } else {
+                                const lastPage = totalPages;
+                                loadPage(lastPage);
+                                currentPage = lastPage;
+                            }
+                        });
+
+                        company_right.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            const nextPage = currentPage + 1;
+                            if (nextPage <= totalPages) {
+                                loadPage(nextPage);
+                                currentPage = nextPage;
+                            } else {
+                                loadPage(1); // Go back to the first page
+                                currentPage = 1;
+                            }
+                        });
+
+                        function loadPage(pageNumber) {
+                            fetch(`?company_page=${pageNumber}`)
+                                .then(response => response.text())
+                                .then(html => {
+                                    const div = document.createElement('div');
+                                    div.innerHTML = html;
+                                    const content = div.querySelector('#startupCompanyCards').innerHTML;
+                                    companySlideshowContainer.innerHTML = content;
+                                })
+                                .catch(error => console.error('Error fetching page:', error));
+                        }
+                    });
+
+                    // Function to fetch image data from API for startup company section
+                    async function updateCompanyImageSrc(imgSrc) {
+                        imgSrc.src = `http://217.196.51.115/m/api/images?filePath=blog-pics/${imgSrc.alt}`
+                    }
+
+                    // Loop through images with IDs containing "dynamicCompanyImg"
+                    document.querySelectorAll('[id^="dynamicCompanyImg-"]').forEach((imgElement, index) => {
+                        // Update each image's src from the API
+                        updateCompanyImageSrc(imgElement);
+                    });
+                </script>
 
                 <?php
                 // If search results are not displayed, show Startup Enabler section
                 if (!$searchResultsDisplayed) {
                     echo '<div id="startupEnablerSection" class="text-center">';
-                    echo '<h3 class="font-bold text-3xl md:text-4xl mb-5">Startup Enabler</h3>';
+                    echo '<h3 class="font-bold text-3xl md:text-4xl mb-5 mt-10">Startup Enabler</h3>';
                     echo '<div class="flex justify-end">';
-                    echo '<a href="enablers-blogs.php?type=company" class="view-all">View All</a>';
+                    echo '<a href="enablers-blogs.php?type=enabler" class="view-all">View All</a>';
                     echo '</div>';
                     echo '</div>';
                 }
 
                 $totalBlogs = count($enabler);
-                $perPage = 4;
                 $pages = ceil($totalBlogs / $perPage);
 
-                $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                $offset = ($currentPage - 1) * $perPage;
+                $currentPage = isset($_GET['enabler_page']) ? $_GET['enabler_page'] : 1;
+                $enablerOffset = ($currentPage - 1) * $perPage;
                 ?>
 
-                <div class="flex flex-row">
+                <div class="flex flex-row bg-white">
 
                     <div class="flex justify-center mt-4">
                         <div class="text-center" style="margin-top: 220px;">
-                            <a href="?page=<?php echo $currentPage - 1; ?>" class="mr-4"><i class="fas fa-chevron-left"></i></a>
+                            <a id="enabler-left" href="#" class="mr-4"><i class="fas fa-chevron-left"></i></a>
                         </div>
                     </div>
 
@@ -471,7 +548,7 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                                 return strtotime($b['blog_dateadded']) - strtotime($a['blog_dateadded']);
                             });
 
-                            $displayedBlogs = array_slice($enabler, $offset, $perPage);
+                            $displayedBlogs = array_slice($enabler, $enablerOffset, $perPage);
 
                             foreach ($displayedBlogs as $enablerBlog) :
                                 $authorName = '';
@@ -482,10 +559,9 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                                     }
                                 }
                             ?>
-
                                 <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
                                     <a href="blogs-view.php?blog_id=<?php echo $enablerBlog['blog_id']; ?>" class="link">
-                                        <img src="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" id="dynamicEnablerImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                        <img src="http://217.196.51.115/m/api/images?filePath=blog-pics/<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                         <div class="p-4">
                                             <div class="flex items-center mb-2">
                                                 <div>
@@ -511,62 +587,73 @@ if (!$company || !$enabler || !$enablers || !$companies) {
                                         </div>
                                     </a>
                                 </div>
+
                             <?php endforeach; ?>
                         </div>
                     </div>
                     <div style="display: flex; justify-content: center;">
                         <div class="flex justify-center mt-4">
                             <div class="text-center" style="margin-top: 220px;">
-                                <a href="?page=<?php echo $currentPage + 1; ?>" class="ml-4"><i class="fas fa-chevron-right"></i></a>
+                                <a id="enabler-right" href="#" class="ml-4"><i class="fas fa-chevron-right"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <script>
-                    // JavaScript code for slideshow functionality
+                    // JavaScript code for slideshow functionality for startup enabler section
                     document.addEventListener('DOMContentLoaded', function() {
-                        const leftArrow = document.querySelector('.fa-chevron-left');
-                        const rightArrow = document.querySelector('.fa-chevron-right');
-                        const slideshowContainer = document.getElementById('startupEnablerCards');
+                        const enabler_left = document.getElementById('enabler-left');
+                        const enabler_right = document.getElementById('enabler-right');
+                        const enablerSlideshowContainer = document.getElementById('startupEnablerCards');
+                        let currentPage = <?php echo $currentPage; ?>;
                         const totalPages = <?php echo $pages; ?>;
 
-                        leftArrow.style.display = <?php echo $pages <= 1 ? "'none'" : "'block'"; ?>;
-                        rightArrow.style.display = <?php echo $pages <= 1 ? "'none'" : "'block'"; ?>;
+                        enabler_left.style.display = <?php echo $pages <= 1 ? "'none'" : "'block'"; ?>;
+                        enabler_right.style.display = <?php echo $pages <= 1 ? "'none'" : "'block'"; ?>;
 
-                        leftArrow.addEventListener('click', function(event) {
+                        enabler_left.addEventListener('click', function(event) {
                             event.preventDefault();
-                            const prevPage = <?php echo $currentPage - 1; ?>;
+                            const prevPage = currentPage - 1;
                             if (prevPage >= 1) {
-                                slideshowContainer.style.transform = 'translateX(100%)'; // Apply transition
-                                window.location.href = `?page=${prevPage}`;
+                                loadPage(prevPage);
+                                currentPage = prevPage;
                             } else {
-                                // Display last page if current page is the first page
-                                slideshowContainer.style.transform = 'translateX(100%)'; // Apply transition
-                                window.location.href = `?page=${totalPages}`;
+                                const lastPage = totalPages;
+                                loadPage(lastPage);
+                                currentPage = lastPage;
                             }
                         });
 
-                        rightArrow.addEventListener('click', function(event) {
+                        enabler_right.addEventListener('click', function(event) {
                             event.preventDefault();
-                            const nextPage = <?php echo $currentPage + 1; ?>;
-                            if (nextPage <= <?php echo $pages; ?>) {
-                                slideshowContainer.style.transform = 'translateX(-100%)'; // Apply transition
-                                window.location.href = `?page=${nextPage}`;
+                            const nextPage = currentPage + 1;
+                            if (nextPage <= totalPages) {
+                                loadPage(nextPage);
+                                currentPage = nextPage;
                             } else {
-                                // Redirect to the first page if current page is the last page
-                                slideshowContainer.style.transform = 'translateX(-100%)'; // Apply transition
-                                window.location.href = `?page=1`;
+                                loadPage(1); // Go back to the first page
+                                currentPage = 1;
                             }
                         });
+
+                        function loadPage(pageNumber) {
+                            fetch(`?enabler_page=${pageNumber}`)
+                                .then(response => response.text())
+                                .then(html => {
+                                    const div = document.createElement('div');
+                                    div.innerHTML = html;
+                                    const content = div.querySelector('#startupEnablerCards').innerHTML;
+                                    enablerSlideshowContainer.innerHTML = content;
+                                })
+                                .catch(error => console.error('Error fetching page:', error));
+                        }
                     });
 
-                    const enablerCards = <?php echo json_encode($enabler); ?>;
 
-                    // Function to fetch image data from API
+                    // Function to fetch image data from API for startup enabler section
                     async function updateEnablerImageSrc(imgSrc) {
                         imgSrc.src = `http://217.196.51.115/m/api/images?filePath=blog-pics/${imgSrc.alt}`
-                        console.log(imgSrc)
                     }
 
                     // Loop through images with IDs containing "dynamicEnablerImg"

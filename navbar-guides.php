@@ -112,9 +112,19 @@
                             <span class="btn-navmenu">Events</span>
                         </a>
                     </li>
-                    <li style="margin-right: 150px;" class="mr-4">
+                    <li style="margin-right: 65px;" class="mr-4">
                         <a href="guides.php" class="blue-underline">
                             <span class="btn-navmenu2">Guides</span>
+                        </a>
+                    </li>
+                    <li style="margin-right: 65px;" class="mr-4">
+                        <a href="startup-company.php" class="blue-underline">
+                            <span class="btn-navmenu">Startup Companies</span>
+                        </a>
+                    </li>
+                    <li style="margin-right: 150px;" class="mr-4">
+                        <a href="startup-enabler.php" class="blue-underline">
+                            <span class="btn-navmenu">Startup Enablers</span>
                         </a>
                     </li>
                     <li style="margin-right: 65px;" class="mr-4 relative group">
