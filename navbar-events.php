@@ -62,6 +62,10 @@
                 text-decoration: none;
             }
         }
+
+        span {
+            color: rgba(0, 0, 0, 0.6); /* Black color with 80% opacity */
+        }
     </style>
 
     <script>
@@ -102,35 +106,35 @@
                 <!-- Navigation menu -->
                 <ul class="md:flex md:justify-end nav-menu" id="navMenu">
 
-                    <li style="margin-right: 65px;" class="mr-4">
+                    <li style="margin-right: 75px;" class="mr-4">
                         <a href="blogs.php" class="blue-underline">
                             <span class="btn-navmenu">Blog Articles</span>
                         </a>
                     </li>
-                    <li style="margin-right: 65px;" class="mr-4">
+                    <li style="margin-right: 75px;" class="mr-4">
                         <a href="events.php" class="blue-underline">
                             <span class="btn-navmenu2">Events</span>
                         </a>
                     </li>
-                    <li style="margin-right: 65px;" class="mr-4">
+                    <li style="margin-right: 75px;" class="mr-4">
                         <a href="guides.php" class="blue-underline">
                             <span class="btn-navmenu">Guides</span>
                         </a>
                     </li>
-                    <li style="margin-right: 65px;" class="mr-4">
+                    <li style="margin-right: 75px;" class="mr-4">
                         <a href="startup-company.php" class="blue-underline">
                             <span class="btn-navmenu">Startup Companies</span>
                         </a>
                     </li>
-                    <li style="margin-right: 150px;" class="mr-4">
+                    <li style="margin-right: 171px;" class="mr-4">
                         <a href="startup-enabler.php" class="blue-underline">
                             <span class="btn-navmenu">Startup Enablers</span>
                         </a>
                     </li>
-                    <li style="margin-right: 65px;" class="mr-4 relative group">
+                    <li style="margin-right: 75px;" class="mr-4 relative group">
                         <a href="https://member.binnostartup.site" class="btn-navmenu blue-underline">
-                            <span class="fas fa-user-circle"></span>
-                            <span class="btn-text">Sign In</span>
+                            <span class="btn-navmenu fas fa-user-circle"></span>
+                            <span class="btn-navmenu btn-text">Sign In</span>
                         </a>
                     </li>
 

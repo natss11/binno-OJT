@@ -70,14 +70,6 @@ if (!$enablers || !$companies) {
                 border-bottom-right-radius: 5px;
             }
 
-
-
-
-            .slideshow-container {
-                transition: transform 0.3s ease-in-out;
-                /* Add transition effect */
-            }
-
             .fa-chevron-left,
             .fa-chevron-right {
                 color: black;
@@ -94,6 +86,19 @@ if (!$enablers || !$companies) {
                 /* Hover color */
                 font-size: 28px;
                 /* Increased font size on hover */
+            }
+
+            /* Add CSS for box effect transition */
+            #startupCompanyCards {
+                transition: transform 0.5s ease;
+                transform-origin: center;
+            }
+
+            .box-transition {
+                transform: scale(0.8);
+                /* Initial scale */
+                opacity: 0;
+                /* Initially hidden */
             }
         </style>
 
@@ -411,7 +416,7 @@ if (!$enablers || !$companies) {
                                     }
                                 }
                             ?>
-                                <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
+                                <div class="card-container bg-white rounded-lg overflow-hidden">
                                     <a href="blogs-view.php?blog_id=<?php echo $companyBlog['blog_id']; ?>" class="link">
                                         <img src="http://217.196.51.115/m/api/images?filePath=blog-pics/<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                         <div class="p-4">
@@ -428,8 +433,8 @@ if (!$enablers || !$companies) {
                                                     <p class="mb-2 mt-2">
                                                         <?php
                                                         $words = str_word_count($companyBlog['blog_content'], 1);
-                                                        echo htmlspecialchars(implode(' ', array_slice($words, 0, 30)));
-                                                        if (count($words) > 30) {
+                                                        echo htmlspecialchars(implode(' ', array_slice($words, 0, 25)));
+                                                        if (count($words) > 25) {
                                                             echo '...';
                                                         }
                                                         ?>
@@ -517,7 +522,7 @@ if (!$enablers || !$companies) {
                 // If search results are not displayed, show Startup Enabler section
                 if (!$searchResultsDisplayed) {
                     echo '<div id="startupEnablerSection" class="text-center">';
-                    echo '<h3 class="font-bold text-3xl md:text-4xl mb-5 mt-10">Startup Enabler</h3>';
+                    echo '<h3 class="font-bold text-3xl md:text-4xl mb-5 mt-5">Startup Enabler</h3>';
                     echo '<div class="flex justify-end">';
                     echo '<a href="enablers-blogs.php?type=enabler" class="view-all">View All</a>';
                     echo '</div>';
@@ -559,7 +564,7 @@ if (!$enablers || !$companies) {
                                     }
                                 }
                             ?>
-                                <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
+                                <div class="card-container bg-white rounded-lg overflow-hidden">
                                     <a href="blogs-view.php?blog_id=<?php echo $enablerBlog['blog_id']; ?>" class="link">
                                         <img src="http://217.196.51.115/m/api/images?filePath=blog-pics/<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                         <div class="p-4">
@@ -576,8 +581,8 @@ if (!$enablers || !$companies) {
                                                     <p class="mb-2 mt-2">
                                                         <?php
                                                         $words = str_word_count($enablerBlog['blog_content'], 1);
-                                                        echo htmlspecialchars(implode(' ', array_slice($words, 0, 30)));
-                                                        if (count($words) > 30) {
+                                                        echo htmlspecialchars(implode(' ', array_slice($words, 0, 25)));
+                                                        if (count($words) > 25) {
                                                             echo '...';
                                                         }
                                                         ?>
@@ -638,13 +643,21 @@ if (!$enablers || !$companies) {
                         });
 
                         function loadPage(pageNumber) {
+                            const enablerSlideshowContainer = document.getElementById('startupEnablerCards');
+                            enablerSlideshowContainer.style.opacity = 0; // Fade out content
+
                             fetch(`?enabler_page=${pageNumber}`)
                                 .then(response => response.text())
                                 .then(html => {
                                     const div = document.createElement('div');
                                     div.innerHTML = html;
                                     const content = div.querySelector('#startupEnablerCards').innerHTML;
-                                    enablerSlideshowContainer.innerHTML = content;
+
+                                    // Wait for a short delay to allow the fade-out effect to complete
+                                    setTimeout(() => {
+                                        enablerSlideshowContainer.innerHTML = content;
+                                        enablerSlideshowContainer.style.opacity = 1; // Fade in new content
+                                    }, 300); // Adjust the delay time as needed
                                 })
                                 .catch(error => console.error('Error fetching page:', error));
                         }

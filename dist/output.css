@@ -207,11 +207,11 @@ h11 {
   font-size: 1rem;
   color: #FF7A00;
   font-weight: bold;
-  text-decoration: underline;
 }
 
 .view-all:hover {
   color: darkorange;
+  text-decoration: underline;
 }
 
 /* h1,
@@ -793,28 +793,10 @@ button,
   /* Add relative positioning */
 }
 
-.btn-navmenu::after {
-  /* Add an after pseudo-element */
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  /* Adjust as needed */
-  width: 100%;
-  height: 2px;
-  background-color: transparent;
-  transition: background-color 0.4s, transform 0.4s;
-  /* Add transform transition */
-  transform: scaleX(0);
-  /* Initial state: invisible */
-  transform-origin: bottom left;
-  /* Set transform origin to bottom left */
-}
-
 .btn-navmenu:hover::after,
 .btn-navmenu:focus::after {
   /* Change to :focus for click effect */
-  background-color: #FF7A00;
+  background-color: rgba(0, 0, 0, 0.8);;
   /* Change to desired color */
   transform: scaleX(1);
   /* Make the underline visible */
@@ -822,20 +804,18 @@ button,
 
 .btn-navmenu:hover,
 .btn-navmenu:focus {
-  color: #FF7A00;
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: bold;
   /* Ensure text color remains visible */
 }
 
 .btn-navmenu2 {
-  color: #FF7A00;
+  color: rgba(0, 0, 0, 0.8); /* Black color with 80% opacity */
   border-radius: 10px;
   transition-duration: 0.4s;
   position: relative;
-  text-decoration: underline;
-  text-decoration-color: #FF7A00;
-  /* add this line */
-  text-decoration-thickness: 2px;
-  text-underline-offset: 5px;
+  text-decoration-color: rgba(0, 0, 0, 0.8); /* Matching text decoration color */
+  font-weight: bold;
 }
 
 /*
