@@ -57,7 +57,7 @@
 
 <body class="bg-gray-100">
 
-    <?php include 'navbar-profiles.php'; ?>
+    <?php include 'navbar-companies.php'; ?>
 
     <?php
 

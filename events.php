@@ -24,7 +24,7 @@ function fetch_api_data($api_url)
     return $data;
 }
 
-function loadProfilePic($authorProfilePic, $elementId)
+function loadProfilePic($authorProfilePic)
 {
 ?>
     <script>
@@ -38,11 +38,10 @@ function loadProfilePic($authorProfilePic, $elementId)
             .then(blob => {
                 const imageUrl = URL.createObjectURL(blob);
                 console.log('Profile picture loaded successfully');
-                document.getElementById('<?php echo $elementId; ?>').src = imageUrl;
+                document.getElementById('author_profile_pic').src = imageUrl;
             })
             .catch(error => {
                 console.error('Error fetching profile picture:', error);
-                console.log('Profile picture URL:', "<?php echo $authorProfilePic; ?>");
             });
     </script>
     <?php
@@ -159,25 +158,37 @@ if ($events) {
                                         }
                                     }
                             ?>
-                                    <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg flex">
+                                    <div class="card-container bg-white overflow-hidden flex">
                                         <a href="events-view.php?event_id=<?php echo $event['event_id']; ?>" class="link flex">
-                                            <img src="<?php echo htmlspecialchars($event['event_img']); ?>" alt="<?php echo htmlspecialchars($event['event_img']); ?>" id="dynamicImg-<?php echo $i ?>" class="h-32 w-64 object-cover" style="background-color: #888888; max-width: 200px;">
+                                            <div class="flex flex-col items-center">
+                                                <div style="position: relative; padding: 20px;">
+                                                    <img src="<?php echo htmlspecialchars($event['event_img']); ?>" alt="<?php echo htmlspecialchars($event['event_img']); ?>" id="dynamicImg-<?php echo $i ?>" class="h-48 w-36 object-cover" style="background-color: #888888; max-width: 200px; border-radius: 16px; object-fit: cover;">
+                                                    <?php if ($authorProfilePicUrl) : ?>
+                                                        <img src="http://217.196.51.115/m/api/images?filePath=profile-img/<?php echo urlencode($authorProfilePicUrl); ?>" id="author_profile_pic" alt="<?php echo urlencode($authorProfilePicUrl); ?>" class="h-20 w-20 rounded-full absolute top-4/5 left-1/2 transform -translate-x-1/2 -translate-y-1/2" style="border: 2px solid #f4f4f4; background-color: #888888; object-fit: cover;">
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="flex items-center mt-6 mb-4">
+                                                    <p class="font-bold" style="color: #FF7A00; font-size: 14px;"><?php echo $authorName; ?></p>
+                                                </div>
+                                            </div>
                                             <div class="p-4 w-2/3 flex flex-col justify-between">
                                                 <div>
                                                     <h2 class="text-2xl font-semibold"><?php echo strlen($event['event_title']) > 20 ? htmlspecialchars(substr($event['event_title'], 0, 20)) . '...' : htmlspecialchars($event['event_title']); ?></h2>
-                                                    <p class="font-semibold text-sm mt-2 mb-2">When: <?php echo date('F j, Y', strtotime($event['event_date'])); ?> | <?php echo date('h:i A', strtotime($event['event_time'])); ?></p>
-                                                    <p class="font-semibold text-sm mt-2 mb-2">Where: <?php echo ($event['event_address']); ?></p>
-                                                </div>
-                                                <div class="flex items-center mt-2">
-                                                    <img src="<?php echo $authorProfilePicUrl; ?>" alt="<?php echo $authorProfilePicUrl; ?>" class="h-16 w-16 rounded-full mr-2" id="author_profile_pic_<?php echo $i; ?>">
-                                                    <p class="text-sm"><?php echo $authorName; ?></p>
+                                                    <p class="font-semibold text-sm mt-2 mb-2"><i class="fas fa-map-marker-alt"></i> <?php echo ($event['event_address']); ?></p>
+                                                    <p class="font-semibold text-sm mt-2 mb-2"><i class="fas fa-calendar-alt mr-1"></i><?php echo date('F j, Y', strtotime($event['event_date'])); ?></p>
+                                                    <p class="font-semibold text-sm mt-2 mb-2"><i class="far fa-clock"></i> <?php echo date('h:i A', strtotime($event['event_time'])); ?></p>
+                                                    <p class="mb-2 mt-2">
+                                                        <?php
+                                                        $words = str_word_count($event['event_description'], 1);
+                                                        echo htmlspecialchars(implode(' ', array_slice($words, 0, 20)));
+                                                        if (count($words) > 20) {
+                                                            echo '...';
+                                                        }
+                                                        ?>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </a>
-                                        <?php
-                                        // Call the function to load profile picture
-                                        loadProfilePic($authorProfilePicUrl, 'author_profile_pic_' . $i);
-                                        ?>
                                     </div>
                             <?php
                                 }
@@ -210,13 +221,14 @@ if ($events) {
                         .catch(error => console.error('Error fetching image data:', error));
                 }
 
-
                 // Loop through images with IDs starting with "dynamicImg-"
                 document.querySelectorAll('[id^="dynamicImg-"]').forEach(imgElement => {
                     // Update each image's src from the API
                     updateImageSrc(imgElement);
                 });
             </script>
+
+            <?php loadProfilePic($authorProfilePicUrl); ?>
 
         </body>
 

@@ -517,6 +517,7 @@ button,
   /* Normal styles for the card container */
   transition: transform 0.3s ease;
   /* Add transition for smooth effect */
+  border-radius: 16px;
 }
 
 .card-container:hover {

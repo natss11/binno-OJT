@@ -68,7 +68,7 @@ if (!$enablers) {
 
     <body class="bg-gray-100">
 
-        <?php include 'navbar-profiles.php'; ?>
+        <?php include 'navbar-enablers.php'; ?>
 
         <div class="container mx-auto p-8">
 

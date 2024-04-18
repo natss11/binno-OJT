@@ -100,6 +100,26 @@ if (!$enablers || !$companies) {
                 opacity: 0;
                 /* Initially hidden */
             }
+
+            #company-left {
+                width: 80px;
+                height: 80px;
+            }
+
+            #company-right {
+                width: 80px;
+                height: 80px;
+            }
+
+            #enabler-left {
+                width: 80px;
+                height: 80px;
+            }
+
+            #enabler-right {
+                width: 80px;
+                height: 80px;
+            }
         </style>
 
     </head>
@@ -110,23 +130,29 @@ if (!$enablers || !$companies) {
             <?php include 'navbar-blogs.php'; ?>
         </div>
 
-        <main class="flex justify-center">
-            <div class="container mx-16">
+        <main class="justify-center">
+            <div>
                 <div>
-                    <h4 class="mt-5 font-bold text-3xl md:text-5xl">Blog Articles</h4>
+                    <h4 class="mt-5 font-bold text-8xl md:text-5xl ml-20">Blog Articles</h4>
                 </div>
 
                 <div class="my-4 flex flex-col items-center">
                     <!-- Search Bar -->
+                    <div style="height: 30px;"></div>
+
                     <div class="relative" style="width: 700px;">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m4-6a8 8 0 11-16 0 8 8 0 0116 0z"></path>
                             </svg>
                         </span>
-                        <input type="text" id="searchInput" placeholder="Search for a topic or organizer" class="pl-10 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" style="width: calc(100% - 60px); border-radius: 15px;"> <!-- Subtracting 40px for the icon -->
+                        <input type="text" id="searchInput" placeholder="Search for a topic or organizer" class="pl-10 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" style="width: calc(100% - 50px); border-radius: 16px;"> <!-- Subtracting 40px for the icon -->
                         <button id="searchButton" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md" style="border-top-right-radius: 16px; border-bottom-right-radius: 16px;">Search</button>
                     </div>
+
+                    <!-- Add spacing of 30px below the search bar -->
+                    <div style="height: 30px;"></div>
+
                     <!-- Recent Words -->
                     <div id="recentWords" class="recent" style="width: 700px;"></div>
                 </div>
@@ -289,7 +315,7 @@ if (!$enablers || !$companies) {
                                 formattedDate = formattedDate.replace("at", "|");
 
                                 var card = `
-                    <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg mt-10">
+                    <div class="card-container rounded-lg overflow-hidden shadow-lg mt-10">
                         <a href="blogs-view.php?blog_id=${blog.blog_id}" class="link">
                             <img src="${blog.blog_img}" alt="${blog.blog_img}" class="w-full h-40 object-cover" style="background-color: #888888;">
                             <div class="p-4">
@@ -375,9 +401,9 @@ if (!$enablers || !$companies) {
                 // If search results are not displayed, show Startup Enabler section
                 if (!$searchResultsDisplayed) {
                     echo '<div id="startupCompanySection" class="text-center">';
-                    echo '<h3 class="font-bold text-3xl md:text-4xl mb-5">Startup Company</h3>';
+                    echo '<h3 class="font-bold text-3xl md:text-4xl mb-10">Startup Company</h3>';
                     echo '<div class="flex justify-end">';
-                    echo '<a href="startups-blogs.php?type=company" class="view-all">View All</a>';
+                    echo '<a href="startups-blogs.php?type=company" class="view-all mr-10">View All</a>';
                     echo '</div>';
                     echo '</div>';
                 }
@@ -397,60 +423,63 @@ if (!$enablers || !$companies) {
                 $displayedBlogs = array_slice($company, $companyOffset, $perPage);
                 ?>
 
-                <div class="flex flex-row bg-white">
+                <div class="bg-white">
 
-                    <div class="flex justify-center mt-4">
-                        <div class="text-center" style="margin-top: 220px;">
-                            <a id="company-left" href="#" class="mr-4"><i class="fas fa-chevron-left"></i></a>
-                        </div>
-                    </div>
+                    <div class="flex flex-row">
 
-                    <div id="startupCompanyCards" class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <?php foreach ($displayedBlogs as $companyBlog) :
-                                $authorName = '';
-                                foreach ($companies as $companyMember) {
-                                    if ($companyMember['member_id'] == $companyBlog['blog_author']) {
-                                        $authorName = $companyMember['setting_institution'];
-                                        break;
-                                    }
-                                }
-                            ?>
-                                <div class="card-container bg-white rounded-lg overflow-hidden">
-                                    <a href="blogs-view.php?blog_id=<?php echo $companyBlog['blog_id']; ?>" class="link">
-                                        <img src="http://217.196.51.115/m/api/images?filePath=blog-pics/<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
-                                        <div class="p-4">
-                                            <div class="flex items-center mb-2">
-                                                <div>
-                                                    <h2 class="text-2xl font-semibold"><?php echo strlen($companyBlog['blog_title']) > 20 ? htmlspecialchars(substr($companyBlog['blog_title'], 0, 20)) . '...' : htmlspecialchars($companyBlog['blog_title']); ?></h2>
-                                                    <p class="text-gray-600 text-sm">
-                                                        <?php
-                                                        $formatted_date = date('F j, Y | h:i A', strtotime($companyBlog['blog_dateadded']));
-                                                        echo $formatted_date;
-                                                        ?>
-                                                    </p>
-                                                    <p class="text-m text-gray-600 mb-3"><?php echo $authorName; ?></p>
-                                                    <p class="mb-2 mt-2">
-                                                        <?php
-                                                        $words = str_word_count($companyBlog['blog_content'], 1);
-                                                        echo htmlspecialchars(implode(' ', array_slice($words, 0, 25)));
-                                                        if (count($words) > 25) {
-                                                            echo '...';
-                                                        }
-                                                        ?>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                    <div style="display: flex; justify-content: center;" class="bg-white">
                         <div class="flex justify-center mt-4">
                             <div class="text-center" style="margin-top: 220px;">
-                                <a id="company-right" href="#" class="ml-4"><i class="fas fa-chevron-right"></i></a>
+                                <a id="company-left" href="#"><i class="fas fa-chevron-left text-3l"></i></a>
+                            </div>
+                        </div>
+
+                        <div id="startupCompanyCards" class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <?php foreach ($displayedBlogs as $companyBlog) :
+                                    $authorName = '';
+                                    foreach ($companies as $companyMember) {
+                                        if ($companyMember['member_id'] == $companyBlog['blog_author']) {
+                                            $authorName = $companyMember['setting_institution'];
+                                            break;
+                                        }
+                                    }
+                                ?>
+                                    <div class="card-container rounded-lg overflow-hidden bg-white">
+                                        <a href="blogs-view.php?blog_id=<?php echo $companyBlog['blog_id']; ?>" class="link">
+                                            <img src="http://217.196.51.115/m/api/images?filePath=blog-pics/<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($companyBlog['blog_img']); ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                            <div class="p-4">
+                                                <div class="flex items-center mb-2">
+                                                    <div>
+                                                        <h2 class="text-2xl font-semibold"><?php echo strlen($companyBlog['blog_title']) > 20 ? htmlspecialchars(substr($companyBlog['blog_title'], 0, 20)) . '...' : htmlspecialchars($companyBlog['blog_title']); ?></h2>
+                                                        <p class="text-gray-600 text-sm">
+                                                            <?php
+                                                            $formatted_date = date('F j, Y | h:i A', strtotime($companyBlog['blog_dateadded']));
+                                                            echo $formatted_date;
+                                                            ?>
+                                                        </p>
+                                                        <p class="text-m text-gray-600 mb-3"><?php echo $authorName; ?></p>
+                                                        <p class="mb-2 mt-2">
+                                                            <?php
+                                                            $words = str_word_count($companyBlog['blog_content'], 1);
+                                                            echo htmlspecialchars(implode(' ', array_slice($words, 0, 25)));
+                                                            if (count($words) > 25) {
+                                                                echo '...';
+                                                            }
+                                                            ?>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: center;">
+                            <div class="flex justify-center mt-4">
+                                <div class="text-center" style="margin-top: 220px;">
+                                    <a id="company-right" href="#"><i class="fas fa-chevron-right text-3l"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -522,9 +551,9 @@ if (!$enablers || !$companies) {
                 // If search results are not displayed, show Startup Enabler section
                 if (!$searchResultsDisplayed) {
                     echo '<div id="startupEnablerSection" class="text-center">';
-                    echo '<h3 class="font-bold text-3xl md:text-4xl mb-5 mt-5">Startup Enabler</h3>';
+                    echo '<h3 class="font-bold text-3xl md:text-4xl mb-10 mt-10">Startup Enabler</h3>';
                     echo '<div class="flex justify-end">';
-                    echo '<a href="enablers-blogs.php?type=enabler" class="view-all">View All</a>';
+                    echo '<a href="enablers-blogs.php?type=enabler" class="view-all mr-10">View All</a>';
                     echo '</div>';
                     echo '</div>';
                 }
@@ -536,70 +565,72 @@ if (!$enablers || !$companies) {
                 $enablerOffset = ($currentPage - 1) * $perPage;
                 ?>
 
-                <div class="flex flex-row bg-white">
+                <div class="bg-white">
+                    <div class="flex flex-row mb-10">
 
-                    <div class="flex justify-center mt-4">
-                        <div class="text-center" style="margin-top: 220px;">
-                            <a id="enabler-left" href="#" class="mr-4"><i class="fas fa-chevron-left"></i></a>
-                        </div>
-                    </div>
-
-
-                    <div id="startupEnablerCards" class="slideshow-container container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <?php
-                            // Sort the blogs array by the blog_dateadded field in descending order
-                            usort($enabler, function ($a, $b) {
-                                return strtotime($b['blog_dateadded']) - strtotime($a['blog_dateadded']);
-                            });
-
-                            $displayedBlogs = array_slice($enabler, $enablerOffset, $perPage);
-
-                            foreach ($displayedBlogs as $enablerBlog) :
-                                $authorName = '';
-                                foreach ($enablers as $enablerMember) {
-                                    if ($enablerMember['member_id'] == $enablerBlog['blog_author']) {
-                                        $authorName = $enablerMember['setting_institution'];
-                                        break;
-                                    }
-                                }
-                            ?>
-                                <div class="card-container bg-white rounded-lg overflow-hidden">
-                                    <a href="blogs-view.php?blog_id=<?php echo $enablerBlog['blog_id']; ?>" class="link">
-                                        <img src="http://217.196.51.115/m/api/images?filePath=blog-pics/<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
-                                        <div class="p-4">
-                                            <div class="flex items-center mb-2">
-                                                <div>
-                                                    <h2 class="text-2xl font-semibold"><?php echo strlen($enablerBlog['blog_title']) > 20 ? htmlspecialchars(substr($enablerBlog['blog_title'], 0, 20)) . '...' : htmlspecialchars($enablerBlog['blog_title']); ?></h2>
-                                                    <p class="text-gray-600 text-sm">
-                                                        <?php
-                                                        $formatted_date = date('F j, Y | h:i A', strtotime($enablerBlog['blog_dateadded']));
-                                                        echo $formatted_date;
-                                                        ?>
-                                                    </p>
-                                                    <p class="text-m text-gray-600 mb-3"><?php echo $authorName; ?></p>
-                                                    <p class="mb-2 mt-2">
-                                                        <?php
-                                                        $words = str_word_count($enablerBlog['blog_content'], 1);
-                                                        echo htmlspecialchars(implode(' ', array_slice($words, 0, 25)));
-                                                        if (count($words) > 25) {
-                                                            echo '...';
-                                                        }
-                                                        ?>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                    <div style="display: flex; justify-content: center;">
                         <div class="flex justify-center mt-4">
                             <div class="text-center" style="margin-top: 220px;">
-                                <a id="enabler-right" href="#" class="ml-4"><i class="fas fa-chevron-right"></i></a>
+                                <a id="enabler-left" href="#"><i class="fas fa-chevron-left text-3l"></i></a>
+                            </div>
+                        </div>
+
+
+                        <div id="startupEnablerCards" class="slideshow-container container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <?php
+                                // Sort the blogs array by the blog_dateadded field in descending order
+                                usort($enabler, function ($a, $b) {
+                                    return strtotime($b['blog_dateadded']) - strtotime($a['blog_dateadded']);
+                                });
+
+                                $displayedBlogs = array_slice($enabler, $enablerOffset, $perPage);
+
+                                foreach ($displayedBlogs as $enablerBlog) :
+                                    $authorName = '';
+                                    foreach ($enablers as $enablerMember) {
+                                        if ($enablerMember['member_id'] == $enablerBlog['blog_author']) {
+                                            $authorName = $enablerMember['setting_institution'];
+                                            break;
+                                        }
+                                    }
+                                ?>
+                                    <div class="card-container overflow-hidden bg-white">
+                                        <a href="blogs-view.php?blog_id=<?php echo $enablerBlog['blog_id']; ?>" class="link">
+                                            <img src="http://217.196.51.115/m/api/images?filePath=blog-pics/<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" alt="<?php echo htmlspecialchars($enablerBlog['blog_img']); ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
+                                            <div class="p-4">
+                                                <div class="flex items-center mb-2">
+                                                    <div>
+                                                        <h2 class="text-2xl font-semibold"><?php echo strlen($enablerBlog['blog_title']) > 20 ? htmlspecialchars(substr($enablerBlog['blog_title'], 0, 20)) . '...' : htmlspecialchars($enablerBlog['blog_title']); ?></h2>
+                                                        <p class="text-gray-600 text-sm">
+                                                            <?php
+                                                            $formatted_date = date('F j, Y | h:i A', strtotime($enablerBlog['blog_dateadded']));
+                                                            echo $formatted_date;
+                                                            ?>
+                                                        </p>
+                                                        <p class="text-m text-gray-600 mb-3"><?php echo $authorName; ?></p>
+                                                        <p class="mb-2 mt-2">
+                                                            <?php
+                                                            $words = str_word_count($enablerBlog['blog_content'], 1);
+                                                            echo htmlspecialchars(implode(' ', array_slice($words, 0, 25)));
+                                                            if (count($words) > 25) {
+                                                                echo '...';
+                                                            }
+                                                            ?>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: center;">
+                            <div class="flex justify-center mt-4">
+                                <div class="text-center" style="margin-top: 220px;">
+                                    <a id="enabler-right" href="#"><i class="fas fa-chevron-right text-3l"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>

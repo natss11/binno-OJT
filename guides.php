@@ -86,7 +86,7 @@ if (!$programs) {
                         foreach ($programs as $program) {
                             $i++;
                         ?>
-                            <div class="card-container bg-white rounded-lg overflow-hidden shadow-lg">
+                            <div class="card-container bg-white overflow-hidden shadow-lg">
                                 <a href="<?php echo htmlspecialchars('guides-view.php') . '?program_id=' . (isset($program['program_id']) ? $program['program_id'] : ''); ?>" class="link">
                                     <img src=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> alt=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                     <div class="p-4 object-cover">
