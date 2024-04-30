@@ -91,6 +91,16 @@ if ($events) {
             <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
             <title>BINNO | EVENTS</title>
+
+            <style>
+                .recent {
+                    background-color: #599EF3;
+                    margin-right: 55px;
+                    border-bottom-left-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                }
+            </style>
+
         </head>
 
         <body class="bg-gray-100">
@@ -105,20 +115,22 @@ if ($events) {
                         <h4 class="mt-5 font-bold text-3xl md:text-5xl">Events</h4>
                     </div>
 
-                    <!-- Search Bar -->
-                    <div class="my-4 flex justify-center">
+                    <div class="my-4 flex flex-col items-center">
+                        <!-- Search Bar -->
+                        <div style="height: 30px;"></div>
+
                         <div class="relative" style="width: 700px;">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m4-6a8 8 0 11-16 0 8 8 0 0116 0z"></path>
                                 </svg>
                             </span>
-                            <input type="text" placeholder="Search for a topic or organizer" class="pl-10 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" style="width: calc(100% - 60px); border-radius: 15px;"> <!-- Subtracting 40px for the icon -->
-                            <button type="submit" id="searchButton" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md" style="border-top-right-radius: 15px; border-bottom-right-radius: 15px;">Search</button>
+                            <input type="text" id="searchInput" placeholder="Search for event title or author" class="pl-10 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500" style="width: calc(100% - 60px); border-radius: 15px;"> <!-- Subtracting 40px for the icon -->
+                            <button type="button" id="searchButton" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md" style="border-top-right-radius: 15px; border-bottom-right-radius: 15px;">Search</button>
                         </div>
                     </div>
 
-                    <div class="container mx-auto p-8 px-4 md:px-8 lg:px-32 flex flex-col md:flex-column">
+                    <div id="eventSection" class="container mx-auto p-8 px-4 md:px-8 lg:px-32 flex flex-col md:flex-column">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                             <?php
                             // Sort the events array by date in descending order
@@ -225,6 +237,28 @@ if ($events) {
                 document.querySelectorAll('[id^="dynamicImg-"]').forEach(imgElement => {
                     // Update each image's src from the API
                     updateImageSrc(imgElement);
+                });
+            </script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const searchInput = document.getElementById('searchInput');
+                    const cards = document.querySelectorAll('.card-container');
+
+                    searchInput.addEventListener('input', function(event) {
+                        const searchTerm = event.target.value.toLowerCase().trim();
+
+                        cards.forEach(card => {
+                            const title = card.querySelector('h2').textContent.toLowerCase();
+                            const author = card.querySelector('.font-bold').textContent.toLowerCase(); // Assuming .font-bold is used for author name
+
+                            if (title.includes(searchTerm) || author.includes(searchTerm)) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    });
                 });
             </script>
 

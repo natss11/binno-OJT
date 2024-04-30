@@ -25,8 +25,9 @@ function fetch_api_data($api_url)
 }
 
 $programs = fetch_api_data("http://217.196.51.115/m/api/programs/");
+$authors = fetch_api_data("http://217.196.51.115/m/api/members/enablers");
 
-if (!$programs) {
+if (!$programs || !$authors) {
     // Handle the case where the API request failed or returned invalid data
     echo "Failed to fetch guides";
 } else {
@@ -82,22 +83,29 @@ if (!$programs) {
                             return $dateB - $dateA;
                         });
 
-                        $i = 0;
                         foreach ($programs as $program) {
-                            $i++;
+                            // Find the author information
+                            $author = array_values(array_filter($authors, function ($author) use ($program) {
+                                return $author['member_id'] == $program['program_author'];
+                            }));
+
+                            // If author exists, get the name and profile picture
+                            $authorName = isset($author[0]['setting_institution']) ? $author[0]['setting_institution'] : 'Unknown';
+                            $authorProfilePic = isset($author[0]['setting_profilepic']) ? $author[0]['setting_profilepic'] : '';
+
                         ?>
                             <div class="card-container bg-white overflow-hidden shadow-lg">
                                 <a href="<?php echo htmlspecialchars('guides-view.php') . '?program_id=' . (isset($program['program_id']) ? $program['program_id'] : ''); ?>" class="link">
                                     <img src=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> alt=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
                                     <div class="p-4 object-cover">
+                                        <!-- Displaying author name -->
                                         <h2 class="text-2xl font-semibold"><?php echo strlen($program['program_heading']) > 20 ? htmlspecialchars(substr($program['program_heading'], 0, 20)) . '...' : htmlspecialchars($program['program_heading']); ?></h2>
                                         <p class="text-gray-600 text-sm mb-2">
-                                            <?php
-                                            $program_date = isset($program['program_dateadded']) ? $program['program_dateadded'] : '';
-                                            $formatted_date = date('F j, Y | h:i A', strtotime($program_date));
-                                            echo $formatted_date;
-                                            ?>
+                                            <?php echo $authorName; ?>
                                         </p>
+
+                                        <!-- Displaying author profile picture -->
+                                        <img src="http://217.196.51.115/m/api/images?filePath=profile-img/<?php echo $authorProfilePic; ?>" alt="Author Profile Picture" class="w-10 h-10 rounded-full">
                                     </div>
                                 </a>
                             </div>
@@ -133,6 +141,28 @@ if (!$programs) {
             document.querySelectorAll('[id^="dynamicImg-"]').forEach(imgElement => {
                 // Update each image's src from the API
                 updateImageSrc(imgElement);
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const searchInput = document.querySelector('input[type="text"]');
+                const cards = document.querySelectorAll('.card-container');
+
+                searchInput.addEventListener('input', function(event) {
+                    const searchTerm = event.target.value.toLowerCase().trim();
+
+                    cards.forEach(card => {
+                        const title = card.querySelector('h2').textContent.toLowerCase();
+                        const author = card.querySelector('.text-gray-600').textContent.toLowerCase(); // Update class selector to target author name
+
+                        if (title.includes(searchTerm) || author.includes(searchTerm)) { // Check if title or author name includes the search term
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
             });
         </script>
 
