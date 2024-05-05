@@ -43,6 +43,13 @@ if (!$programs || !$authors) {
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
         <title>BINNO | GUIDES</title>
+
+        <style>
+            .programImage {
+                border-radius: 8px;
+            }
+        </style>
+
     </head>
 
     <body class="bg-gray-100">
@@ -71,7 +78,7 @@ if (!$programs || !$authors) {
                 </div>
 
                 <div class="container mx-auto p-8 px-4 md:px-8 lg:px-16 flex flex-col md:flex-column">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                         <?php
                         //program_dateadded attribute
                         usort($programs, function ($a, $b) {
@@ -94,21 +101,32 @@ if (!$programs || !$authors) {
                             $authorProfilePic = isset($author[0]['setting_profilepic']) ? $author[0]['setting_profilepic'] : '';
 
                         ?>
-                            <div class="card-container bg-white overflow-hidden shadow-lg">
-                                <a href="<?php echo htmlspecialchars('guides-view.php') . '?program_id=' . (isset($program['program_id']) ? $program['program_id'] : ''); ?>" class="link">
-                                    <img src=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> alt=<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?> id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover" style="background-color: #888888;">
-                                    <div class="p-4 object-cover">
-                                        <!-- Displaying author name -->
-                                        <h2 class="text-2xl font-semibold"><?php echo strlen($program['program_heading']) > 20 ? htmlspecialchars(substr($program['program_heading'], 0, 20)) . '...' : htmlspecialchars($program['program_heading']); ?></h2>
-                                        <p class="text-gray-600 text-sm mb-2">
-                                            <?php echo $authorName; ?>
-                                        </p>
+                                <div class="card-container bg-white">
+                                    <a href="<?php echo htmlspecialchars('guides-view.php') . '?program_id=' . (isset($program['program_id']) ? $program['program_id'] : ''); ?>" class="link">
+                                        <div style="padding: 20px 20px 5px 20px;">
+                                            <img src="<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?>" alt="<?php echo isset($program['program_img']) ? htmlspecialchars($program['program_img'], ENT_QUOTES, 'UTF-8') : ''; ?>" id="dynamicImg-<?php echo $i ?>" class="w-full h-40 object-cover rounded-lg">
+                                        </div>
+                                        <div class="mt-16 absolute" style="margin-left: -25px;">
+                                            <!-- Displaying author profile picture -->
+                                            <img src="http://217.196.51.115/m/api/images?filePath=profile-img/<?php echo $authorProfilePic; ?>" alt="<?php echo $authorName; ?>" class="w-20 h-20 rounded-full mr-2 border border-gray-100 flex flex-col sm:flex-row items-start sm:items-center -mt-28">
+                                        </div>
+                                        <div class="flex items-center mb-5">
+                                            <div class="ml-16">
+                                                <!-- Displaying program heading -->
+                                                <h2 class="text-2xl font-semibold"><?php echo strlen($program['program_heading']) > 15 ? htmlspecialchars(substr($program['program_heading'], 0, 15)) . '...' : htmlspecialchars($program['program_heading']); ?></h2>
+                                                <!-- Displaying author name -->
+                                                <p class="text-gray-600 text-sm"><?php echo $authorName; ?></p>
+                                                <p class="text-gray-600 text-sm">
+                                                    <?php
+                                                    $formatted_date = date('F j, Y | h:i A', strtotime($program['program_dateadded']));
+                                                    echo $formatted_date;
+                                                    ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
 
-                                        <!-- Displaying author profile picture -->
-                                        <img src="http://217.196.51.115/m/api/images?filePath=profile-img/<?php echo $authorProfilePic; ?>" alt="Author Profile Picture" class="w-10 h-10 rounded-full">
-                                    </div>
-                                </a>
-                            </div>
                         <?php } ?>
                     </div>
                 </div>

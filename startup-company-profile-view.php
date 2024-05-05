@@ -57,7 +57,9 @@
 
 <body class="bg-gray-100">
 
-    <?php include 'navbar-companies.php'; ?>
+    <div class="bg-white">
+        <?php include 'navbar-companies.php'; ?>
+    </div>
 
     <?php
 
@@ -157,7 +159,7 @@
                         <!-- Tab buttons -->
                         <div class="flex justify-center sm:justify-end gap-10 text-xl">
                             <button class="tab-btn active" onclick="showContent('events', this)">Events</button>
-                            <button class="tab-btn" onclick="showContent('posts', this)">Posts</button>
+                            <button class="tab-btn" onclick="showContent('blogs', this)">Blogs</button>
                             <button class="tab-btn" onclick="showContent('about', this)">About</button>
                         </div>
 
@@ -206,8 +208,15 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <p class="text-sm font-semibold text-black-600 mb-2 mt-5">When: <?php echo date('F j, Y', strtotime($event['event_date'])); ?> | <?php echo date('h:i A', strtotime($event['event_time'])); ?></p>
-                                        <p class="font-semibold text-sm mt-2 mb-2">Where: <?php echo ($event['event_address']); ?></p>
+                                        <p class="font-semibold text-sm mt-5 mb-2">
+                                            <i class="fas fa-map-marker-alt mr-1"></i><?php echo ($event['event_address']); ?>
+                                        </p>
+                                        <p class="text-sm font-semibold text-black-600 mb-2 mt-2">
+                                            <i class="fas fa-calendar-alt mr-1"></i><?php echo date('F j, Y', strtotime($event['event_date'])); ?>
+                                        </p>
+                                        <p class="text-sm font-semibold text-black-600 mb-2 mt-2">
+                                            <i class="far fa-clock mr-1"></i> <?php echo date('h:i A', strtotime($event['event_time'])); ?>
+                                        </p>
                                         <h2 class="text-sm font-bold mt-3"><?php echo isset($event['event_title']) ? $event['event_title'] : ''; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-full object-cover mb-2 mt-3 border" style="background-color: #ffffff;">
                                         <p class="text-sm text-black-800 mb-2 mt-2">
@@ -255,113 +264,79 @@
                             </script>
                         </div>
 
-                        <div id="postsContent" style="display: none;">
-                            <div class="flex justify-between mb-3">
-                                <h10>Posts</h10>
-                                <div>
-                                    <select id="categorySelect" class="mt-3 block w-full py-2 px-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onchange="filterPosts()">
-                                        <option value="">All Posts</option>
-                                        <option value="Milestone">Milestone</option>
-                                        <option value="Promotion">Promotion</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="flex justify-center md:justify-start grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                        <!-- Blogs content (hidden by default) -->
+                        <div id="blogsContent" style="display: none;">
+                            <h10>Blogs</h10>
+                            <div id="blogsContent" class="mt-5">
                                 <?php
-                                // Fetch posts for the specific member
-                                $posts_url = "http://217.196.51.115/m/api/posts/";
+                                // Fetch blogs for the specific member
+                                $blogs_url = "http://217.196.51.115/m/api/blogs/";
                                 $member_id = $selected_company['member_id'];
+                                $blogs = fetch_api_data($blogs_url);
 
-                                // Initialize $posts before checking its existence
-                                $posts = fetch_api_data($posts_url);
-
-                                if ($posts) {
-                                    // Initialize arrays to store pinned posts and other posts
-                                    $pinned_posts = array();
-                                    $other_posts = array();
-
-                                    // Separate pinned posts and other posts
-                                    foreach ($posts as $post) {
-                                        if ($post['post_author'] === $member_id) {
-                                            if ($post['post_pin'] == 1) {
-                                                $pinned_posts[] = $post;
-                                            } else {
-                                                $other_posts[] = $post;
-                                            }
-                                        }
-                                    }
-
-                                    // Sort other_posts by post_dateadded in descending order
-                                    usort($other_posts, function ($a, $b) {
-                                        return strtotime($b['post_dateadded']) - strtotime($a['post_dateadded']);
+                                if ($blogs) {
+                                    // Filter and display blogs for the specific member
+                                    $filtered_blogs = array_filter($blogs, function ($blog) use ($member_id) {
+                                        return $blog['blog_author'] === $member_id;
                                     });
 
-                                    // Display pinned posts first
-                                    foreach ($pinned_posts as $post) {
+                                    // Sort blogs by date in descending order (newest to oldest)
+                                    usort($filtered_blogs, function ($a, $b) {
+                                        return strtotime($b['blog_dateadded']) - strtotime($a['blog_dateadded']);
+                                    });
+
+                                    foreach ($filtered_blogs as $blog) {
+                                        // Check if content length is more than 50 words
+                                        $content_words = str_word_count($blog['blog_content']);
+                                        $display_see_more = $content_words > 50;
+
+                                        // Limit content display to 50 words
+                                        $display_content = implode(' ', array_slice(explode(' ', $blog['blog_content']), 0, 50));
+
+                                        // Output blog content with "See more" link if applicable
                                 ?>
-                                        <div class="image-container bg-white rounded-lg overflow-hidden shadow-lg post-item <?php echo $post['post_category']; ?>">
-                                            <!-- Pin icon -->
-                                            <div class="pin-icon">
-                                                <i class="fas fa-thumbtack"></i>
+                                        <div class="bg-white border p-4 mb-4 mt-5 position-relative" style="border-radius: 10px;">
+                                            <div class="flex items-center">
+                                                <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border">
+                                                <div class="ml-4">
+                                                    <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
+                                                    <p class="text-sm text-gray-600"><?php echo date('F j, Y | g:i A', strtotime($blog['blog_dateadded'])); ?></p>
+                                                </div>
                                             </div>
-                                            <a href="posts-view.php?post_id=<?= $post['post_id']; ?>" class="link">
-                                                <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-full object-cover border" style="background-color: #ffffff;">
-                                            </a>
-                                        </div>
-                                    <?php
-                                        // Call the function to load the image
-                                        loadImage('post_pic_' . $post['post_id'], 'post-pics');
-
-                                        // Call the function to load the profile pic with a unique ID for each post
-                                        loadImage('post_profile_pic_' . $post['post_id'], 'profile-img');
-                                    }
-
-                                    // Display other posts after pinned posts
-                                    foreach ($other_posts as $post) {
-                                    ?>
-                                        <!-- display the post -->
-                                        <div class="image-container bg-white rounded-lg overflow-hidden shadow-lg post-item <?php echo $post['post_category']; ?>">
-                                            <a href="posts-view.php?post_id=<?= $post['post_id']; ?>" class="link">
-                                                <img id="post_pic_<?php echo $post['post_id']; ?>" alt="<?php echo $post['post_img']; ?>" class="w-full h-full object-cover border" style="background-color: #ffffff;">
-                                            </a>
+                                            <h2 class="text-sm font-bold mt-3"><?php echo $blog['blog_title']; ?></h2>
+                                            <img id="blog_pic_<?php echo $blog['blog_id']; ?>" alt="<?php echo $blog['blog_img']; ?>" class="w-full h-full object-cover mb-2 mt-3 border" style="background-color: #ffffff;">
+                                            <p class="text-sm text-black-800 mt-3">
+                                                <?php echo $display_content; ?>
+                                                <?php if ($display_see_more) { ?>
+                                                    <span class="full-content hidden"><?php echo $blog['blog_content']; ?></span>
+                                                    <span class="see-more position-absolute bottom-0 end-0 mb-2 me-2"> <a href="#" class="see-more-link">See more</a></span>
+                                                <?php } ?>
+                                            </p>
                                         </div>
                                 <?php
                                         // Call the function to load the image
-                                        loadImage('post_pic_' . $post['post_id'], 'post-pics');
+                                        loadImage('blog_pic_' . $blog['blog_id'], 'blog-pics');
 
-                                        // Call the function to load the profile pic with a unique ID for each post
-                                        loadImage('post_profile_pic_' . $post['post_id'], 'profile-img');
+                                        // Call the function to load the profile pic with a unique ID for each blog
+                                        loadImage('blog_profile_pic_' . $blog['blog_id'], 'profile-img');
                                     }
                                 } else {
-                                    // Handle the case where the API request for posts failed or returned invalid data
-                                    echo "Failed to fetch posts.";
+                                    // Handle the case where the API request for blogs failed or returned invalid data
+                                    echo "Failed to fetch blogs.";
                                 }
                                 ?>
-
-                                <script>
-                                    function filterPosts() {
-                                        var category = document.getElementById("categorySelect").value;
-                                        var posts = document.getElementsByClassName("post-item");
-
-                                        if (category === "") {
-                                            // Show all posts if no category is selected
-                                            for (var i = 0; i < posts.length; i++) {
-                                                posts[i].style.display = "block";
-                                            }
-                                        } else {
-                                            // Hide posts that do not match the selected category
-                                            for (var i = 0; i < posts.length; i++) {
-                                                if (!posts[i].classList.contains(category)) {
-                                                    posts[i].style.display = "none";
-                                                } else {
-                                                    posts[i].style.display = "block";
-                                                }
-                                            }
-                                        }
-                                    }
-                                </script>
                             </div>
+                            <script>
+                                // Add event listener for "See more" link
+                                document.querySelectorAll('.see-more-link').forEach(link => {
+                                    link.addEventListener('click', function(e) {
+                                        e.preventDefault();
+                                        const parent = e.target.closest('.border');
+                                        parent.querySelector('.full-content').classList.toggle('hidden');
+                                        e.target.textContent = e.target.textContent === 'See more' ? 'See less' : 'See more';
+                                    });
+                                });
+                            </script>
                         </div>
 
                         <div id="aboutContent" style="display: none;">
@@ -393,7 +368,7 @@
                     function showContent(tabName, tabBtn) {
                         // Hide all content
                         document.getElementById('eventsContent').style.display = 'none';
-                        document.getElementById('postsContent').style.display = 'none';
+                        document.getElementById('blogsContent').style.display = 'none';
                         document.getElementById('aboutContent').style.display = 'none';
 
                         // Deactivate all tabs

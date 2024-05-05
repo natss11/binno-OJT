@@ -68,7 +68,9 @@ if (!$enablers) {
 
     <body class="bg-gray-100">
 
-        <?php include 'navbar-enablers.php'; ?>
+        <div class="bg-white">
+            <?php include 'navbar-enablers.php'; ?>
+        </div>
 
         <div class="container mx-auto p-8">
 
@@ -160,8 +162,15 @@ if (!$enablers) {
                                             </div>
                                         </div>
 
-                                        <p class="text-sm font-semibold text-black-600 mb-2 mt-5">When: <?php echo date('F j, Y', strtotime($event['event_date'])); ?> | <?php echo date('h:i A', strtotime($event['event_time'])); ?></p>
-                                        <p class="font-semibold text-sm mt-2 mb-2">Where: <?php echo ($event['event_address']); ?></p>
+                                        <p class="font-semibold text-sm mt-5 mb-2">
+                                            <i class="fas fa-map-marker-alt mr-1"></i><?php echo ($event['event_address']); ?>
+                                        </p>
+                                        <p class="text-sm font-semibold text-black-600 mb-2 mt-2">
+                                            <i class="fas fa-calendar-alt mr-1"></i><?php echo date('F j, Y', strtotime($event['event_date'])); ?>
+                                        </p>
+                                        <p class="text-sm font-semibold text-black-600 mb-2 mt-2">
+                                            <i class="far fa-clock mr-1"></i> <?php echo date('h:i A', strtotime($event['event_time'])); ?>
+                                        </p>
                                         <h2 class="text-sm font-bold mt-3"><?php echo $event['event_title']; ?></h2>
                                         <img id="event_pic_<?php echo $event['event_id']; ?>" alt="<?php echo $event['event_img']; ?>" class="w-full h-full object-cover mb-2 mt-3 border" style="background-color: #ffffff;">
                                         <p class="text-sm text-black-800 mt-3">

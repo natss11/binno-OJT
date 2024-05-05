@@ -161,8 +161,6 @@ if (!$enablers) {
             }
         </script>
 
-        <?php include 'footer.php'; ?>
-
     </body>
 
     </html>
