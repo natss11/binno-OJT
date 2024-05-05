@@ -107,7 +107,7 @@ if (!$enablers) {
                         <img id="profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_profilepic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg" style="background-color: #ffffff;">
                         <div class="px-4 py-2 sm:mt-16">
                             <h4 class="text-3xl font-bold mb-2"><?php echo $selected_enabler['setting_institution']; ?></h4>
-                            <p class="text-sm text-gray-600 mb-1">Startup Enabler</p>
+                            <p class="text-sm text-gray-600 mb-1"><?php echo ($selected_enabler['enabler_class']); ?></p>
                         </div>
                     </div>
                 </div>
@@ -300,12 +300,17 @@ if (!$enablers) {
                                     <p class="text-sm mb-10 mt-3"><?php echo $selected_enabler['setting_address']; ?></p>
 
                                     <h7 class="text-lg font-semibold">Contact Details</h7>
-                                    <p class="text-sm mb-2 mt-3">
-                                        <i class="fas fa-phone-alt mr-2"></i><?php echo $selected_enabler['contact_number']; ?>
-                                    </p>
-                                    <p class="text-sm mb-2 mt-3">
-                                        <i class="far fa-envelope mr-2"></i><?php echo $selected_enabler['email_address']; ?>
-                                    </p>
+                                    <?php if (!empty($selected_enabler['contact_number'])) : ?>
+                                        <p class="text-sm mb-2 mt-3">
+                                            <i class="fas fa-phone-alt mr-2"></i><?php echo $selected_enabler['contact_number']; ?>
+                                        </p>
+                                    <?php endif; ?>
+
+                                    <?php if (!empty($selected_enabler['email_address'])) : ?>
+                                        <p class="text-sm mb-2 mt-3">
+                                            <i class="far fa-envelope mr-2"></i><?php echo $selected_enabler['email_address']; ?>
+                                        </p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>

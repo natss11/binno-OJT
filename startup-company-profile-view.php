@@ -351,10 +351,28 @@
 
                                     <h7>Contact Details</h7>
                                     <p class="text-sm mb-2 mt-3">
-                                        <i class="fas fa-phone-alt mr-2"></i><?php echo $selected_company['contact_number']; ?>
+                                        <?php if (!empty($selected_company['contact_number'])) : ?>
+                                            <i class="fas fa-phone-alt mr-2"></i><?php echo $selected_company['contact_number']; ?>
+                                        <?php endif; ?>
                                     </p>
+
                                     <p class="text-sm mb-2 mt-3">
-                                        <i class="far fa-envelope mr-2"></i><?php echo $selected_company['email_address']; ?>
+                                        <?php if (!empty($selected_company['email_address'])) : ?>
+                                            <i class="far fa-envelope mr-2"></i><?php echo $selected_company['email_address']; ?>
+                                        <?php endif; ?>
+                                    </p>
+
+                                    <p class="text-sm mb-2">
+                                        <?php
+                                        if (isset($selected_company['links']) && is_array($selected_company['links'])) {
+                                            foreach ($selected_company['links'] as $link) {
+                                                if (isset($link['url']) && !empty($link['url'])) {
+                                                    // Add the website icon before each URL
+                                                    echo '<i class="fas fa-globe mb-2 mt-3"></i> ' . $link['url'] . "<br>";
+                                                }
+                                            }
+                                        }
+                                        ?>
                                     </p>
                                 </div>
                             </div>

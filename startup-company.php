@@ -104,7 +104,7 @@ if (!$companies) {
                                 <h2 class="text-lg font-semibold mb-2 mt-10"><?php echo $setting_institution; ?></h2>
                                 <p class="mb-2 mt-2" style="text-align: center;">
                                     <?php
-                                    $words = str_word_count($company['setting_bio'], 1);
+                                    $words = str_word_count($company['setting_tagline'], 1);
                                     echo htmlspecialchars(implode(' ', array_slice($words, 0, 7)));
                                     if (count($words) > 7) {
                                         echo '...';
