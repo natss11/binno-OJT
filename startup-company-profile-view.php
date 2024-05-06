@@ -199,7 +199,7 @@
                                         <div class="flex items-center">
                                             <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border">
                                             <div class="ml-4">
-                                                <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
+                                                <h2 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h2>
                                                 <p class="text-sm text-gray-600">
                                                     <?php
                                                     $event_datetime = strtotime($event['event_datecreated']);
@@ -299,7 +299,7 @@
                                             <div class="flex items-center">
                                                 <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_company['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_company['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border">
                                                 <div class="ml-4">
-                                                    <h4 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h4>
+                                                    <h2 class="text-xl font-bold"><?php echo $selected_company['setting_institution']; ?></h2>
                                                     <p class="text-sm text-gray-600"><?php echo date('F j, Y | g:i A', strtotime($blog['blog_dateadded'])); ?></p>
                                                 </div>
                                             </div>

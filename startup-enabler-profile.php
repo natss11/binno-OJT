@@ -152,7 +152,7 @@ if (!$enablers) {
                                         <div class="flex items-center">
                                             <img id="event_profile_pic_<?php echo $event['event_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border">
                                             <div class="ml-4">
-                                                <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
+                                                <h2 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h2>
                                                 <p class="text-sm text-gray-600">
                                                     <?php
                                                     $event_datetime = strtotime($event['event_datecreated']);
@@ -249,7 +249,7 @@ if (!$enablers) {
                                             <div class="flex items-center">
                                                 <img id="blog_profile_pic_<?php echo $blog['blog_id']; ?>" src="<?php echo htmlspecialchars($selected_enabler['setting_profilepic']); ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-16 h-16 object-cover rounded-full border">
                                                 <div class="ml-4">
-                                                    <h4 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h4>
+                                                    <h2 class="text-xl font-bold"><?php echo $selected_enabler['setting_institution']; ?></h2>
                                                     <p class="text-sm text-gray-600"><?php echo date('F j, Y | g:i A', strtotime($blog['blog_dateadded'])); ?></p>
                                                 </div>
                                             </div>
@@ -308,9 +308,12 @@ if (!$enablers) {
 
                                     <?php if (!empty($selected_enabler['email_address'])) : ?>
                                         <p class="text-sm mb-2 mt-3">
-                                            <i class="far fa-envelope mr-2"></i><?php echo $selected_enabler['email_address']; ?>
+                                            <i class="far fa-envelope mr-2 mb-10"></i><?php echo $selected_enabler['email_address']; ?>
                                         </p>
                                     <?php endif; ?>
+
+                                    <h7 class="text-lg font-semibold">History</h7>
+                                    <p class="text-sm mb-10 mt-3"></p>
                                 </div>
                             </div>
                         </div>
