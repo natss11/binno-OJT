@@ -51,6 +51,16 @@
         .pin-icon i {
             font-size: 20px;
         }
+
+        .contact-info-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .contact-info-item {
+            width: 48%;
+            /* Adjust as needed */
+        }
     </style>
 
 </head>
@@ -147,7 +157,7 @@
                     <div class="flex flex-col sm:flex-row items-center sm:items-start -mt-20 ml-0 sm:ml-20">
                         <img id="profile_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg" style="background-color: #ffffff;">
                         <div class="px-4 py-2 sm:mt-16">
-                            <h4 class="text-3xl font-bold mb-2"><?php echo $selected_company['setting_institution']; ?></h4>
+                            <h2 class="text-3xl font-bold mb-2"><?php echo $selected_company['setting_institution']; ?></h2>
                             <p class="text-sm text-gray-600 mb-1">Startup Company</p>
                         </div>
                     </div>
@@ -340,29 +350,36 @@
                         </div>
 
                         <div id="aboutContent" style="display: none;">
-                            <h10>About Us</h10>
+                            <h10>About</h10>
                             <div id="aboutContent" class="mt-5">
-                                <div class="border p-4 bg-white" style="border-radius: 10px;">
-                                    <h7>About Us</h7>
-                                    <p class="text-sm mb-10 mt-3"><?php echo $selected_company['setting_bio']; ?></p>
+                                <div class="p-4 bg-white" style="border-radius: 10px;">
+                                    <div class="contact-info-container">
+                                        <div class="contact-info-item">
+                                            <h8 class="text-sm font-bold">Contact Number</h8>
+                                            <?php if (!empty($selected_company['contact_number'])) : ?>
+                                                <p class="text-sm mb-3 mt-3">
+                                                    <i class="fas fa-phone-alt mr-2"></i><?php echo $selected_company['contact_number']; ?>
+                                                </p>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="contact-info-item">
+                                            <h8 class="text-sm font-bold">Email Address</h8>
+                                            <?php if (!empty($selected_company['email_address'])) : ?>
+                                                <p class="text-sm mb-3 mt-3">
+                                                    <i class="far fa-envelope mr-2"></i><?php echo $selected_company['email_address']; ?>
+                                                </p>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
 
-                                    <h7>Address</h7>
+                                    <h8 class="text-sm font-bold">Company Address</h8>
                                     <p class="text-sm mb-10 mt-3"><?php echo $selected_company['setting_address']; ?></p>
 
-                                    <h7>Contact Details</h7>
-                                    <p class="text-sm mb-2 mt-3">
-                                        <?php if (!empty($selected_company['contact_number'])) : ?>
-                                            <i class="fas fa-phone-alt mr-2"></i><?php echo $selected_company['contact_number']; ?>
-                                        <?php endif; ?>
-                                    </p>
+                                    <h8 class="text-sm font-bold">Company Description</h8>
+                                    <p class="text-sm mb-10 mt-3"><?php echo $selected_company['setting_bio']; ?></p>
 
-                                    <p class="text-sm mb-2 mt-3">
-                                        <?php if (!empty($selected_company['email_address'])) : ?>
-                                            <i class="far fa-envelope mr-2"></i><?php echo $selected_company['email_address']; ?>
-                                        <?php endif; ?>
-                                    </p>
-
-                                    <p class="text-sm mb-2">
+                                    <h8 class="text-sm font-bold">Company Links</h8>
+                                    <p class="text-sm mb-10 mt-3">
                                         <?php
                                         if (isset($selected_company['links']) && is_array($selected_company['links'])) {
                                             foreach ($selected_company['links'] as $link) {
@@ -375,6 +392,8 @@
                                         ?>
                                     </p>
                                 </div>
+                                <h12>History</h12>
+                                <p class="text-sm mb-10 mt-3"></p>
                             </div>
                         </div>
 

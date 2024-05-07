@@ -149,7 +149,7 @@ h3 {
 /* Style for h4 */
 h4 {
   font-size: 1.25rem;
-  color: black;
+  color: #FF7A00;
   font-weight: bold;
 }
 
@@ -199,6 +199,13 @@ h10 {
 h11 {
   font-size: 1.25rem;
   color: #FF7A00;
+  font-weight: bold;
+  /* Add any other styles you want for h2 */
+}
+
+h12 {
+  font-size: 2em;
+  color: #599EF3;
   font-weight: bold;
   /* Add any other styles you want for h2 */
 }

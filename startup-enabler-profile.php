@@ -64,6 +64,19 @@ if (!$enablers) {
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
         <title>BINNO | Startup Enabler</title>
+
+        <style>
+            .contact-info-container {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .contact-info-item {
+                width: 48%;
+                /* Adjust as needed */
+            }
+        </style>
+
     </head>
 
     <body class="bg-gray-100">
@@ -106,7 +119,7 @@ if (!$enablers) {
                         <!-- Use loadProfileImage for profile pic -->
                         <img id="profile_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_profilepic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-img/', '', $selected_enabler['setting_profilepic'])); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg" style="background-color: #ffffff;">
                         <div class="px-4 py-2 sm:mt-16">
-                            <h4 class="text-3xl font-bold mb-2"><?php echo $selected_enabler['setting_institution']; ?></h4>
+                            <h2 class="text-3xl font-bold mb-2"><?php echo $selected_enabler['setting_institution']; ?></h2>
                             <p class="text-sm text-gray-600 mb-1"><?php echo ($selected_enabler['enabler_class']); ?></p>
                         </div>
                     </div>
@@ -290,32 +303,39 @@ if (!$enablers) {
                         </div>
 
                         <div id="aboutContent" style="display: none;">
-                            <h10>About Us</h10>
+                            <h10>About</h10>
                             <div id="aboutContent" class="mt-5">
                                 <div class="p-4 bg-white" style="border-radius: 10px;">
-                                    <h7 class="text-lg font-semibold">Company Description</h7>
-                                    <p class="text-sm mb-10 mt-3"><?php echo $selected_enabler['setting_bio']; ?></p>
+                                    <div class="contact-info-container">
+                                        <div class="contact-info-item">
+                                            <h8 class="text-sm font-bold">Contact Number</h8>
+                                            <?php if (!empty($selected_enabler['contact_number'])) : ?>
+                                                <p class="text-sm mb-2 mt-3">
+                                                    <i class="fas fa-phone-alt mr-2"></i><?php echo $selected_enabler['contact_number']; ?>
+                                                </p>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="contact-info-item">
+                                            <h8 class="text-sm font-bold">Email Address</h8>
+                                            <?php if (!empty($selected_enabler['email_address'])) : ?>
+                                                <p class="text-sm mb-2 mt-3">
+                                                    <i class="far fa-envelope mr-2"></i><?php echo $selected_enabler['email_address']; ?>
+                                                </p>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
 
-                                    <h7 class="text-lg font-semibold">Company Address</h7>
+                                    <h8 class="text-sm font-bold">Company Address</h8>
                                     <p class="text-sm mb-10 mt-3"><?php echo $selected_enabler['setting_address']; ?></p>
 
-                                    <h7 class="text-lg font-semibold">Contact Details</h7>
-                                    <?php if (!empty($selected_enabler['contact_number'])) : ?>
-                                        <p class="text-sm mb-2 mt-3">
-                                            <i class="fas fa-phone-alt mr-2"></i><?php echo $selected_enabler['contact_number']; ?>
-                                        </p>
-                                    <?php endif; ?>
-
-                                    <?php if (!empty($selected_enabler['email_address'])) : ?>
-                                        <p class="text-sm mb-2 mt-3">
-                                            <i class="far fa-envelope mr-2 mb-10"></i><?php echo $selected_enabler['email_address']; ?>
-                                        </p>
-                                    <?php endif; ?>
-
-                                    <h7 class="text-lg font-semibold">History</h7>
-                                    <p class="text-sm mb-10 mt-3"></p>
+                                    <h8 class="text-sm font-bold">Company Description</h8>
+                                    <p class="text-sm mb-10 mt-3"><?php echo $selected_enabler['setting_bio']; ?></p>
                                 </div>
                             </div>
+
+                            <h12>History</h12>
+                            <p class="text-sm mb-10 mt-3"></p>
+                            
                         </div>
 
                         <!-- JavaScript to handle tab switching -->
