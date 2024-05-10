@@ -392,10 +392,39 @@
                                         ?>
                                     </p>
                                 </div>
-                                <h12>History</h12>
-                                <p class="text-sm mb-10 mt-3"></p>
+                                <div id="historyWrapper"></div>
                             </div>
                         </div>
+
+                        <script>
+                            // Function to fetch and display history
+                            function fetchAndDisplayHistory(memberId) {
+                                $.ajax({
+                                    url: 'http://217.196.51.115/m/api/history/fetch',
+                                    type: 'POST',
+                                    contentType: 'application/json',
+                                    data: JSON.stringify({
+                                        member_id: memberId
+                                    }),
+                                    success: function(response) {
+                                        if (response.length > 0) {
+                                            var historyContent = '<h12>History</h12><div id="historyContent"><ul>';
+                                            response.forEach(function(historyItem) {
+                                                historyContent += '<li>' + historyItem.history_datecreated + ': ' + historyItem.history_text + '</li>';
+                                            });
+                                            historyContent += '</ul></div>';
+                                            $('#historyWrapper').html(historyContent);
+                                        }
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('Error fetching history:', error);
+                                    }
+                                });
+                            }
+
+                            // Call the function with the member_id of the specific company
+                            fetchAndDisplayHistory(<?php echo $selected_company['member_id']; ?>);
+                        </script>
 
                     </div>
                 </div>
