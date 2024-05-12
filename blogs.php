@@ -152,7 +152,7 @@ if (!$enablers || !$companies) {
                 </div>
 
                 <?php
-                // If search results are not displayed, show Startup Enabler section
+                // If search results are not displayed, show Startup Company section
                 if (!$searchResultsDisplayed) {
                     echo '<div id="startupCompanySection" class="text-center">';
                     echo '<h3 class="font-bold text-3xl md:text-4xl mb-10">Startup Company</h3>';
