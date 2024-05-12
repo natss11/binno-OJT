@@ -61,15 +61,21 @@
             width: 48%;
             /* Adjust as needed */
         }
+
+        .rec {
+            border-radius: 8px;
+            border-color: #d9d9d9;
+            padding: 5px;
+        }
+
+        .datetime {
+            float: right;
+        }
     </style>
 
 </head>
 
-<body class="bg-gray-100">
-
-    <div class="bg-white">
-        <?php include 'navbar-companies.php'; ?>
-    </div>
+<body>
 
     <?php
 
@@ -151,11 +157,11 @@
             if (isset($selected_company['setting_institution'])) {
             ?>
                 <div class="container mx-auto px-4 sm:px-8 md:px-16 lg:px-20 xl:px-64">
-                    <div class="bg-white rounded-lg overflow-hidden shadow-md mb-5">
-                        <img id="cover_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_coverpic']; ?>" alt="<?php echo str_replace('profile-cover-img/', '', $selected_company['setting_coverpic']); ?>" class="w-full h-64 object-cover shadow-lg" style="background-color: #ffffff;">
+                    <div class="bg-white rounded-lg overflow-hidden mb-5">
+                        <img id="cover_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_coverpic']; ?>" alt="<?php echo str_replace('profile-cover-img/', '', $selected_company['setting_coverpic']); ?>" class="w-full h-64 object-cover" style="background-color: #ffffff;">
                     </div>
                     <div class="flex flex-col sm:flex-row items-center sm:items-start -mt-20 ml-0 sm:ml-20">
-                        <img id="profile_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white shadow-lg" style="background-color: #ffffff;">
+                        <img id="profile_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_profilepic']; ?>" alt="<?php echo str_replace('profile-img/', '', $selected_company['setting_profilepic']); ?>" class="w-32 h-32 object-cover rounded-full border-4 border-white" style="background-color: #ffffff;">
                         <div class="px-4 py-2 sm:mt-16">
                             <h2 class="text-3xl font-bold mb-2"><?php echo $selected_company['setting_institution']; ?></h2>
                             <p class="text-sm text-gray-600 mb-1">Startup Company</p>
@@ -352,46 +358,47 @@
                         <div id="aboutContent" style="display: none;">
                             <h10>About</h10>
                             <div id="aboutContent" class="mt-5">
-                                <div class="p-4 bg-white" style="border-radius: 10px;">
-                                    <div class="contact-info-container">
-                                        <div class="contact-info-item">
-                                            <h8 class="text-sm font-bold">Contact Number</h8>
-                                            <?php if (!empty($selected_company['contact_number'])) : ?>
-                                                <p class="text-sm mb-3 mt-3">
-                                                    <i class="fas fa-phone-alt mr-2"></i><?php echo $selected_company['contact_number']; ?>
-                                                </p>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="contact-info-item">
-                                            <h8 class="text-sm font-bold">Email Address</h8>
-                                            <?php if (!empty($selected_company['email_address'])) : ?>
-                                                <p class="text-sm mb-3 mt-3">
-                                                    <i class="far fa-envelope mr-2"></i><?php echo $selected_company['email_address']; ?>
-                                                </p>
-                                            <?php endif; ?>
-                                        </div>
+                                <div class="contact-info-container mb-10">
+                                    <div class="contact-info-item">
+                                        <h8 class="text-sm font-bold">Contact Number</h8>
+                                        <?php if (!empty($selected_company['contact_number'])) : ?>
+                                            <p class="text-sm mb-3 mt-3 border rec">
+                                                <i class="fas fa-phone-alt mr-2"></i><?php echo $selected_company['contact_number']; ?>
+                                            </p>
+                                        <?php endif; ?>
                                     </div>
+                                    <div class="contact-info-item">
+                                        <h8 class="text-sm font-bold">Email Address</h8>
+                                        <?php if (!empty($selected_company['email_address'])) : ?>
+                                            <p class="text-sm mb-3 mt-3 border rec">
+                                                <i class="far fa-envelope mr-2"></i><?php echo $selected_company['email_address']; ?>
+                                            </p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
 
-                                    <h8 class="text-sm font-bold">Company Address</h8>
-                                    <p class="text-sm mb-10 mt-3"><?php echo $selected_company['setting_address']; ?></p>
+                                <h8 class="text-sm font-bold">Company Address</h8>
+                                <p class="text-sm mb-10 mt-3 border rec"><?php echo $selected_company['setting_address']; ?></p>
 
-                                    <h8 class="text-sm font-bold">Company Description</h8>
-                                    <p class="text-sm mb-10 mt-3"><?php echo $selected_company['setting_bio']; ?></p>
-
-                                    <h8 class="text-sm font-bold">Company Links</h8>
-                                    <p class="text-sm mb-10 mt-3">
-                                        <?php
-                                        if (isset($selected_company['links']) && is_array($selected_company['links'])) {
-                                            foreach ($selected_company['links'] as $link) {
-                                                if (isset($link['url']) && !empty($link['url'])) {
-                                                    // Add the website icon before each URL
-                                                    echo '<i class="fas fa-globe mb-2 mt-3"></i> ' . $link['url'] . "<br>";
-                                                }
+                                <h8 class="text-sm font-bold">Account Links</h8>
+                                <p class="text-sm mb-3">
+                                    <?php
+                                    if (isset($selected_company['links']) && is_array($selected_company['links'])) {
+                                        foreach ($selected_company['links'] as $link) {
+                                            if (isset($link['url']) && !empty($link['url'])) {
+                                                // Add the website icon before each URL
+                                                echo '<div class="border rec mb-3"><i class="fas fa-globe"></i> ' . $link['url'] . "</div>";
                                             }
                                         }
-                                        ?>
-                                    </p>
-                                </div>
+                                    }
+                                    ?>
+                                </p>
+
+                                <br>
+
+                                <h8 class="text-sm font-bold">Company Description</h8>
+                                <p class="text-sm mb-10 mt-3 border rec"><?php echo $selected_company['setting_bio']; ?></p>
+
                                 <div id="historyWrapper"></div>
                             </div>
                         </div>
@@ -408,9 +415,29 @@
                                     }),
                                     success: function(response) {
                                         if (response.length > 0) {
-                                            var historyContent = '<h12>History</h12><div id="historyContent"><ul>';
+                                            var historyContent = '<h12>History</h12><div class="mt-5" id="historyContent"><ul>';
                                             response.forEach(function(historyItem) {
-                                                historyContent += '<li>' + historyItem.history_datecreated + ': ' + historyItem.history_text + '</li>';
+                                                // Convert date string to JavaScript Date object
+                                                var date = new Date(historyItem.history_datecreated);
+                                                // Format date
+                                                var formattedDate = date.toLocaleString('en-US', {
+                                                    month: 'long',
+                                                    day: 'numeric',
+                                                    year: 'numeric'
+                                                });
+                                                // Format time
+                                                var hours = date.getHours();
+                                                var minutes = ('0' + date.getMinutes()).slice(-2);
+                                                var ampm = hours >= 12 ? 'PM' : 'AM';
+                                                hours = hours % 12;
+                                                hours = hours ? hours : 12; // 12-hour clock, so 0 should be 12
+                                                var formattedTime = hours + ':' + minutes + ' ' + ampm;
+
+                                                // Concatenate formatted date and time
+                                                var formattedDateTime = formattedDate + ' | ' + formattedTime;
+
+                                                // Append to historyContent
+                                                historyContent += '<li><div class="history-item"><div class="border rec mb-3">' + historyItem.history_text + '<span class="datetime">' + formattedDateTime + '</span></div></div></li>';
                                             });
                                             historyContent += '</ul></div>';
                                             $('#historyWrapper').html(historyContent);
