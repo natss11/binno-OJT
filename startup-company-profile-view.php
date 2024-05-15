@@ -134,12 +134,6 @@
 
         <div class="container mx-auto p-8">
 
-            <div class="flex items-center mb-5">
-                <a href="startup-company.php" class="blue-back text-lg">
-                    <i class="fas fa-arrow-left"></i> Back
-                </a>
-            </div>
-
             <?php
             // Retrieve the parameters from the URL
             $setting_institution = isset($_GET['setting_institution']) ? urldecode($_GET['setting_institution']) : '';
@@ -157,6 +151,11 @@
             if (isset($selected_company['setting_institution'])) {
             ?>
                 <div class="container mx-auto px-4 sm:px-8 md:px-16 lg:px-20 xl:px-64">
+                    <div class="flex items-center mb-10">
+                        <a href="startup-company.php" class="blue-back text-lg">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </a>
+                    </div>
                     <div class="bg-white rounded-lg overflow-hidden mb-5">
                         <img id="cover_pic_<?php echo $selected_company['member_id']; ?>" src="<?php echo $selected_company['setting_coverpic']; ?>" alt="<?php echo str_replace('profile-cover-img/', '', $selected_company['setting_coverpic']); ?>" class="w-full h-64 object-cover" style="background-color: #ffffff;">
                     </div>

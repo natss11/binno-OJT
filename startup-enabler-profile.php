@@ -93,12 +93,6 @@ if (!$enablers) {
 
         <div class="container mx-auto p-8">
 
-            <div class="flex items-center mb-5">
-                <a href="startup-enabler.php" class="blue-back text-lg">
-                    <i class="fas fa-arrow-left"></i> Back
-                </a>
-            </div>
-
             <?php
             // Retrieve the parameters from the URL
             $setting_institution = isset($_GET['setting_institution']) ? urldecode($_GET['setting_institution']) : '';
@@ -117,6 +111,11 @@ if (!$enablers) {
             ?>
 
                 <div class="container mx-auto px-4 sm:px-8 md:px-16 lg:px-20 xl:px-64">
+                    <div class="flex items-center mb-10">
+                        <a href="startup-enabler.php" class="blue-back text-lg">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </a>
+                    </div>
                     <div class="bg-white rounded-lg overflow-hidden mb-5">
                         <!-- Use loadCoverImage for cover pic -->
                         <img id="cover_pic_<?php echo $selected_enabler['member_id']; ?>" src="<?php echo $selected_enabler['setting_coverpic']; ?>" alt="<?php echo htmlspecialchars(str_replace('profile-cover-img/', '', $selected_enabler['setting_coverpic'])); ?>" class="w-full h-64 object-cover" style="background-color: #ffffff;">
@@ -310,8 +309,60 @@ if (!$enablers) {
                         </div>
 
                         <div id="mentorsContent" style="display: none;">
+                            <h10>Mentors</h10>
+                            <?php
+                            // Fetch mentors for the specific enabler
+                            $mentor_url = "http://217.196.51.115/m/api/mentor/list/enabler/";
+                            $enabler_id = $selected_enabler['member_id'];
+                            $mentors = fetch_api_data($mentor_url . $enabler_id);
 
+                            if ($mentors && !empty($mentors)) {
+                                // Display mentors
+                                foreach ($mentors as $mentor) {
+                            ?>
+                                    <div class="flex items-center mt-10 mb-6 mr-5">
+                                        <!-- Load mentor profile picture -->
+                                        <div class="relative flex items-start">
+                                            <!-- Mentor name -->
+                                            <p class="absolute top-16 left-0 ml-10 mt-0 text-lg border border-blue-500 p-16" style="border-radius: 16px; border-color: #599EF3; z-index: 0;"><?php echo $mentor['mentor_name']; ?></p>
+                                            <!-- Profile picture -->
+                                            <img id="mentor_profile_pic_<?php echo $mentor['mentor_id']; ?>" alt="<?php echo $mentor['mentor_profile_pic']; ?>" class="w-32 h-32 rounded-full object-cover border-8 border-blue-500 relative z-10">
+                                        </div>
+                                    </div>
+                            <?php
+                                }
+                            } else {
+                                // Display message if no mentors found
+                                echo "<p>No mentors yet.</p>";
+                            }
+                            ?>
                         </div>
+
+                        <script>
+                            // Function to update image src from API
+                            const updateImageSrc = async (imgElement) => {
+                                // Get the current src value
+                                var currentSrc = imgElement.alt;
+
+                                // Fetch image data from API
+                                const res = await fetch('http://217.196.51.115/m/api/images?filePath=profile-img/' + encodeURIComponent(currentSrc))
+                                    .then(response => response.blob())
+                                    .then(data => {
+                                        // Create a blob from the response data
+                                        var blob = new Blob([data], {
+                                            type: 'image/png'
+                                        }); // Adjust type if needed
+
+                                        // Set the new src value using a blob URL
+                                        imgElement.src = URL.createObjectURL(blob);
+                                    })
+                                    .catch(error => console.error('Error fetching image data:', error));
+                            }
+
+                            // Update each mentor's profile picture
+                            const mentorImages = document.querySelectorAll('[id^="mentor_profile_pic_"]');
+                            mentorImages.forEach(img => updateImageSrc(img));
+                        </script>
 
                         <div id="aboutContent" style="display: none;">
                             <h10>About</h10>
