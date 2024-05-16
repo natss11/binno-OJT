@@ -121,7 +121,7 @@ if (!$enablers || !$companies) {
                 height: 80px;
             }
         </style>
-        
+
     </head>
 
     <body class="bg-gray-100">
